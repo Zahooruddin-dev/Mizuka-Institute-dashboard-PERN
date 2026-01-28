@@ -5,10 +5,6 @@ require('dotenv').config;
 
 router.get('/', controller.getClasses);
 
-router.get('/physics', (req, res) => {
-	res.send('THIS IS NOTHIGN');
-});
-
 router.post('/', controller.createClasses);
 
 module.exports = router;

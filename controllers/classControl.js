@@ -10,9 +10,9 @@ async function getClasses(req, res) {
 }
 async function createClasses(req, res) {
 	try {
-		const data = req.body
-    await db.CreateNewClass(data)
-		res.status(201).json({message:'Created succesfully a new class'})
+		const data = req.body;
+		await db.CreateNewClass(data);
+		res.status(201).json({ message: 'Created succesfully a new class' });
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
