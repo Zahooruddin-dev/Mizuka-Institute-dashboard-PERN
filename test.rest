@@ -1,0 +1,7 @@
+POST http://localhost:3000/api/class/
+Content-Type: application/json
+
+{
+  "class_name":"Biology",
+  "time_in_pakistan":7
+}
