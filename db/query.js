@@ -1,8 +1,8 @@
 const pool = require('./Pool')
 
 async function getAllClasses() {
-  const { classes } = await pool.query(`SELECT * FROM classes;`)
-  return classes
+  const { rows } = await pool.query(`SELECT * FROM classes;`)
+  return rows
 }
 
 
