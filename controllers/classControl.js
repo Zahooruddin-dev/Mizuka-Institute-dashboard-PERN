@@ -18,11 +18,11 @@ async function createClasses(req, res) {
 	}
 }
 async function deleteClass(req, res) {
+	const { id } = req.params;
 	try {
-		const { id } = req.body;
-		await db.deleteClassQuery(id);
-		res.status(201).json({ message: 'Created succesfully a new class' });
-	} catch {
+		await db.deleteClassById(id);
+		res.status(204).send()
+		} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
 }

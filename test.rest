@@ -6,4 +6,4 @@ Content-Type: application/json
   "time_in_pakistan":7
 }
 ### DELETE SPECIFIC CLASS
-DELETE  http://localhost:3000/api/class/c1e0345b-e85f-4564-b81b-ad8a27b41ddd
+DELETE  http://localhost:3000/api/class/ecc23544-7835-483a-a266-f934e7011fda

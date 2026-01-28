@@ -15,17 +15,11 @@ async function CreateNewClass(data) {
 		[class_name, time_in_pakistan],
 	);
 }
-async function deleteClassQuery(id) {
-	await pool.query(
-		`
-    DELETE FROM classes WHERE id = $1
-    `,
-		[id],
-	);
+async function deleteClassById(id) {
+  await pool.query('DELETE FROM classes WHERE id = $1', [id]);
 }
-
 module.exports = {
 	getAllClasses,
 	CreateNewClass,
-	deleteClassQuery,
+	deleteClassById,
 };
