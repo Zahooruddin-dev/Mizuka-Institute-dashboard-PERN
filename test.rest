@@ -5,3 +5,5 @@ Content-Type: application/json
   "class_name":"Biology",
   "time_in_pakistan":7
 }
+### DELETE SPECIFIC CLASS
+DELETE  http://localhost:3000/api/class/c1e0345b-e85f-4564-b81b-ad8a27b41ddd

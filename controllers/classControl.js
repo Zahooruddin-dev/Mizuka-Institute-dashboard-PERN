@@ -19,7 +19,7 @@ async function createClasses(req, res) {
 }
 async function deleteClass(req, res) {
 	try {
-		const {id} = req.body;
+		const { id } = req.body;
 		await db.deleteClassQuery(id);
 		res.status(201).json({ message: 'Created succesfully a new class' });
 	} catch {
@@ -30,5 +30,5 @@ async function deleteClass(req, res) {
 module.exports = {
 	getClasses,
 	createClasses,
-	deleteClass
+	deleteClass,
 };

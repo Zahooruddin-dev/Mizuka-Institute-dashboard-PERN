@@ -18,7 +18,7 @@ async function CreateNewClass(data) {
 async function deleteClassQuery(id) {
 	await pool.query(
 		`
-    DELETE FROM classes WHERE id = $!
+    DELETE FROM classes WHERE id = $1
     `,
 		[id],
 	);
