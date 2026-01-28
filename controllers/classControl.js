@@ -29,8 +29,8 @@ async function deleteClass(req, res) {
 async function getSpecificClass(req, res) {
 	const { id } = req.params;
 	try {
-		await db.getClassById(id);
-		res.status(204).send();
+		const subjectClass = await db.getClassById(id);
+		res.status(201).json(subjectClass);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
@@ -40,5 +40,5 @@ module.exports = {
 	getClasses,
 	createClasses,
 	deleteClass,
-	getSpecificClass
+	getSpecificClass,
 };
