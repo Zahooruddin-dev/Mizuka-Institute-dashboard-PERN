@@ -17,11 +17,13 @@ async function CreateNewClass(data) {
 }
 
 async function getClassById(id) {
-	await pool.query('SELECT * FROM classes WHERE id = $1', [id]);
+	const { rows } = await pool.query('SELECT * FROM classes WHERE id = $1', [
+		id,
+	]);
+	return rows;
 }
 async function deleteClassById(id) {
-	const { rows } = await pool.query('DELETE FROM classes WHERE id = $1', [id]);
-	return rows
+	await pool.query('DELETE FROM classes WHERE id = $1', [id]);
 }
 module.exports = {
 	getAllClasses,

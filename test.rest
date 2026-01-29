@@ -2,8 +2,11 @@ POST http://localhost:3000/api/class/
 Content-Type: application/json
 
 {
-  "class_name":"Biology",
-  "time_in_pakistan":7
+  "class_name":"Maths",
+  "time_in_pakistan":12
 }
 ### DELETE SPECIFIC CLASS
-DELETE  http://localhost:3000/api/class/ecc23544-7835-483a-a266-f934e7011fda
+DELETE  http://localhost:3000/api/class/58a3a2ad-d2c3-4d8a-a6a7-5f46f83bb69f
+
+### 3. Get Specific (Replace with a real UUID from your DB)
+GET http://localhost:3000/api/class/58a3a2ad-d2c3-4d8a-a6a7-5f46f83bb69f
