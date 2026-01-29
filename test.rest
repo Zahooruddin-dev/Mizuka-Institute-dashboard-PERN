@@ -5,6 +5,16 @@ Content-Type: application/json
   "class_name":"Maths",
   "time_in_pakistan":12
 }
+
+### 4. Update Specific
+PUT http://localhost:3000/api/class/6029682e-ac6d-4210-b730-d2fa28507b53
+Content-Type: application/json
+
+{
+    "class_name": "Calculus",
+    "time_in_pakistan": 15
+}
+
 ### DELETE SPECIFIC CLASS
 DELETE  http://localhost:3000/api/class/58a3a2ad-d2c3-4d8a-a6a7-5f46f83bb69f
 

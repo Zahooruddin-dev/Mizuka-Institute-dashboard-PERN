@@ -15,6 +15,17 @@ async function CreateNewClass(data) {
 		[class_name, time_in_pakistan],
 	);
 }
+async function queryEditClass(id, data) {
+	const { class_name, time_in_pakistan } = data;
+	await pool.query(
+		`
+		UPDATE classes
+		SET class_name = $1, time_in_pakistan = $2
+		WHERE id = $3
+    `,
+		[class_name, time_in_pakistan, id],
+	);
+}
 
 async function getClassById(id) {
 	const { rows } = await pool.query('SELECT * FROM classes WHERE id = $1', [
@@ -30,4 +41,5 @@ module.exports = {
 	CreateNewClass,
 	deleteClassById,
 	getClassById,
+	queryEditClass,
 };
