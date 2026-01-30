@@ -1,4 +1,4 @@
-const db = require('../db/query');
+const db = require('../db/queryClasses');
 
 async function getClasses(req, res) {
 	try {

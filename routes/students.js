@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/classControl');
+const controller = require('../controllers/studentControl.js');
 require('dotenv').config;
 
 

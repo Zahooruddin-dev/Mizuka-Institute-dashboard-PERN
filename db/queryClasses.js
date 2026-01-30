@@ -36,6 +36,7 @@ async function getClassById(id) {
 async function deleteClassById(id) {
 	await pool.query('DELETE FROM classes WHERE id = $1', [id]);
 }
+
 module.exports = {
 	getAllClasses,
 	CreateNewClass,
