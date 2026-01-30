@@ -10,7 +10,8 @@ async function getStudents(req, res) {
 	}
 }
 async function createStudent(req, res) {
-	const { name, email, id } = req.params;
+	const { id } = req.params;
+	const { name, email } = req.body;
 	try {
 		const student = await db.createStudentQuery(name, email, id);
 		res.json(student);
