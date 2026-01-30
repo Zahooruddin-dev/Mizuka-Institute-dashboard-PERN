@@ -1,6 +1,6 @@
 const pool = require('./Pool');
 
-async function getStudents(id) {
+async function getStudentsQuery(id) {
 	await pool.query(`
 		SELECT classes.class_name, student.student_name
 		FROM classes
@@ -9,4 +9,4 @@ async function getStudents(id) {
 		`)
 }
 
-module.exports = {getStudents}
+module.exports = {getStudentsQuery}
