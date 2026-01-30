@@ -9,7 +9,17 @@ async function getStudents(req, res) {
 		res.status(500).json({ message: 'Internal server error' });
 	}
 }
+async function createStudent(req, res) {
+	const { name, email, id } = req.params;
+	try {
+		const student = await db.createStudentQuery(name, email, id);
+		res.json(student);
+	} catch {
+		res.status(500).json({ message: 'Internal server error' });
+	}
+}
 
 module.exports = {
 	getStudents,
+	createStudent,
 };
