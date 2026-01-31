@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/classControl');
-const students = require('./students');
+const students = require('./classStudents');
 require('dotenv').config;
 
 router.use('/:id', students);
