@@ -1,6 +1,6 @@
 const pool = require('./Pool');
 
-async function getAllClassesStatsQuery(id) {
+async function getAllClassesStatsQuery() {
 	const { rows } = await pool.query(
 		`
     SELECT classes.class_name,COUNT(student.id) AS student_count
