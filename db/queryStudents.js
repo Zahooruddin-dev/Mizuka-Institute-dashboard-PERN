@@ -1,13 +1,14 @@
 const pool = require('./Pool');
 
-async function searchStudentsQuery(name, email, id) {
+async function searchStudentsQuery(name) {
+  const searchTerm = `%${name}%`
 	const { rows } = await pool.query(
 		`
-    INSERT INTO students (student_name, email, class_id) VALUES ($1, $2, $3) RETURNING *
+    SELECT * from students WHERE student_name ILIKE $1
     `,
-		[name, email, id],
+		[searchTerm],
 	);
-	return rows[0];
+	return rows;
 }
 
 module.exports = { searchStudentsQuery };
