@@ -1,4 +1,4 @@
-const db = require('../db/queryStudents');
+const db = require('../db/queryClassStudents');
 
 async function getStudents(req, res) {
 	const { id } = req.params;
