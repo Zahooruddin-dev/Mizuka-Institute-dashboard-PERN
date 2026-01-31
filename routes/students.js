@@ -3,8 +3,6 @@ const router = express.Router();
 const controller = require('../controllers/studentControl');
 require('dotenv').config;
 
-router.get('/:id', controller.getSpecificClass);
-
-
+router.get('/:id', controller.searchStudents);
 
 module.exports = router;
