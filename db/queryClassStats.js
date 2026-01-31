@@ -6,9 +6,8 @@ async function getAllClassesStatsQuery(id) {
     SELECT classes.class_name,COUNT(student.id) AS student_count
     FROM classes
     LEFT JOIN students ON classes.id = students.class_id
-    WHERE classes.id = $1
+    GROUP BY classes.id
     `,
-		[id],
 	);
 	return rows;
 }
