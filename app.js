@@ -13,7 +13,7 @@ app.use(express.json());
 app.use('/api/class', classRoutes);
 app.use('/api/class-stats', classStatsRoute);
 app.use('/api/students', studentsRoute);
-app.use('/api/enroll=students', enrollRoutes);
+app.use('/api/enroll', enrollRoutes);
 
 app.listen(PORT, () => {
 	console.log(`${PORT} is running`);
