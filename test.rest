@@ -38,3 +38,11 @@ Content-Type: application/json
 
 GET http://localhost:3000/api/students//classes
 
+### Test Enrollment
+POST http://localhost:3000/api/enroll
+Content-Type: application/json
+
+{
+"id": "f1ff9546-fe0e-457b-9f71-0655fcdb6b6d",
+"class_id": "6029682e-ac6d-4210-b730-d2fa28507b53"
+}
