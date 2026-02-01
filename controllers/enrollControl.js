@@ -1,4 +1,4 @@
-const db = require('../db/queryStudents');
+const db = require('../db/queryEnrollment');
 
 async function createEnrollment(req, res) {
 	const { student_id, class_id } = req.body;
@@ -19,4 +19,12 @@ async function createEnrollment(req, res) {
 		res.status(500).json({ error: err.message });
 	}
 }
-module.exports = {createEnrollment}
+async function rooster(req, res) {
+	try {
+		const roster = await db.getClassRoster(req.params.id);
+		res.json(roster);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+}
+module.exports = { createEnrollment, rooster };
