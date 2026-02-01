@@ -24,4 +24,13 @@ async function specificStudentAttendingQuery(id) {
 	return rows;
 }
 
-module.exports = { searchStudentsQuery,specificStudentAttendingQuery };
+async function enrollStudent(studentId, classId) {
+  const { rows } = await pool.query(
+    `INSERT INTO enrollments (student_id, class_id) 
+     VALUES ($1, $2) 
+     RETURNING *`,
+    [studentId, classId]
+  );
+  return rows[0];
+}
+module.exports = { searchStudentsQuery,specificStudentAttendingQuery,enrollStudent };
