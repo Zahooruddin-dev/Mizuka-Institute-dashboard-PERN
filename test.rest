@@ -26,11 +26,15 @@ GET http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210/student
 
 ### 5. POST a student linked to a class (Replace with a real UUID from your DB)
 
-POST http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210/students
+POST http://localhost:3000/api/class/37cecd7a-edc3-4a3a-a3fa-e03e464c6020/students
 Content-Type: application/json
 
 {
-  "name":"Bablo",
-  "email":"mzkhan886@gmail.com"
+  "name":"King",
+  "email":"king@gmail.com"
   
 }
+### 5. Get a specified student classes ( all of which they are attending) (Replace with a real UUID from your DB)
+
+GET http://localhost:3000/api/students//classes
+
