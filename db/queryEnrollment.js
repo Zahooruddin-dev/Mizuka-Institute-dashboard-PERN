@@ -20,7 +20,7 @@ async function enrollStudent(studentId, classId) {
   );
   return rows[0];
 }
-async function getStudentSchedule(studentId) {
+async function getStudentScheduleQuery(studentId) {
   const { rows } = await pool.query(
     `SELECT students.student_name, classes.class_name, enrollments.enrollment_date
      FROM students
@@ -34,5 +34,5 @@ async function getStudentSchedule(studentId) {
 module.exports= {
   enrollStudent,
   getClassRoster,
-  getStudentSchedule
+  getStudentScheduleQuery
 }

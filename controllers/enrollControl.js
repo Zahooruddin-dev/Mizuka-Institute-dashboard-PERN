@@ -27,4 +27,13 @@ async function rooster(req, res) {
 		res.status(500).json({ error: err.message });
 	}
 }
-module.exports = { createEnrollment, rooster };
+async function getStudentSchedule(req, res) {
+  const { id } = req.params;
+  try {
+    const schedule = await db.getStudentScheduleQuery(id);
+    res.json(schedule);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+module.exports = { createEnrollment, rooster,getStudentSchedule };
