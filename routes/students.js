@@ -4,5 +4,6 @@ const controller = require('../controllers/studentControl');
 require('dotenv').config;
 
 router.get('/:id', controller.searchStudents);
+router.get('/:id/classes', controller.searchStudents);
 
 module.exports = router;
