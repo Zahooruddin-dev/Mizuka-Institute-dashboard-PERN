@@ -43,6 +43,9 @@ POST http://localhost:3000/api/enroll
 Content-Type: application/json
 
 {
-"id": "f1ff9546-fe0e-457b-9f71-0655fcdb6b6d",
+"id": "b35029fd-5efd-484a-937c-fe3a484d4e27",
 "class_id": "6029682e-ac6d-4210-b730-d2fa28507b53"
 }
+###
+
+GET  http://localhost:3000/api/enroll/class/6029682e-ac6d-4210-b730-d2fa28507b53
