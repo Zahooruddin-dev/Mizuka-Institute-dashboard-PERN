@@ -16,7 +16,7 @@ Content-Type: application/json
 }
 
 ### DELETE SPECIFIC CLASS
-DELETE  http://localhost:3000/api/class/58a3a2ad-d2c3-4d8a-a6a7-5f46f83bb69f
+DELETE  http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210
 
 ### 3. Get Specific (Replace with a real UUID from your DB)
 GET http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210
