@@ -60,9 +60,47 @@ async function createStudent(req, res) {
 			.json({ message: 'Database error. Could not save the student' });
 	}
 }
+async function updateStudent(req, res) {
+	const { id } = req.params;
+	const { name, email } = req.body;
+	if (!email.includes('@')) {
+		return res.status(400).json({ error: 'Invalid email format' });
+	}
+	if (!name || !email) {
+		return res.status(400).json({ error: 'Name and email are required' });
+	}
+	try {
+		const student = await db.updateStudentQuery(name, email, id);
+		res.status(201).json(student);
+	} catch {
+		res
+			.status(500)
+			.json({ message: 'Database error. Could not save the student' });
+	}
+}
+async function deleteStudent(req, res) {
+	const { id } = req.params;
+	const { name, email } = req.body;
+	if (!email.includes('@')) {
+		return res.status(400).json({ error: 'Invalid email format' });
+	}
+	if (!name || !email) {
+		return res.status(400).json({ error: 'Name and email are required' });
+	}
+	try {
+		const student = await db.deleteStudentQuery(name, email, id);
+		res.status(201).json(student);
+	} catch {
+		res
+			.status(500)
+			.json({ message: 'Database error. Could not save the student' });
+	}
+}
 module.exports = {
 	searchStudents,
 	specificStudentAttending,
 	createStudent,
-	getStudents
+	getStudents,
+	updateStudent,
+	deleteStudent
 };
