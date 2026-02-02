@@ -15,11 +15,16 @@ async function createStudent(req, res) {
 	if (!email.includes('@')) {
 		return res.status(400).json({ error: 'Invalid email format' });
 	}
+	if (!name || !email) {
+		return res.status(400).json({ error: 'Name and email are required' });
+	}
 	try {
 		const student = await db.createStudentQuery(name, email, id);
-		res.json(student);
+		res.status(201).json(student);
 	} catch {
-		res.status(500).json({ message: 'Internal server error' });
+		res
+			.status(500)
+			.json({ message: 'Database error. Could not save the student' });
 	}
 }
 
