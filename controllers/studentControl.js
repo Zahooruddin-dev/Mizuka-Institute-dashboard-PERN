@@ -1,5 +1,12 @@
 const db = require('../db/queryStudents');
-
+async function getAllStudents(req,res) {
+	try {
+			const classes = await db.getAllStudents();
+			res.json(classes);
+		} catch {
+			res.status(500).json({ message: 'Internal server error' });
+		}
+}
 async function searchStudents(req, res) {
 	const { name } = req.query;
 	if (!name) {
@@ -63,15 +70,15 @@ async function createStudent(req, res) {
 async function updateStudent(req, res) {
 	const { id } = req.params;
 	const { student_name, email } = req.body;
-	if (!student_name.includes('@')) {
+	if (!email.includes('@')) {
 		return res.status(400).json({ error: 'Invalid email format' });
 	}
 	if (!student_name || !email) {
 		return res.status(400).json({ error: 'Name and email are required' });
 	}
 	try {
-		const student = await db.updateStudentQuery(student_name, email, id);
-		res.status(201).json(student);
+		const updatedStudent = await db.updateStudentQuery( id,student_name, email);
+		res.status(201).json(updatedStudent);
 	} catch {
 		res
 			.status(500)
@@ -100,4 +107,5 @@ module.exports = {
 	getStudents,
 	updateStudent,
 	deleteStudent,
+	getAllStudents
 };

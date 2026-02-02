@@ -1,4 +1,8 @@
 const pool = require('./Pool');
+async function getAllStudents() {
+	const { rows } = await pool.query(`SELECT * FROM students;`);
+	return rows;
+}
 async function getStudentByIdQuery(id) {
 	const { rows } = await pool.query(`SELECT * FROM students WHERE id = $1`, [
 		id,
@@ -51,4 +55,5 @@ module.exports = {
 	createStudentQuery,
 	updateStudentQuery,
 	deleteStudentQuery,
+	getAllStudents
 };

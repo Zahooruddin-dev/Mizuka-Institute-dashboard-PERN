@@ -4,6 +4,7 @@ const controller = require('../controllers/studentControl');
 const enrollController = require('../controllers/enrollControl')
 require('dotenv').config;
 
+router.get('/', controller.getAllStudents)
 router.get('/search', controller.searchStudents);
 router.get('/:id', controller.getStudents); 
 router.get('/:id/classes', enrollController.getStudentSchedule); 
