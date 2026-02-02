@@ -38,10 +38,17 @@ async function updateStudentQuery(name, email, id) {
 	);
 	return rows[0];
 }
-
+async function deleteStudentQuery(id) {
+	const { rows } = await pool.query(
+		`DELETE FROM students WHERE id = $1 RETURNING *`,
+		[id],
+	);
+	return rows[0];
+}
 module.exports = {
 	getStudentByIdQuery,
 	specificStudentAttendingQuery,
 	createStudentQuery,
-	updateStudentQuery
+	updateStudentQuery,
+	deleteStudentQuery,
 };
