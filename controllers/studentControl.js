@@ -16,17 +16,13 @@ async function searchStudents(req, res) {
 }
 async function specificStudentAttending(req, res) {
 	const { id } = req.params;
-	if (!id) {
-		return res
-			.status(400)
-			.json({
-				error:
-					'Id required to be able to get specified student attending a class',
-			});
-	}
+
 	try {
-		const results = await db.searchStudentsQuery(id);
-		res.json(results).status(200);
+		const student = await db.getStudentByIdQuery(id);
+		if (!student) {
+			return res.status(404).json({ error: 'Student not found' });
+		}
+		res.json(student).status(200);
 	} catch (err) {
 		res.status(500).json({ message: 'Internal Server Error' });
 	}

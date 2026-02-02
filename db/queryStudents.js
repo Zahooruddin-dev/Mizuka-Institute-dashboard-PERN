@@ -1,6 +1,6 @@
 const pool = require('./Pool');
 
-async function searchStudentsQuery(name) {
+async function getStudentByIdQuery(name) {
 	const searchTerm = `%${name}%`;
 	const { rows } = await pool.query(
 		`
@@ -24,4 +24,4 @@ async function specificStudentAttendingQuery(id) {
 	return rows;
 }
 
-module.exports = { searchStudentsQuery,specificStudentAttendingQuery };
+module.exports = { getStudentByIdQuery,specificStudentAttendingQuery };
