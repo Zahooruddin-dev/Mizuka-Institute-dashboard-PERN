@@ -33,6 +33,11 @@ async function deleteClass(req, res) {
 }
 async function getSpecificClass(req, res) {
 	const { id } = req.params;
+	if (!id) {
+		return res
+			.status(400)
+			.json({ error: 'Id required to be able to get specific class' });
+	}
 	try {
 		const subjectClass = await db.getClassById(id);
 		res.status(201).json(subjectClass);
