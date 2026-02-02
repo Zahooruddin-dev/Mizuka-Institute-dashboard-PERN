@@ -19,4 +19,14 @@ async function specificStudentAttendingQuery(id) {
 	return rows;
 }
 
-module.exports = { getStudentByIdQuery,specificStudentAttendingQuery };
+async function createStudentQuery(name, email, id) {
+	const { rows } = await pool.query(
+		`
+		INSERT INTO students (student_name, email, class_id) VALUES ($1, $2, $3) RETURNING *
+		`,
+		[name, email, id],
+	);
+	return rows[0];
+}
+
+module.exports = { getStudentByIdQuery,specificStudentAttendingQuery,createStudentQuery };
