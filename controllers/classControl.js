@@ -47,6 +47,11 @@ async function getSpecificClass(req, res) {
 }
 async function editSpecificClass(req, res) {
 	const { id } = req.params;
+	if (!id) {
+		return res
+			.status(400)
+			.json({ error: 'Id required to be able to edit specific class' });
+	}
 	try {
 		const data = req.body;
 
