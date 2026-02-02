@@ -54,7 +54,6 @@ async function editSpecificClass(req, res) {
 	}
 	try {
 		const data = req.body;
-
 		const subjectClass = await db.queryEditClass(id, data);
 		res.status(201).json(subjectClass);
 	} catch {
