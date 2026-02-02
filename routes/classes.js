@@ -1,11 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/classControl');
-const students = require('./classStudents');
 require('dotenv').config;
-
-router.use('/:id', students);
-
 
 router.get('/', controller.getClasses);
 
@@ -16,6 +12,5 @@ router.put('/:id', controller.editSpecificClass);
 router.post('/', controller.createClasses);
 
 router.delete('/:id', controller.deleteClass);
-
 
 module.exports = router;
