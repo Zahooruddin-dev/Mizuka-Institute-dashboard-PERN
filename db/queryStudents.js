@@ -1,16 +1,11 @@
 const pool = require('./Pool');
-
-async function getStudentByIdQuery(name) {
-	const searchTerm = `%${name}%`;
-	const { rows } = await pool.query(
-		`
-    SELECT * from students WHERE student_name ILIKE $1
-    `,
-		[searchTerm],
-	);
-	return rows;
+async function getStudentByIdQuery(id) {
+  const { rows } = await pool.query(
+    `SELECT * FROM students WHERE id = $1`,
+    [id]
+  );
+  return rows[0]; 
 }
-
 async function specificStudentAttendingQuery(id) {
 	const { rows } = await pool.query(
 		`SELECT classes.class_name, enrollments.enrollment_date

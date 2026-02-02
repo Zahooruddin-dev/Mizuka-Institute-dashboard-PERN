@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 ### 5. Get a specified student classes ( all of which they are attending) (Replace with a real UUID from your DB)
 
-GET http://localhost:3000/api/students//classes
+GET http://localhost:3000/api/students/c312354c-9858-4db4-b0f6-2b508f81c4bb/classes
 
 ### Test Enrollment (Fixed Keys)
 POST http://localhost:3000/api/enroll
