@@ -19,9 +19,14 @@ async function createClasses(req, res) {
 }
 async function deleteClass(req, res) {
 	const { id } = req.params;
+	if (!id) {
+		return res
+			.status(400)
+			.json({ error: 'Id required to be able to delete class' });
+	}
 	try {
 		await db.deleteClassById(id);
-		res.status(204).json({ message: 'Class deleted' });;
+		res.status(204).json({ message: 'Class deleted' });
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
