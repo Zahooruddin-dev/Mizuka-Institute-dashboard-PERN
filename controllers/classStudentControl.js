@@ -2,9 +2,14 @@ const db = require('../db/queryClassStudents');
 
 async function getStudents(req, res) {
 	const { id } = req.params;
+	if (!id) {
+		return res
+			.status(400)
+			.json({ error: 'Id required to be able to get the specific student' });
+	}
 	try {
 		const classes = await db.getStudentsQuery(id);
-		res.json(classes);
+		res.status(201).json(classes);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
