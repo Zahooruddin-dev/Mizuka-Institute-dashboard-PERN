@@ -21,7 +21,7 @@ async function deleteClass(req, res) {
 	const { id } = req.params;
 	try {
 		await db.deleteClassById(id);
-		res.status(204).send();
+		res.status(204).json({ message: 'Class deleted' });;
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
