@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/studentControl');
+const enrollController = require('../controllers/enrollControl')
 require('dotenv').config;
 
 router.get('/search', controller.searchStudents);
-router.get('/:id', controller.getStudentById); 
-router.get('/:id/classes', controller.getStudentSchedule); 
+router.get('/:id', controller.getStudents); 
+router.get('/:id/classes', enrollController.getStudentSchedule); 
 
 router.put('/:id', controller.updateStudent);              
 router.delete('/:id', controller.deleteStudent);            
