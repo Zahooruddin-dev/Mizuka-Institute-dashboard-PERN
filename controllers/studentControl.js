@@ -80,16 +80,13 @@ async function updateStudent(req, res) {
 }
 async function deleteStudent(req, res) {
 	const { id } = req.params;
-	const { name, email } = req.body;
-	if (!email.includes('@')) {
-		return res.status(400).json({ error: 'Invalid email format' });
-	}
-	if (!name || !email) {
-		return res.status(400).json({ error: 'Name and email are required' });
-	}
 	try {
-		const student = await db.deleteStudentQuery(name, email, id);
-		res.status(201).json(student);
+		const deleted = await db.deleteStudentQuery(id);
+		if (!deleted) return res.status(404).json({ error: 'Student not found' });
+		res.json({
+			message: 'Student deleted successfully',
+			deleteStudent: deleted,
+		});
 	} catch {
 		res
 			.status(500)
@@ -102,5 +99,5 @@ module.exports = {
 	createStudent,
 	getStudents,
 	updateStudent,
-	deleteStudent
+	deleteStudent,
 };
