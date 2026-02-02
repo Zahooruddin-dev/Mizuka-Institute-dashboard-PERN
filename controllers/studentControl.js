@@ -1,11 +1,11 @@
 const db = require('../db/queryStudents');
-async function getAllStudents(req,res) {
+async function getAllStudents(req, res) {
 	try {
-			const classes = await db.getAllStudents();
-			res.json(classes);
-		} catch {
-			res.status(500).json({ message: 'Internal server error' });
-		}
+		const classes = await db.getAllStudents();
+		res.json(classes);
+	} catch {
+		res.status(500).json({ message: 'Internal server error' });
+	}
 }
 async function searchStudents(req, res) {
 	const { name } = req.query;
@@ -77,7 +77,7 @@ async function updateStudent(req, res) {
 		return res.status(400).json({ error: 'Name and email are required' });
 	}
 	try {
-		const updatedStudent = await db.updateStudentQuery( id,student_name, email);
+		const updatedStudent = await db.updateStudentQuery(student_name, email, id);
 		res.status(201).json(updatedStudent);
 	} catch {
 		res
@@ -107,5 +107,5 @@ module.exports = {
 	getStudents,
 	updateStudent,
 	deleteStudent,
-	getAllStudents
+	getAllStudents,
 };

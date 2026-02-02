@@ -55,12 +55,12 @@ GET  http://localhost:3000/api/enroll/class/6029682e-ac6d-4210-b730-d2fa28507b53
 GET  http://localhost:3000/api/enroll/student/c312354c-9858-4db4-b0f6-2b508f81c4bb
 ###
 
-PUT  http://localhost:3000/api/students/5084b0db-7b85-4af5-96fd-a50c8161a912
+PUT  http://localhost:3000/api/students/c312354c-9858-4db4-b0f6-2b508f81c4bb
 Content-Type: application/json
 
 {
-  "student_name": "updatedKing",
-  "email":"updateKing@gmail.com"
+  "student_name": "noLongerTheKing",
+  "email":"noKing@gmail.com"
 }
 ### GET ALL STUDENTS
 GET http://localhost:3000/api/students
