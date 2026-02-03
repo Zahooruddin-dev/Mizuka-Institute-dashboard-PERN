@@ -1,11 +1,10 @@
 const pool = require('./Pool');
 
-async function getAllClasses() {
+async function getAllClassesQuery() {
 	const { rows } = await pool.query(`SELECT * FROM classes;`);
 	return rows;
 }
-
-async function CreateNewClass(data) {
+async function CreateNewClassQuery(data) {
 	const { class_name, time_in_pakistan } = data;
 	await pool.query(
 		`
@@ -15,7 +14,7 @@ async function CreateNewClass(data) {
 		[class_name, time_in_pakistan],
 	);
 }
-async function queryEditClass(id, data) {
+async function queryEditClassQuery(id, data) {
 	const { class_name, time_in_pakistan } = data;
 	await pool.query(
 		`
@@ -26,21 +25,20 @@ async function queryEditClass(id, data) {
 		[class_name, time_in_pakistan, id],
 	);
 }
-
-async function getClassById(id) {
+async function getClassByIdQuery(id) {
 	const { rows } = await pool.query('SELECT * FROM classes WHERE id = $1', [
 		id,
 	]);
 	return rows;
 }
-async function deleteClassById(id) {
+async function deleteClassByIdQuery(id) {
 	await pool.query('DELETE FROM classes WHERE id = $1', [id]);
 }
 
 module.exports = {
-	getAllClasses,
-	CreateNewClass,
-	deleteClassById,
-	getClassById,
-	queryEditClass,
+	getAllClassesQuery,
+	CreateNewClassQuery,
+	deleteClassByIdQuery,
+	getClassByIdQuery,
+	queryEditClassQuery,
 };

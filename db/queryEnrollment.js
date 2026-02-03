@@ -1,6 +1,6 @@
 const pool = require('./Pool');
 
-async function getClassRoster(classId) {
+async function getClassRosterQuery(classId) {
   const { rows } = await pool.query(
     `SELECT classes.class_name, students.student_name, students.email
      FROM classes
@@ -11,7 +11,7 @@ async function getClassRoster(classId) {
   );
   return rows;
 }
-async function enrollStudent(studentId, classId) {
+async function enrollStudentQuery(studentId, classId) {
   const { rows } = await pool.query(
     `INSERT INTO enrollments (student_id, class_id) 
      VALUES ($1, $2) 
@@ -32,7 +32,7 @@ async function getStudentScheduleQuery(studentId) {
   return rows;
 }
 module.exports= {
-  enrollStudent,
-  getClassRoster,
+  enrollStudentQuery,
+  getClassRosterQuery,
   getStudentScheduleQuery
 }
