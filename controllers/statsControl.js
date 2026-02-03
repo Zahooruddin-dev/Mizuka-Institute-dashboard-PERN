@@ -8,6 +8,16 @@ async function getAllClassesStats(req, res) {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+async function getPopularityStats(req, res) {
+  try {
+    const classes = await db.getClassPopularityQuery();
+    res.status(200).json(classes);
+  } catch {
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
 
-module.exports = {getAllClassesStats
+
+module.exports = {getAllClassesStats,
+  getPopularityStats
 };
