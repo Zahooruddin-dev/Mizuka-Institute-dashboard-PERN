@@ -1,5 +1,5 @@
 const db = require('../db/queryEnrollment');
-
+const dbClass = require('../db/queryClasses')
 async function createEnrollment(req, res) {
 	const { student_id, class_id } = req.body;
 	if (!student_id || !class_id) {
@@ -8,6 +8,11 @@ async function createEnrollment(req, res) {
 			.json({ error: 'student and class ID are required.' });
 	}
 	try {
+		//1 Check existence of studentid and class id
+		const classObj = await dbClass.getClassById(class_id)
+
+
+
 		const enrollment = await db.enrollStudent(student_id, class_id);
 		res.status(201).json({
 			message: 'Enrollment successful',
