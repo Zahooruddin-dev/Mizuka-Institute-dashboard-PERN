@@ -20,7 +20,8 @@ async function getClassPopularityQuery() {
            AS student_count
     FROM classes
     LEFT JOIN enrollments ON classes.id = enrollments.class_id
-    GROUP BY student_count DESC
+    GROUP BY classes.id , classes.class_name
+    ORDER BY student_count DESC
     `,
 	);
 	return rows;
