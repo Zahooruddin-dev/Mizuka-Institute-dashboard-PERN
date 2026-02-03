@@ -59,4 +59,5 @@ async function getStudentSchedule(req, res) {
 		res.status(500).json({ error: err.message });
 	}
 }
+
 module.exports = { createEnrollment, rooster, getStudentSchedule };
