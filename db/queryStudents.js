@@ -9,6 +9,13 @@ async function getStudentByIdQuery(id) {
 	]);
 	return rows[0];
 }
+async function searchStudentsQuery(name) {
+	const { rows } = await pool.query(
+		`SELECT * FROM students WHERE student_name ILIKE $1`,
+		[name],
+	);
+	return rows[0];
+}
 async function specificStudentAttendingQuery(id) {
 	const { rows } = await pool.query(
 		`SELECT classes.class_name, enrollments.enrollment_date
@@ -55,5 +62,6 @@ module.exports = {
 	createStudentQuery,
 	updateStudentQuery,
 	deleteStudentQuery,
-	getAllStudentsQuery
+	getAllStudentsQuery,
+	searchStudentsQuery,
 };

@@ -11,6 +11,7 @@ async function getAllClassesStatsQuery() {
 	);
 	return rows;
 }
+
 async function getClassPopularityQuery() {
 	const { rows } = await pool.query(
 		`
@@ -27,4 +28,17 @@ async function getClassPopularityQuery() {
 	return rows;
 }
 
-module.exports = { getAllClassesStatsQuery, getClassPopularityQuery };
+async function getAllStudentsStatsQuery() {
+	const { rows } = await pool.query(
+		`
+    SELECT students.student_name,COUNT(enrollment.class_id) AS class_count
+    FROM students
+    LEFT JOIN enrollments ON student.id = enrollments.student_id
+    GROUP BY students.id,students.student_name
+    ORDER BY class_count DESC 
+    `,
+	);
+	return rows;
+}
+
+module.exports = { getAllClassesStatsQuery, getClassPopularityQuery, getAllStudentsStatsQuery };
