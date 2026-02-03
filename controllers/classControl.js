@@ -2,7 +2,7 @@ const db = require('../db/queryClasses');
 
 async function getClasses(req, res) {
 	try {
-		const classes = await db.getAllClasses();
+		const classes = await db.getAllClassesQuery();
 		res.json(classes);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
@@ -11,7 +11,7 @@ async function getClasses(req, res) {
 async function createClasses(req, res) {
 	try {
 		const data = req.body;
-		await db.CreateNewClass(data);
+		await db.CreateNewClassQuery(data);
 		res.status(201).json({ message: 'Created succesfully a new class' });
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
@@ -25,7 +25,7 @@ async function deleteClass(req, res) {
 			.json({ error: 'Id required to be able to delete class' });
 	}
 	try {
-		await db.deleteClassById(id);
+		await db.deleteClassByIdQuery(id);
 		res.status(204).json({ message: 'Class deleted' });
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
@@ -39,7 +39,7 @@ async function getSpecificClass(req, res) {
 			.json({ error: 'Id required to be able to get specific class' });
 	}
 	try {
-		const subjectClass = await db.getClassById(id);
+		const subjectClass = await db.getClassByIdQuery(id);
 		res.status(201).json(subjectClass);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
@@ -54,7 +54,7 @@ async function editSpecificClass(req, res) {
 	}
 	try {
 		const data = req.body;
-		const subjectClass = await db.queryEditClass(id, data);
+		const subjectClass = await db.queryEditClassQuery(id, data);
 		res.status(201).json(subjectClass);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });

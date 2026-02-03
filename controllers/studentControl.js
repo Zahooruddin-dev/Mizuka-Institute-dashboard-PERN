@@ -1,7 +1,7 @@
 const db = require('../db/queryStudents');
 async function getAllStudents(req, res) {
 	try {
-		const classes = await db.getAllStudents();
+		const classes = await db.getAllStudentsQuery();
 		res.json(classes);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });

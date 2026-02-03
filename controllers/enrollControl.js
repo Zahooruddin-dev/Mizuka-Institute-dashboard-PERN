@@ -11,7 +11,7 @@ async function createEnrollment(req, res) {
 	try {
 		//1 Check existence of studentid and class id
 		const student = await dbStudent.getStudentByIdQuery(student_id);
-		const classObj = await dbClass.getClassById(class_id);
+		const classObj = await dbClass.getClassByIdQuery(class_id);
 		if (!student) {
 			return res
 				.status(404)
@@ -21,7 +21,7 @@ async function createEnrollment(req, res) {
 			return res.status(404).json({ error: 'Class not found. Cannot enroll.' });
 		}
 
-		const enrollment = await db.enrollStudent(student_id, class_id);
+		const enrollment = await db.enrollStudentQuery(student_id, class_id);
 		res.status(201).json({
 			message: 'Enrollment successful',
 			data: enrollment,
@@ -39,7 +39,7 @@ async function createEnrollment(req, res) {
 }
 async function rooster(req, res) {
 	try {
-		const roster = await db.getClassRoster(req.params.id);
+		const roster = await db.getClassRosterQuery(req.params.id);
 		res.json(roster);
 	} catch (err) {
 		res.status(500).json({ error: err.message });
