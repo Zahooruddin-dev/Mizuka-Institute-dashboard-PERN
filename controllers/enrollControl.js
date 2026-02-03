@@ -1,5 +1,6 @@
 const db = require('../db/queryEnrollment');
-const dbClass = require('../db/queryClasses')
+const dbClass = require('../db/queryClasses');
+const dbStudent = require('../db/queryStudents');
 async function createEnrollment(req, res) {
 	const { student_id, class_id } = req.body;
 	if (!student_id || !class_id) {
@@ -9,9 +10,16 @@ async function createEnrollment(req, res) {
 	}
 	try {
 		//1 Check existence of studentid and class id
-		const classObj = await dbClass.getClassById(class_id)
-
-
+		const student = await dbStudent.getStudentByIdQuery(student_id);
+		const classObj = await dbClass.getClassById(class_id);
+		if (!student) {
+			return res
+				.status(404)
+				.json({ error: 'Student not found. Cannot enroll.' });
+		}
+		if (!classObj) {
+			return res.status(404).json({ error: 'Class not found. Cannot enroll.' });
+		}
 
 		const enrollment = await db.enrollStudent(student_id, class_id);
 		res.status(201).json({
