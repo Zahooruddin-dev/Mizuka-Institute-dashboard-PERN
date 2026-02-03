@@ -31,14 +31,24 @@ async function getClassPopularityQuery() {
 async function getAllStudentsStatsQuery() {
 	const { rows } = await pool.query(
 		`
-    SELECT students.student_name,COUNT(enrollment.class_id) AS class_count
+    SELECT 
+    students.student_name,
+    COUNT(enrollments.class_id)
+     AS class_count
     FROM students
-    LEFT JOIN enrollments ON student.id = enrollments.student_id
-    GROUP BY students.id,students.student_name
+    LEFT JOIN enrollments
+     ON students.id = 
+     enrollments.student_id
+    GROUP BY students.id,
+    students.student_name
     ORDER BY class_count DESC 
     `,
 	);
 	return rows;
 }
 
-module.exports = { getAllClassesStatsQuery, getClassPopularityQuery, getAllStudentsStatsQuery };
+module.exports = {
+	getAllClassesStatsQuery,
+	getClassPopularityQuery,
+	getAllStudentsStatsQuery,
+};
