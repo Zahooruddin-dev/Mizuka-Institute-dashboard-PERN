@@ -16,7 +16,7 @@ async function getClassPopularityQuery() {
 		`
     SELECT 
           classes.class_name,
-          COUNT(enrollments.students.id)
+          COUNT(enrollments.student_id)
            AS student_count
     FROM classes
     LEFT JOIN enrollments ON classes.id = enrollments.class_id

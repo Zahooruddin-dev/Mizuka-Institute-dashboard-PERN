@@ -10,8 +10,8 @@ async function getAllClassesStats(req, res) {
 }
 async function getPopularityStats(req, res) {
   try {
-    const classes = await db.getClassPopularityQuery();
-    res.status(200).json(classes);
+    const stats = await db.getClassPopularityQuery();
+    res.status(200).json(stats);
   } catch {
     res.status(500).json({ message: 'Internal server error' });
   }

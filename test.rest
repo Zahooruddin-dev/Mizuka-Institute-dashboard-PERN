@@ -64,3 +64,8 @@ Content-Type: application/json
 }
 ### GET ALL STUDENTS
 GET http://localhost:3000/api/students
+
+
+
+### POPULARITY OF CLASSES AMONG STUDENTS ENROLLED
+GET http://localhost:3000/api/class-stats/popularity
