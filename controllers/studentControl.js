@@ -8,10 +8,11 @@ async function getAllStudents(req, res) {
 	}
 }
 async function getAllStudentsPagination(req, res) {
-	const {limit = 10, page = 1, name=''} = req.params
+	const {limit = 10, page = 1} = req.params
+	const searchTerm = req.query.name ? `%${req.query.name}%` : '%';
 	const offset = (page - 1) * limit;
 	try {
-		const students = await db.getAllStudentsPaginationQuery();
+		const students = await db.getAllStudentsPaginationQuery(limit,offset,searchTerm);
 		res.status(200).json(students);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });

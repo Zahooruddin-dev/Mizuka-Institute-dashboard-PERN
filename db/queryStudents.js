@@ -3,8 +3,12 @@ async function getAllStudentsQuery() {
 	const { rows } = await pool.query(`SELECT * FROM students;`);
 	return rows;
 }
-async function getAllStudentsPaginationQuery() {
-	const { rows } = await pool.query(`SELECT * FROM students LIMIT $1 OFFSET $2;`);
+async function getAllStudentsPaginationQuery(limit,offset,searchTerm) {
+	const { rows } = await pool.query(`
+		SELECT * FROM students 
+		WHERE student_name ILIKE $3
+		ORDER BY id
+		LIMIT $1 OFFSET $2;`,[limit,offset,searchTerm]);
 	return rows;
 }
 async function getStudentByIdQuery(id) {
