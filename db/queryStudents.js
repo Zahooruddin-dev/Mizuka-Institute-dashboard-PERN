@@ -1,10 +1,9 @@
 const pool = require('./Pool');
-async function getAllStudentsPaginationQuery(limit,offset,searchTerm) {
-	const { rows } = await pool.query(`
-		SELECT * FROM students 
-		WHERE student_name ILIKE $3
-		ORDER BY id
-		LIMIT $1 OFFSET $2;`,[limit,offset,searchTerm]);
+async function getAllStudentsPaginationQuery(limit, offset, searchTerm) {
+	const data = await pool.query(
+		`SELECT * FROM students WHERE student_name ILIKE $3 ORDER BY id LIMIT $1 OFFSET $2`,
+		[limit, offset, searchTerm],
+	);
 	return rows;
 }
 async function getStudentByIdQuery(id) {
@@ -67,5 +66,5 @@ module.exports = {
 	updateStudentQuery,
 	deleteStudentQuery,
 	searchStudentsQuery,
-	getAllStudentsPaginationQuery
+	getAllStudentsPaginationQuery,
 };
