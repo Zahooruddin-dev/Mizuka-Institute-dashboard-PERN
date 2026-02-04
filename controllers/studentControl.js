@@ -8,8 +8,8 @@ async function getAllStudents(req, res) {
 	}
 }
 async function getAllStudentsPagination(req, res) {
-	const {limit = 10, page = 1} = req.params
-	const searchTerm = req.query.name ? `%${req.query.name}%` : '%';
+	const {limit = 10, page = 1,name=''} = req.query
+	const searchTerm = `%${name}%`
 	const offset = (page - 1) * limit;
 	try {
 		const students = await db.getAllStudentsPaginationQuery(limit,offset,searchTerm);
