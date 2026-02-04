@@ -1,12 +1,4 @@
 const db = require('../db/queryStudents');
-async function getAllStudents(req, res) {
-	try {
-		const student = await db.getAllStudentsQuery();
-		res.json(student);
-	} catch {
-		res.status(500).json({ message: 'Internal server error' });
-	}
-}
 async function getAllStudentsPagination(req, res) {
 	const {limit = 10, page = 1,name=''} = req.query
 	const searchTerm = `%${name}%`
