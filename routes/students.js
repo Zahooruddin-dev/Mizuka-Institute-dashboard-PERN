@@ -6,7 +6,6 @@ const statsController = require('../controllers/statsControl')
 require('dotenv').config;
 
 router.get('/', controller.getAllStudentsPagination)
-router.get('/', controller.getAllStudents)
 router.get('/search', controller.searchStudents);
 router.get('/workload', statsController.getAllStudentsStats);
 
