@@ -3,6 +3,10 @@ async function getAllStudentsQuery() {
 	const { rows } = await pool.query(`SELECT * FROM students;`);
 	return rows;
 }
+async function getAllStudentsPaginationQuery() {
+	const { rows } = await pool.query(`SELECT * FROM students LIMIT $1 OFFSET $2;`);
+	return rows;
+}
 async function getStudentByIdQuery(id) {
 	const { rows } = await pool.query(`SELECT * FROM students WHERE id = $1`, [
 		id,
@@ -64,4 +68,5 @@ module.exports = {
 	deleteStudentQuery,
 	getAllStudentsQuery,
 	searchStudentsQuery,
+	getAllStudentsPaginationQuery
 };
