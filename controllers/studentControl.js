@@ -1,8 +1,16 @@
 const db = require('../db/queryStudents');
 async function getAllStudents(req, res) {
 	try {
-		const classes = await db.getAllStudentsQuery();
-		res.json(classes);
+		const student = await db.getAllStudentsQuery();
+		res.json(student);
+	} catch {
+		res.status(500).json({ message: 'Internal server error' });
+	}
+}
+async function getAllStudentsPagination(req, res) {
+	try {
+		const students = await db.getAllStudentsPaginationQuery();
+		res.json(students);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
@@ -108,4 +116,5 @@ module.exports = {
 	updateStudent,
 	deleteStudent,
 	getAllStudents,
+	getAllStudentsPagination
 };
