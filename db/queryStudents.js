@@ -1,8 +1,4 @@
 const pool = require('./Pool');
-async function getAllStudentsQuery() {
-	const { rows } = await pool.query(`SELECT * FROM students;`);
-	return rows;
-}
 async function getAllStudentsPaginationQuery(limit,offset,searchTerm) {
 	const { rows } = await pool.query(`
 		SELECT * FROM students 
