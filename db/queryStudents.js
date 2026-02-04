@@ -66,7 +66,6 @@ module.exports = {
 	createStudentQuery,
 	updateStudentQuery,
 	deleteStudentQuery,
-	getAllStudentsQuery,
 	searchStudentsQuery,
 	getAllStudentsPaginationQuery
 };

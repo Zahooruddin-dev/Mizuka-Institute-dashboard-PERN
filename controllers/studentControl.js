@@ -110,6 +110,5 @@ module.exports = {
 	getStudents,
 	updateStudent,
 	deleteStudent,
-	getAllStudents,
 	getAllStudentsPagination
 };
