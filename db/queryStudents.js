@@ -4,7 +4,15 @@ async function getAllStudentsPaginationQuery(limit, offset, searchTerm) {
 		`SELECT * FROM students WHERE student_name ILIKE $3 ORDER BY id LIMIT $1 OFFSET $2`,
 		[limit, offset, searchTerm],
 	);
-	return rows;
+	const total = await pool.query(
+		`SELECT COUNT (*) FROM students
+		WHERE student_name ILIKE $1`,
+		[searchTerm],
+	);
+	return {
+		student: data.rows,
+		totalCount: parseInt(total.rows[0].count),
+	};
 }
 async function getStudentByIdQuery(id) {
 	const { rows } = await pool.query(`SELECT * FROM students WHERE id = $1`, [
