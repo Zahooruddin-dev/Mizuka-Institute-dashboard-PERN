@@ -7,7 +7,7 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
-    setLoading(true)
+		setLoading(true);
 		axios
 			.get(`http://localhost:3000/api/students?name=${searchTerm}`)
 			.then((res) => {
