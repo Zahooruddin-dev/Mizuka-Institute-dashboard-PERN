@@ -9,7 +9,7 @@ function App() {
 	useEffect(() => {
     setLoading(true)
 		axios
-			.get('http://localhost:3000/api/students')
+			.get(`http://localhost:3000/api/students?name=${searchTerm}`)
 			.then((res) => {
 				(setStudents(res.data.student), setLoading(false));
 			})
