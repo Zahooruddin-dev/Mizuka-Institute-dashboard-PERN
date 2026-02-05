@@ -18,6 +18,7 @@ function App() {
 				setLoading(false),
 			);
 	}, []);
+  if (loading) return <h1>Loading Students...</h1>;
 	return (
 		<div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
 			<h1>Institutes Dashboard</h1>
