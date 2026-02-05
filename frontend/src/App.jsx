@@ -1,11 +1,16 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-
+ useEffect(()=>{
+  axios.get('http://http://localhost:3000/api/students')
+  .then(res=>console.log('Connection succeful students found', res.data)
+  .then(err => console.error("Connection failed", err);
+  )
+  )
+ })
   return (
     <>
       <div>
