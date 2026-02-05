@@ -18,12 +18,22 @@ function App() {
 				setLoading(false),
 			);
 	}, []);
-  if (loading) return <h1>Loading Students...</h1>;
+	if (loading) return <h1>Loading Students...</h1>;
 	return (
-		<div style={{ padding: '40px', fontFamily: 'sans-serif' }}>
-			<h1>Institutes Dashboard</h1>
-			<p>check the console (F12) to see if backend worked or not </p>
-			<li></li>
+		<div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+			<table border="1" cellPadding="10" style={{ width: '100%', textAlign: 'left' }}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+        
+        </tbody>
+      </table>
+      {/* If array is empty, shows a message */}
+      {students.length === 0 && <p>No students found.</p>}
 		</div>
 	);
 }
