@@ -5,8 +5,9 @@ import './App.css';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState('')
+	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
+    setLoading(true)
 		axios
 			.get('http://localhost:3000/api/students')
 			.then((res) => {
@@ -19,7 +20,13 @@ function App() {
 	if (loading) return <h1>Loading Students...</h1>;
 	return (
 		<div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <input type='text' placeholder='Search student by name'value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)} style={{marginBottom:'20px', padding:'8px', width:'300px'}}></input>
+			<input
+				type='text'
+				placeholder='Search student by name'
+				value={searchTerm}
+				onChange={(e) => setSearchTerm(e.target.value)}
+				style={{ marginBottom: '20px', padding: '8px', width: '300px' }}
+			></input>
 			<table
 				border='1'
 				cellPadding='10'
