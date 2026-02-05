@@ -16,8 +16,7 @@ function App() {
 			.catch((err) => {
 				(console.error('Connection failed', err), setLoading(false));
 			});
-	}, []);
-	if (loading) return <h1>Loading Students...</h1>;
+	}, [searchTerm]);
 	return (
 		<div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
 			<input
@@ -26,7 +25,7 @@ function App() {
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
 				style={{ marginBottom: '20px', padding: '8px', width: '300px' }}
-			></input>
+			/>
 			<table
 				border='1'
 				cellPadding='10'
