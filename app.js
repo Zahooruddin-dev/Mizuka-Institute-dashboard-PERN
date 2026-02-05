@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const classRoutes = require('./routes/classes');
 const classStatsRoute = require('./routes/class-stats');
 const studentsRoute = require('./routes/students');
@@ -8,7 +9,7 @@ require('dotenv').config();
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-
+app.use(cors())
 app.use(express.json());
 app.use('/api/class', classRoutes);
 app.use('/api/class-stats', classStatsRoute);
