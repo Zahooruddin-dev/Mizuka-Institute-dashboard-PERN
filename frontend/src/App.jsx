@@ -9,7 +9,7 @@ function App() {
 		axios
 			.get('http://localhost:3000/api/students')
 			.then((res) => {
-				(setStudents(res.data.students), setLoading(false));
+				(setStudents(res.data.student), setLoading(false));
 			})
 			.catch((err) => {
 				(console.error('Connection failed', err), setLoading(false));
@@ -30,12 +30,12 @@ function App() {
 					</tr>
 				</thead>
 				<tbody>
-					{students.map((student) => {
+					{students.map((student) => (
 						<tr key={student.id}>
-							<td>{student.name}</td>
+							<td>{student.student_name}</td>
 							<td>{student.email}</td>
-						</tr>;
-					})}
+						</tr>)
+					)}
 				</tbody>
 			</table>
 			{/* If array is empty, shows a message */}
