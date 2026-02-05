@@ -5,7 +5,6 @@ Content-Type: application/json
   "class_name":"Maths",
   "time_in_pakistan":12
 }
-
 ### 4. Update Specific
 PUT http://localhost:3000/api/class/6029682e-ac6d-4210-b730-d2fa28507b53
 Content-Type: application/json
@@ -14,18 +13,13 @@ Content-Type: application/json
     "class_name": "Calculus",
     "time_in_pakistan": 15
 }
-
 ### DELETE SPECIFIC CLASS
 DELETE  http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210
-
 ### 3. Get Specific (Replace with a real UUID from your DB)
 GET http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210
-
 ### 4. Get Specific classes Students (Replace with a real UUID from your DB)
 GET http://localhost:3000/api/class/96df342f-5b60-46a0-b744-366afa123210/students
-
 ### 5. POST a student linked to a class (Replace with a real UUID from your DB)
-
 POST http://localhost:3000/api/class/37cecd7a-edc3-4a3a-a3fa-e03e464c6020/students
 Content-Type: application/json
 
@@ -35,10 +29,8 @@ Content-Type: application/json
   
 }
 ### 5. Get a specified student classes ( all of which they are attending) (Replace with a real UUID from your DB)
-
 GET http://localhost:3000/api/students/c312354c-9858-4db4-b0f6-2b508f81c4bb/classes
-
-### Test Enrollment (Fixed Keys)
+### 6. Test Enrollment (Fixed Keys)
 POST http://localhost:3000/api/enroll
 Content-Type: application/json
 
@@ -47,14 +39,11 @@ Content-Type: application/json
   "class_id": "37cecd7a-edc3-4a3a-a3fa-e03e464c6020"
 }
 ###
-
+### 6. Enrollment classes GET
 GET  http://localhost:3000/api/enroll/class/6029682e-ac6d-4210-b730-d2fa28507b53
-
-
 ###
 GET  http://localhost:3000/api/enroll/student/c312354c-9858-4db4-b0f6-2b508f81c4bb
 ###
-
 PUT  http://localhost:3000/api/students/c312354c-9858-4db4-b0f6-2b508f81c4bb
 Content-Type: application/json
 
@@ -64,8 +53,5 @@ Content-Type: application/json
 }
 ### GET ALL STUDENTS
 GET http://localhost:3000/api/students
-
-
-
 ### POPULARITY OF CLASSES AMONG STUDENTS ENROLLED
 GET http://localhost:3000/api/class-stats/popularity

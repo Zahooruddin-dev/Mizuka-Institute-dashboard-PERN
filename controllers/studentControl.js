@@ -1,10 +1,14 @@
 const db = require('../db/queryStudents');
 async function getAllStudentsPagination(req, res) {
-	const {limit = 10, page = 1,name=''} = req.query
-	const searchTerm = `%${name}%`
-	const offset = (Number(page - 1)) *Number(limit);
+	const { limit = 10, page = 1, name = '' } = req.query;
+	const searchTerm = `%${name}%`;
+	const offset = Number(page - 1) * Number(limit);
 	try {
-		const students = await db.getAllStudentsPaginationQuery(limit,offset,searchTerm);
+		const students = await db.getAllStudentsPaginationQuery(
+			limit,
+			offset,
+			searchTerm,
+		);
 		res.status(200).json(students);
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
@@ -110,5 +114,5 @@ module.exports = {
 	getStudents,
 	updateStudent,
 	deleteStudent,
-	getAllStudentsPagination
+	getAllStudentsPagination,
 };
