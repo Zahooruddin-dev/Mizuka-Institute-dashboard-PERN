@@ -5,18 +5,25 @@ import './App.css';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
 	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
 		setLoading(true);
+    setError(null); // Clear previous errors on new search
 		axios
 			.get(`http://localhost:3000/api/students?name=${searchTerm}`)
 			.then((res) => {
 				(setStudents(res.data.student), setLoading(false));
 			})
 			.catch((err) => {
-				(console.error('Connection failed', err), setLoading(false));
+				(console.error('Connection failed', err),
+					setLoading(false),
+					setError(true));
 			});
 	}, [searchTerm]);
+	if (error) {
+		return <h1>Failed</h1>;
+	}
 	return (
 		<div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
 			<input
