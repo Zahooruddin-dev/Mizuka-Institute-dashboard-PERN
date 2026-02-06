@@ -48,13 +48,15 @@ function App() {
 						placeholder='Full Name'
 						value={FormData.student_name}
 						onChange={handleChange}
-					/>		
-						<input
+						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
+					/>
+					<input
 						type='email'
 						name='email'
 						placeholder='Email Address'
 						value={FormData.email}
 						onChange={handleChange}
+						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
 					/>
 				</>
 			)}
