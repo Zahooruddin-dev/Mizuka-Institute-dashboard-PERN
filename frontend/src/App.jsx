@@ -33,35 +33,43 @@ function App() {
 				marginBottom: '250px',
 			}}
 		>
-			<input
-				type='text'
-				placeholder='Search student by name'
-				value={searchTerm}
-				onChange={(e) => setSearchTerm(e.target.value)}
-				style={{ marginBottom: '20px', padding: '8px', width: '300px' }}
-			/>
-			<table
-				border='1'
-				cellPadding='10'
-				style={{ width: '100%', textAlign: 'left' }}
+			{!postMode && (
+				<>
+					{' '}
+					<input
+						type='text'
+						placeholder='Search student by name'
+						value={searchTerm}
+						onChange={(e) => setSearchTerm(e.target.value)}
+						style={{ marginBottom: '20px', padding: '8px', width: '300px' }}
+					/>
+					<table
+						border='1'
+						cellPadding='10'
+						style={{ width: '100%', textAlign: 'left' }}
+					>
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Email</th>
+							</tr>
+						</thead>
+						<tbody>
+							{students.map((student) => (
+								<tr key={student.id}>
+									<td>{student.student_name}</td>
+									<td>{student.email}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>{' '}
+				</>
+			)}
+			<button
+				style={{ padding: '20px', margin: '20px' }}
+				onClick={() => setPostMode(!postMode)}
 			>
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Email</th>
-					</tr>
-				</thead>
-				<tbody>
-					{students.map((student) => (
-						<tr key={student.id}>
-							<td>{student.student_name}</td>
-							<td>{student.email}</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-			<button style={{ padding: '20px', margin: '20px' }} onClick={()=>setPostMode(!postMode)}> 
-				{postMode ? 'Cancel ': 'POST A NEW CLASS'}
+				{postMode ? 'Cancel ' : 'POST A NEW CLASS'}
 			</button>
 			{/* If array is empty, shows a message */}
 			{students.length === 0 && <p>No students found.</p>}
