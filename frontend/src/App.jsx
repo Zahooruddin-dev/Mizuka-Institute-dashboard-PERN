@@ -4,8 +4,12 @@ import './App.css';
 
 function App() {
 	const [students, setStudents] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [newStudent, setNewStudent] = useState({
+		student_name: '',
+		email: '',
+	});
 	const [postMode, setPostMode] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
@@ -22,6 +26,12 @@ function App() {
 					setError(true));
 			});
 	}, [searchTerm]);
+	const handleChange = (e) => {
+		setNewStudent({
+			...newStudent, //Keeping existing fields
+			[e.target.name]: e.target.value,
+		});
+	};
 	if (error) {
 		return <h1>Failed</h1>;
 	}
@@ -33,6 +43,7 @@ function App() {
 				marginBottom: '250px',
 			}}
 		>
+			{postMode && <></>}
 			{!postMode && (
 				<>
 					{' '}
