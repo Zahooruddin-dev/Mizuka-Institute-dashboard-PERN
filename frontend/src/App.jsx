@@ -11,6 +11,7 @@ function App() {
 	const [postMode, setPostMode] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [refresh, setRefresh] = useState(0);
 	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
 		setLoading(true);
@@ -25,7 +26,7 @@ function App() {
 					setLoading(false),
 					setError(true));
 			});
-	}, [searchTerm]);
+	}, [searchTerm,refresh]);
 	const handleChange = (e) => {
 		setFormData({
 			...formData, //Keeping existing fields
@@ -35,11 +36,12 @@ function App() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		axios
-			.post(`http://localhost:3000/api/students?`)
+			.post(`http://localhost:3000/api/students`,formData)
 			.then((res) => {
 				console.log('student Added', res.data);
 				setFormData({ student_name: '', email: '' });
 				setPostMode(false)
+				setRefresh(prev => prev + 1);
 			})
 			.catch((err) => {
 				console.error('Failed to add the student');
