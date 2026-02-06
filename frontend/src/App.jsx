@@ -39,7 +39,25 @@ function App() {
 		<div
 			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
 		>
-			{postMode && <></>}
+			{postMode && (
+				<>
+					<h3>Add New Student</h3>
+					<input
+						type='text'
+						name='student_name'
+						placeholder='Full Name'
+						value={FormData.student_name}
+						onChange={handleChange}
+					/>		
+						<input
+						type='email'
+						name='email'
+						placeholder='Email Address'
+						value={FormData.email}
+						onChange={handleChange}
+					/>
+				</>
+			)}
 			{!postMode && (
 				<>
 					{' '}
