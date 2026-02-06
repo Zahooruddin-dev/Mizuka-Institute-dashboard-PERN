@@ -56,17 +56,17 @@ async function getStudents(req, res) {
 		res.status(500).json({ message: 'Internal server error' });
 	}
 }
-async function createStudent(req, res) {
-	const { id } = req.params;
-	const { name, email } = req.body;
+async function addStudent(req, res) {
+
+	const { student_name, email } = req.body;
 	if (!email.includes('@')) {
 		return res.status(400).json({ error: 'Invalid email format' });
 	}
-	if (!name || !email) {
+	if (!student_name || !email) {
 		return res.status(400).json({ error: 'Name and email are required' });
 	}
 	try {
-		const student = await db.createStudentQuery(name, email, id);
+		const student = await db.createStudentQuery(student_name, email);
 		res.status(201).json(student);
 	} catch {
 		res
@@ -110,7 +110,7 @@ async function deleteStudent(req, res) {
 module.exports = {
 	searchStudents,
 	specificStudentAttending,
-	createStudent,
+	addStudent,
 	getStudents,
 	updateStudent,
 	deleteStudent,

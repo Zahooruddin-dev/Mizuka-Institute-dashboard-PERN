@@ -39,12 +39,12 @@ async function specificStudentAttendingQuery(id) {
 	);
 	return rows;
 }
-async function createStudentQuery(name, email, id) {
+async function createStudentQuery(student_name, email) {
 	const { rows } = await pool.query(
 		`
-		INSERT INTO students (student_name, email, class_id) VALUES ($1, $2, $3) RETURNING *
+		INSERT INTO students (student_name, email) VALUES ($1, $2) RETURNING *
 		`,
-		[name, email, id],
+		[student_name, email],
 	);
 	return rows[0];
 }
