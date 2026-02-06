@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
 	const [students, setStudents] = useState([]);
-	const [newStudent, setNewStudent] = useState({
+	const [formData, setFormData] = useState({
 		student_name: '',
 		email: '',
 	});
@@ -27,13 +27,22 @@ function App() {
 			});
 	}, [searchTerm]);
 	const handleChange = (e) => {
-		setNewStudent({
-			...newStudent, //Keeping existing fields
+		setFormData({
+			...formData, //Keeping existing fields
 			[e.target.name]: e.target.value,
 		});
 	};
 	const handleSubmit = (e) =>{
 		e.preventDefault()
+		axios.post(`http://localhost:3000/api/students?`)
+		.then((res)=>{
+			console.log('student Added',res.data);
+			set
+		})
+		.catch((err)=>{
+			console.error('Failed to add the student');
+			
+		})
 	}
 	if (error) {
 		return <h1>Failed</h1>;
