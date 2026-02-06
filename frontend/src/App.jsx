@@ -9,7 +9,7 @@ function App() {
 	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
 		setLoading(true);
-    setError(null); // Clear previous errors on new search
+		setError(null); // Clear previous errors on new search
 		axios
 			.get(`http://localhost:3000/api/students?name=${searchTerm}`)
 			.then((res) => {
@@ -25,7 +25,13 @@ function App() {
 		return <h1>Failed</h1>;
 	}
 	return (
-		<div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
+		<div
+			style={{
+				padding: '20px',
+				fontFamily: 'sans-serif',
+				marginBottom: '250px',
+			}}
+		>
 			<input
 				type='text'
 				placeholder='Search student by name'
@@ -53,6 +59,9 @@ function App() {
 					))}
 				</tbody>
 			</table>
+			<button style={{ padding: '20px', margin: '20px' }}>
+				POST A NEW CLASS
+			</button>
 			{/* If array is empty, shows a message */}
 			{students.length === 0 && <p>No students found.</p>}
 		</div>
