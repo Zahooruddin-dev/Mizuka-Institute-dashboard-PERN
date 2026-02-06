@@ -32,6 +32,9 @@ function App() {
 			[e.target.name]: e.target.value,
 		});
 	};
+	const handleSubmit = (e) =>{
+		e.preventDefault()
+	}
 	if (error) {
 		return <h1>Failed</h1>;
 	}
@@ -58,6 +61,7 @@ function App() {
 						onChange={handleChange}
 						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
 					/>
+					<button onClick={handleSubmit}>Save Student</button>
 				</>
 			)}
 			{!postMode && (
