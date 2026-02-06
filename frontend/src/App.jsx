@@ -5,6 +5,7 @@ import './App.css';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [postMode, setPostMode] = useState(false);
 	const [error, setError] = useState(null);
 	const [searchTerm, setSearchTerm] = useState('');
 	useEffect(() => {
@@ -59,8 +60,8 @@ function App() {
 					))}
 				</tbody>
 			</table>
-			<button style={{ padding: '20px', margin: '20px' }}>
-				POST A NEW CLASS
+			<button style={{ padding: '20px', margin: '20px' }} onClick={()=>setPostMode(!postMode)}> 
+				{postMode ? 'Cancel ': 'POST A NEW CLASS'}
 			</button>
 			{/* If array is empty, shows a message */}
 			{students.length === 0 && <p>No students found.</p>}
