@@ -37,11 +37,7 @@ function App() {
 	}
 	return (
 		<div
-			style={{
-				padding: '20px',
-				fontFamily: 'sans-serif',
-				marginBottom: '250px',
-			}}
+			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
 		>
 			{postMode && <></>}
 			{!postMode && (
