@@ -99,9 +99,11 @@ function App() {
 			{isEditing && (
 				<EditComponent
 					handleUpdateSubmit={handleUpdateSubmit}
-					formData={formData}
+					student_name={formData.student_name}
+					email={formData.email}
 					setIsEditing={setIsEditing}
 					handleChange={handleChange}
+					editing = {() => setIsEditing(false)}
 				/>
 			)}
 			{postMode && (

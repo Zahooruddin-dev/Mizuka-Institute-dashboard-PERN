@@ -1,5 +1,5 @@
 import React from 'react';
-export default function EditComponent(handleUpdateSubmit,formData,setIsEditing,handleChange) {
+export default function EditComponent(handleUpdateSubmit,student_name,email,editing,handleChange) {
 	return (
 		<>
 			<div
@@ -37,7 +37,7 @@ export default function EditComponent(handleUpdateSubmit,formData,setIsEditing,h
 						<h3>Edit Student Details</h3>
 						<input
 							name='student_name'
-							value={formData.student_name}
+							value={student_name}
 							onChange={handleChange}
 							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
 							placeholder='Your Name'
@@ -45,14 +45,14 @@ export default function EditComponent(handleUpdateSubmit,formData,setIsEditing,h
 						/>
 						<input
 							name='email'
-							value={formData.email}
+							value={email}
 							onChange={handleChange}
 							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
 							placeholder='example@school.edu'
 							required
 						/>
 						<button type='submit'>Update</button>
-						<button onClick={() => setIsEditing(false)}>Cancel</button>
+						<button onClick={editing}>Cancel</button>
 					</form>
 				</div>
 			</div>
