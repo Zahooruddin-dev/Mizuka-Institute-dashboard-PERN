@@ -75,14 +75,15 @@ function App() {
 		setIsEditing(true);
 	};
 	const handleUpdateSubmit = () => {
-  axios.put(`http://localhost:3000/api/students/${currentStudent.id}`, formData)
-    .then(() => {
-      setIsEditing(false); // Close the popup
-      setFormData({ student_name: '', email: '' }); // Clear form
-      setRefresh(prev => prev + 1); // Refresh table
-    })
-    .catch(err => alert("Update failed!"));
-};
+		axios
+			.put(`http://localhost:3000/api/students/${currentStudent.id}`, formData)
+			.then(() => {
+				setIsEditing(false);
+				setFormData({ student_name: '', email: '' });
+				setRefresh((prev) => prev + 1);
+			})
+			.catch((err) => alert('Update failed!'));
+	};
 	if (error) {
 		return <h1>Failed</h1>;
 	}
@@ -108,10 +109,10 @@ function App() {
 				>
 					<div
 						style={{
-							background: 'white',
+							backgroundColor: 'rgba(17, 16, 16, 0.81)',
 							padding: '20px',
-							borderRadius: '8px',
-							color: 'black',
+							borderRadius: '20px',
+							color: 'white',
 							width: '300px',
 						}}
 					>
@@ -121,12 +122,14 @@ function App() {
 							value={formData.student_name}
 							onChange={handleChange}
 							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
+							placeholder='Your Name'
 						/>
 						<input
 							name='email'
 							value={formData.email}
 							onChange={handleChange}
 							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
+							placeholder='example@school.edu'
 						/>
 						<button onClick={handleUpdateSubmit}>Update</button>
 						<button onClick={() => setIsEditing(false)}>Cancel</button>
@@ -140,7 +143,7 @@ function App() {
 						type='text'
 						name='student_name'
 						placeholder='Full Name'
-						value={FormData.student_name}
+						value={formData.student_name}
 						onChange={handleChange}
 						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
 					/>
@@ -148,7 +151,7 @@ function App() {
 						type='email'
 						name='email'
 						placeholder='Email Address'
-						value={FormData.email}
+						value={formData.email}
 						onChange={handleChange}
 						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
 					/>
