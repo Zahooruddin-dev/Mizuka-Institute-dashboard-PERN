@@ -1,4 +1,4 @@
-export default function postingComponent({
+export default function PostingComponent({
 	student_name,
 	email,
 	handleChange,

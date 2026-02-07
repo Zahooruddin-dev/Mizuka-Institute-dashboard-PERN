@@ -3,7 +3,7 @@ import axios from 'axios';
 import './App.css';
 import { Edit, Trash2 } from 'lucide-react';
 import EditComponent from './components/Edit';
-import postingComponent from './components/Posting';
+import PostingComponent from './components/Posting';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
@@ -42,9 +42,6 @@ function App() {
 
 		if (formData.student_name.length < 3) {
 			return alert('Name is too short');
-		}
-		if (!formData.student_email.includes('@')) {
-			return alert('Email Format Incorrect');
 		}
 
 		axios
@@ -108,7 +105,7 @@ function App() {
 				/>
 			)}
 			{postMode && (
-				<postingComponent
+				<PostingComponent
 					handleSubmit={handleSubmit}
 					email={formData.email}
 					student_name={formData.student_name}
