@@ -120,25 +120,36 @@ function App() {
 							width: '300px',
 						}}
 					>
-						<h3>Edit Student Details</h3>
-						<input
-							name='student_name'
-							value={formData.student_name}
-							onChange={handleChange}
-							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
-							placeholder='Your Name'
-							required
-						/>
-						<input
-							name='email'
-							value={formData.email}
-							onChange={handleChange}
-							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
-							placeholder='example@school.edu'
-							required
-						/>
-						<button type='submit'onClick={handleUpdateSubmit}>Update</button>
-						<button onClick={() => setIsEditing(false)}>Cancel</button>
+						<form
+							onSubmit={handleUpdateSubmit}
+							style={{
+								backgroundColor: 'rgba(17, 16, 16, 0.81)',
+								padding: '20px',
+								borderRadius: '20px',
+							}}
+						>
+							<h3>Edit Student Details</h3>
+							<input
+								name='student_name'
+								value={formData.student_name}
+								onChange={handleChange}
+								style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
+								placeholder='Your Name'
+								required
+							/>
+							<input
+								name='email'
+								value={formData.email}
+								onChange={handleChange}
+								style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
+								placeholder='example@school.edu'
+								required
+							/>
+							<button type='submit'>
+								Update
+							</button>
+							<button onClick={() => setIsEditing(false)}>Cancel</button>
+						</form>
 					</div>
 				</div>
 			)}
