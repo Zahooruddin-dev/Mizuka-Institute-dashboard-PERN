@@ -75,6 +75,10 @@ function App() {
 		setIsEditing(true);
 	};
 	const handleUpdateSubmit = () => {
+		if (!currentStudent || !currentStudent.id) {
+    console.error("No student selected for editing");
+    return;
+  }
 		axios
 			.put(`http://localhost:3000/api/students/${currentStudent.id}`, formData)
 			.then(() => {
