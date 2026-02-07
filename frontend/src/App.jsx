@@ -74,7 +74,7 @@ function App() {
 		setCurrentStudent(student);
 		setIsEditing(true);
 	};
-	const handleUpdateSubmit = () => {
+	const handleUpdateSubmit = (e) => {
 		if (e) e.preventDefault();
 		if (!currentStudent || !currentStudent.id) {
 			console.error('No student selected for editing');
