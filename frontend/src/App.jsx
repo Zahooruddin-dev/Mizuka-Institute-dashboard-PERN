@@ -107,7 +107,14 @@ function App() {
 					editing={() => setIsEditing(false)}
 				/>
 			)}
-			{postMode && <postingComponent />}
+			{postMode && (
+				<postingComponent
+					handleSubmit={handleSubmit}
+					email={formData.email}
+					student_name={formData.student_name}
+					handleChange={handleChange}
+				/>
+			)}
 			{!postMode && (
 				<>
 					{' '}
