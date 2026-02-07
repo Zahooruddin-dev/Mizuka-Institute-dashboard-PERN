@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-import { Trash2 } from 'lucide-react';
+import { Edit, Trash2 } from 'lucide-react';
 
 function App() {
 	const [students, setStudents] = useState([]);
@@ -112,6 +112,8 @@ function App() {
 							<tr>
 								<th>Name</th>
 								<th>Email</th>
+								<th>Delete</th>
+								<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -128,6 +130,7 @@ function App() {
 											style={{ cursor: 'pointer' }}
 										/>
 									</td>
+									<td><Edit/></td>
 								</tr>
 							))}
 						</tbody>
