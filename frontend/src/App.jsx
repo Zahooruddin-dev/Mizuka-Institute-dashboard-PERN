@@ -71,8 +71,8 @@ function App() {
 			student_name: student.student_name,
 			email: student.email,
 		});
-		setCurrentStudent(student); // Save the whole object so we have the ID
-		setIsEditing(true); // Open the popup
+		setCurrentStudent(student);
+		setIsEditing(true);
 	};
 	if (error) {
 		return <h1>Failed</h1>;
@@ -81,6 +81,49 @@ function App() {
 		<div
 			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
 		>
+			{isEditing && (
+				<div
+					className='modal-overlay'
+					style={{
+						position: 'fixed',
+						top: 0,
+						left: 0,
+						width: '100%',
+						height: '100%',
+						backgroundColor: 'rgba(0,0,0,0.7)',
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						zIndex: 1000,
+					}}
+				>
+					<div
+						style={{
+							background: 'white',
+							padding: '20px',
+							borderRadius: '8px',
+							color: 'black',
+							width: '300px',
+						}}
+					>
+						<h3>Edit Student Details</h3>
+						<input
+							name='student_name'
+							value={formData.student_name}
+							onChange={handleChange}
+							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
+						/>
+						<input
+							name='email'
+							value={formData.email}
+							onChange={handleChange}
+							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
+						/>
+						<button onClick={handleUpdateSubmit}>Update</button>
+						<button onClick={() => setIsEditing(false)}>Cancel</button>
+					</div>
+				</div>
+			)}
 			{postMode && (
 				<>
 					<h3>Add New Student</h3>
