@@ -57,7 +57,6 @@ async function getStudents(req, res) {
 	}
 }
 async function addStudent(req, res) {
-
 	const { student_name, email } = req.body;
 	if (!email.includes('@')) {
 		return res.status(400).json({ error: 'Invalid email format' });

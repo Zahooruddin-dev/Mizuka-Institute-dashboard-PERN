@@ -35,6 +35,14 @@ function App() {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		
+		if(formData.student_name.length < 3){
+			return alert('Name is too short')
+		}
+		if(!formData.student_email.includes("@")){
+			return alert('Email Format Incorrect')
+		}
+
 		axios
 			.post(`http://localhost:3000/api/students`,formData)
 			.then((res) => {
@@ -46,6 +54,7 @@ function App() {
 			.catch((err) => {
 				console.error('Failed to add the student');
 			});
+
 	};
 	if (error) {
 		return <h1>Failed</h1>;
