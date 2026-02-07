@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
 import { Edit, Trash2 } from 'lucide-react';
-
+import EditComponent from './components/Edit';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
@@ -97,60 +97,12 @@ function App() {
 			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
 		>
 			{isEditing && (
-				<div
-					className='modal-overlay'
-					style={{
-						position: 'fixed',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
-						backgroundColor: 'rgba(0,0,0,0.7)',
-						display: 'flex',
-						justifyContent: 'center',
-						alignItems: 'center',
-						zIndex: 1000,
-					}}
-				>
-					<div
-						style={{
-							backgroundColor: 'rgba(17, 16, 16, 0.81)',
-							padding: '20px',
-							borderRadius: '20px',
-							color: 'white',
-							width: '300px',
-						}}
-					>
-						<form
-							onSubmit={handleUpdateSubmit}
-							style={{
-								backgroundColor: 'rgba(17, 16, 16, 0.81)',
-								padding: '20px',
-								borderRadius: '20px',
-							}}
-						>
-							<h3>Edit Student Details</h3>
-							<input
-								name='student_name'
-								value={formData.student_name}
-								onChange={handleChange}
-								style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
-								placeholder='Your Name'
-								required
-							/>
-							<input
-								name='email'
-								value={formData.email}
-								onChange={handleChange}
-								style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
-								placeholder='example@school.edu'
-								required
-							/>
-							<button type='submit'>Update</button>
-							<button onClick={() => setIsEditing(false)}>Cancel</button>
-						</form>
-					</div>
-				</div>
+				<EditComponent
+					handleUpdateSubmit={handleUpdateSubmit}
+					formData={formData}
+					setIsEditing={setIsEditing}
+					handleChange={handleChange}
+				/>
 			)}
 			{postMode && (
 				<>
