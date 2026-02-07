@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
@@ -117,6 +118,11 @@ function App() {
 								<tr key={student.id}>
 									<td>{student.student_name}</td>
 									<td>{student.email}</td>
+									<td>
+										<IconButton aria-label='Delete'>
+											<DeleteIcon color='red' />
+										</IconButton>
+									</td>
 								</tr>
 							))}
 						</tbody>
