@@ -1,6 +1,6 @@
 import { Edit, Trash2 } from 'lucide-react';
 
-export default function MainComponent(handleEdit, searchTerm, students) {
+export default function MainComponent({handleEdit, searchTerm, students}) {
 	return (
 		<>
 			<input
