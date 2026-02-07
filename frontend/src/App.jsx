@@ -9,6 +9,8 @@ function App() {
 		student_name: '',
 		email: '',
 	});
+	const [isEditing, setIsEditing] = useState(false);
+	const [currentStudent, setCurrentStudent] = useState(null);
 	const [postMode, setPostMode] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -63,6 +65,14 @@ function App() {
 				.then(() => setRefresh((prev) => prev + 1))
 				.catch((err) => console.error('Delete failed:', err));
 		}
+	};
+	const handleEdit = (student) => {
+		setFormData({
+			student_name: student.student_name,
+			email: student.email,
+		});
+		setCurrentStudent(student); // Save the whole object so we have the ID
+		setIsEditing(true); // Open the popup
 	};
 	if (error) {
 		return <h1>Failed</h1>;
@@ -130,7 +140,15 @@ function App() {
 											style={{ cursor: 'pointer' }}
 										/>
 									</td>
-									<td><Edit/></td>
+									<td>
+										<Edit
+											color='green'
+											size={24}
+											strokeWidth={2}
+											onClick={() => handleEdit(student.id)}
+											style={{ cursor: 'pointer' }}
+										/>
+									</td>
 								</tr>
 							))}
 						</tbody>
