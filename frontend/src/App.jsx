@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import { Edit, Trash2 } from 'lucide-react';
 import EditComponent from './components/Edit';
+import postingComponent from './components/Posting';
 function App() {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
@@ -103,70 +104,10 @@ function App() {
 					email={formData.email}
 					setIsEditing={setIsEditing}
 					handleChange={handleChange}
-					editing = {() => setIsEditing(false)}
+					editing={() => setIsEditing(false)}
 				/>
 			)}
-			{postMode && (
-				<>
-					<div
-						className='modal-overlay'
-						style={{
-							position: 'fixed',
-							top: 0,
-							left: 0,
-							width: '100%',
-							height: '100%',
-							backgroundColor: 'rgba(0,0,0,0.7)',
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							zIndex: 1000,
-						}}
-					>
-						<div
-							style={{
-								backgroundColor: 'rgba(17, 16, 16, 0.81)',
-								padding: '20px',
-								borderRadius: '20px',
-								color: 'white',
-								width: '300px',
-								fontSize: '1rem',
-							}}
-						>
-							<h3>Add New Student</h3>
-							<input
-								type='text'
-								name='student_name'
-								placeholder='Full Name'
-								value={formData.student_name}
-								onChange={handleChange}
-								style={{
-									marginBottom: '12px',
-									padding: '12px',
-									borderColor: 'grey',
-									borderRadius: '8px',
-									width: '75%',
-								}}
-							/>
-							<input
-								type='email'
-								name='email'
-								placeholder='Email Address'
-								value={formData.email}
-								onChange={handleChange}
-								style={{
-									marginBottom: '12px',
-									padding: '12px',
-									borderColor: 'grey',
-									borderRadius: '8px',
-									width: '75%',
-								}}
-							/>
-							<button onClick={handleSubmit}>Save Student</button>
-						</div>
-					</div>
-				</>
-			)}
+			{postMode && <postingComponent />}
 			{!postMode && (
 				<>
 					{' '}

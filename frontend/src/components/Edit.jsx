@@ -1,5 +1,11 @@
 import React from 'react';
-export default function EditComponent(handleUpdateSubmit,student_name,email,editing,handleChange) {
+export default function EditComponent(
+{	handleUpdateSubmit,
+	student_name,
+	email,
+	editing,
+	handleChange}
+) {
 	return (
 		<>
 			<div
