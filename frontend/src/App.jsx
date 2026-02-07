@@ -76,9 +76,9 @@ function App() {
 	};
 	const handleUpdateSubmit = () => {
 		if (!currentStudent || !currentStudent.id) {
-    console.error("No student selected for editing");
-    return;
-  }
+			console.error('No student selected for editing');
+			return;
+		}
 		axios
 			.put(`http://localhost:3000/api/students/${currentStudent.id}`, formData)
 			.then(() => {
@@ -127,6 +127,7 @@ function App() {
 							onChange={handleChange}
 							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
 							placeholder='Your Name'
+							required
 						/>
 						<input
 							name='email'
@@ -134,8 +135,9 @@ function App() {
 							onChange={handleChange}
 							style={{ width: '90%', marginBottom: '10px', padding: '8px' }}
 							placeholder='example@school.edu'
+							required
 						/>
-						<button onClick={handleUpdateSubmit}>Update</button>
+						<button type='submit'onClick={handleUpdateSubmit}>Update</button>
 						<button onClick={() => setIsEditing(false)}>Cancel</button>
 					</div>
 				</div>
@@ -204,7 +206,7 @@ function App() {
 											color='green'
 											size={24}
 											strokeWidth={2}
-											onClick={() => handleEdit(student.id)}
+											onClick={() => handleEdit(student)}
 											style={{ cursor: 'pointer' }}
 										/>
 									</td>

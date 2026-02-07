@@ -76,9 +76,6 @@ async function addStudent(req, res) {
 async function updateStudent(req, res) {
 	const { id } = req.params;
 	const { student_name, email } = req.body;
-	if (!email.includes('@')) {
-		return res.status(400).json({ error: 'Invalid email format' });
-	}
 	if (!student_name || !email) {
 		return res.status(400).json({ error: 'Name and email are required' });
 	}
