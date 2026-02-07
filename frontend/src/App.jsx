@@ -146,9 +146,7 @@ function App() {
 								placeholder='example@school.edu'
 								required
 							/>
-							<button type='submit'>
-								Update
-							</button>
+							<button type='submit'>Update</button>
 							<button onClick={() => setIsEditing(false)}>Cancel</button>
 						</form>
 					</div>
@@ -156,24 +154,63 @@ function App() {
 			)}
 			{postMode && (
 				<>
-					<h3>Add New Student</h3>
-					<input
-						type='text'
-						name='student_name'
-						placeholder='Full Name'
-						value={formData.student_name}
-						onChange={handleChange}
-						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
-					/>
-					<input
-						type='email'
-						name='email'
-						placeholder='Email Address'
-						value={formData.email}
-						onChange={handleChange}
-						style={{ display: 'block', marginBottom: '10px', padding: '8px' }}
-					/>
-					<button onClick={handleSubmit}>Save Student</button>
+					<div
+						className='modal-overlay'
+						style={{
+							position: 'fixed',
+							top: 0,
+							left: 0,
+							width: '100%',
+							height: '100%',
+							backgroundColor: 'rgba(0,0,0,0.7)',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							zIndex: 1000,
+						}}
+					>
+						<div
+							style={{
+								backgroundColor: 'rgba(17, 16, 16, 0.81)',
+								padding: '20px',
+								borderRadius: '20px',
+								color: 'white',
+								width: '300px',
+								fontSize: '1rem',
+							}}
+						>
+							<h3>Add New Student</h3>
+							<input
+								type='text'
+								name='student_name'
+								placeholder='Full Name'
+								value={formData.student_name}
+								onChange={handleChange}
+								style={{
+									marginBottom: '12px',
+									padding: '12px',
+									borderColor: 'grey',
+									borderRadius: '8px',
+									width: '75%',
+								}}
+							/>
+							<input
+								type='email'
+								name='email'
+								placeholder='Email Address'
+								value={formData.email}
+								onChange={handleChange}
+								style={{
+									marginBottom: '12px',
+									padding: '12px',
+									borderColor: 'grey',
+									borderRadius: '8px',
+									width: '75%',
+								}}
+							/>
+							<button onClick={handleSubmit}>Save Student</button>
+						</div>
+					</div>
 				</>
 			)}
 			{!postMode && (
@@ -232,7 +269,7 @@ function App() {
 				style={{ padding: '20px', margin: '20px' }}
 				onClick={() => setPostMode(!postMode)}
 			>
-				{postMode ? 'Cancel ' : 'POST A NEW CLASS'}
+				{postMode ? 'Cancel ' : 'POST A NEW STUDENT'}
 			</button>
 			{/* If array is empty, shows a message */}
 			{students.length === 0 && <p>No students found.</p>}
