@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import {  Trash2 } from 'lucide-react';
+
 function App() {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
@@ -119,9 +119,11 @@ function App() {
 									<td>{student.student_name}</td>
 									<td>{student.email}</td>
 									<td>
-										<IconButton aria-label='Delete'>
-											<DeleteIcon color='red' />
-										</IconButton>
+									<Trash2
+									color='red'
+									size={24}
+									strokeWidth={2} //adjusts line thickness
+									/>
 									</td>
 								</tr>
 							))}
