@@ -113,9 +113,7 @@ function App() {
 					handleChange={handleChange}
 				/>
 			)}
-			{!postMode && (
-				<MainComponent/>
-			)}
+			{!postMode && <MainComponent handleEdit={handleEdit} searchTerm={searchTerm}  students={students}/>}
 			<button
 				style={{ padding: '20px', margin: '20px' }}
 				onClick={() => setPostMode(!postMode)}
