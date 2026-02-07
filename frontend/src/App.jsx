@@ -74,6 +74,15 @@ function App() {
 		setCurrentStudent(student);
 		setIsEditing(true);
 	};
+	const handleUpdateSubmit = () => {
+  axios.put(`http://localhost:3000/api/students/${currentStudent.id}`, formData)
+    .then(() => {
+      setIsEditing(false); // Close the popup
+      setFormData({ student_name: '', email: '' }); // Clear form
+      setRefresh(prev => prev + 1); // Refresh table
+    })
+    .catch(err => alert("Update failed!"));
+};
 	if (error) {
 		return <h1>Failed</h1>;
 	}
