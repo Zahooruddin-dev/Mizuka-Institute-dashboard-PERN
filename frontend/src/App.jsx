@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-import {  Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 
 function App() {
 	const [students, setStudents] = useState([]);
@@ -59,8 +59,9 @@ function App() {
 	const handleDelete = (id) => {
 		if (window.confirm('Are you sure?')) {
 			axios
-				.delete(`http://localhost:3000/api/students${id}`)
-				.then(() => setRefresh((prev) => prev + 1));
+				.delete(`http://localhost:3000/api/students/${id}`)
+				.then(() => setRefresh((prev) => prev + 1))
+				.catch((err) => console.error('Delete failed:', err));
 		}
 	};
 	if (error) {
@@ -119,11 +120,13 @@ function App() {
 									<td>{student.student_name}</td>
 									<td>{student.email}</td>
 									<td>
-									<Trash2
-									color='red'
-									size={24}
-									strokeWidth={2} //adjusts line thickness
-									/>
+										<Trash2
+											color='red'
+											size={24}
+											strokeWidth={2}
+											onClick={() => handleDelete(student.id)}
+											style={{ cursor: 'pointer' }}
+										/>
 									</td>
 								</tr>
 							))}
