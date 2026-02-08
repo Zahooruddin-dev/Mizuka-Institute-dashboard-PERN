@@ -4,6 +4,8 @@ import './App.css';
 import EditComponent from './components/Edit';
 import PostingComponent from './components/Posting';
 import MainComponent from './components/Main';
+import Toast from './components/Toast';
+
 function App() {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
@@ -17,6 +19,17 @@ function App() {
 	const [error, setError] = useState(null);
 	const [refresh, setRefresh] = useState(0);
 	const [searchTerm, setSearchTerm] = useState('');
+	const [toastConfig, setToastConfig] = useState({
+		show: false,
+		message: '',
+		type: 'success',
+	});
+	const triggerToast = (msg, type = 'success') => {
+		setToastConfig({ show: true, message: msg, type: type });
+	};
+	const handleToastClose = () => {
+		setToastConfig((prev) => ({ ...prev, show: false }));
+	};
 	useEffect(() => {
 		setLoading(true);
 		setError(null); // Clear previous errors on new search
@@ -56,12 +69,13 @@ function App() {
 			});
 	};
 	const handleDelete = (id) => {
-		if (window.confirm('Are you sure?')) {
-			axios
-				.delete(`http://localhost:3000/api/students/${id}`)
-				.then(() => setRefresh((prev) => prev + 1))
-				.catch((err) => console.error('Delete failed:', err));
-		}
+		axios
+			.delete(`http://localhost:3000/api/students/${id}`)
+			.then(
+				() => setRefresh((prev) => prev + 1),
+				triggerToast('Student deleted successfully!', 'success'),
+			)
+			.catch(() => triggerToast('Failed to delete student', 'error'));
 	};
 	const handleEdit = (student) => {
 		setFormData({
@@ -86,9 +100,9 @@ function App() {
 			})
 			.catch((err) => alert('Update failed!'));
 	};
-	const onClose = ()=>{
-		setPostMode(false)
-	}
+	const onClose = () => {
+		setPostMode(false);
+	};
 	if (error) {
 		return <h1>Failed</h1>;
 	}
@@ -96,6 +110,13 @@ function App() {
 		<div
 			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
 		>
+			{toastConfig.show && (
+				<Toast
+					message={toastConfig.message}
+					type={toastConfig.type}
+					onToastClose={handleToastClose}
+				/>
+			)}
 			{isEditing && (
 				<EditComponent
 					handleUpdateSubmit={handleUpdateSubmit}
