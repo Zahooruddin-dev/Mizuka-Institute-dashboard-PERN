@@ -20,12 +20,23 @@ export default function MainComponent({
 				/>
 				<Search size={25} color='wheat' style={{ padding: '8px' }} />
 			</div>
-
-			<StudentTable
-				handleEdit={handleEdit}
-				students={students}
-				handleDelete={handleDelete}
-			/>
+			{students.length > 0 ? (
+				<StudentTable
+					handleEdit={handleEdit}
+					students={students}
+					handleDelete={handleDelete}
+				/>
+			) : (
+				<div style={{ padding: '20px', textAlign: 'center', color: 'grey' }}>
+					{searchTerm ? (
+						<p>
+							No students match the name "<strong>{searchTerm}</strong>
+						</p>
+					) : (
+						<p>No students found in the database. </p>
+					)}
+				</div>
+			)}
 		</>
 	);
 }
