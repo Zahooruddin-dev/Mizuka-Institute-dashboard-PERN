@@ -39,10 +39,11 @@ function App() {
 	};
 	const handleSubmit = () => {
 		if (formData.student_name.length < 3) {
-			return alert('Name is too short');
+			alert('Name is too short');
+			return Promise.reject('Name too short');
 		}
 
-		axios
+		return axios
 			.post(`http://localhost:3000/api/students`, formData)
 			.then((res) => {
 				console.log('student Added', res.data);
