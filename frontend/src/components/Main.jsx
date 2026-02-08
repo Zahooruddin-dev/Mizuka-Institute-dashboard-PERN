@@ -27,7 +27,16 @@ export default function MainComponent({
 					handleDelete={handleDelete}
 				/>
 			) : (
-				<div style={{ textAlign: 'center', padding: '20px', color: 'wheat' }}>
+				<div
+					style={{
+						marginTop: '50px',
+						border: '2px dashed wheat',
+						padding: '40px',
+						borderRadius: '15px',
+						opacity: 0.8,
+					}}
+				>
+					{' '}
 					<h3>No Students Found</h3>
 					{searchTerm ? (
 						<button
@@ -42,7 +51,7 @@ export default function MainComponent({
 								fontWeight: 'bold',
 							}}
 						>
-							Clear Search For "{searchTerm}"
+							Clear Search For {searchTerm}
 						</button>
 					) : (
 						<p>No students found in the database. </p>
