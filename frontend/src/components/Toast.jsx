@@ -30,6 +30,7 @@ export default function Toast({ message, type = 'success', onToastClose }) {
 			}}
 		>
 			{type === 'success' ? <CheckCircle size={20} /> : <XCircle size={20} />}
+			<span>{message}</span>
 			<button
 				onClick={onToastClose}
 				style={{
@@ -39,7 +40,7 @@ export default function Toast({ message, type = 'success', onToastClose }) {
 					cursor: 'pointer',
 				}}
 			>
-				<X size={16} />
+				<X size={18} />
 			</button>
 		</div>
 	);

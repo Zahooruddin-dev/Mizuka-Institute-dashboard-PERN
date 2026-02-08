@@ -52,8 +52,7 @@ function App() {
 	};
 	const handleSubmit = () => {
 		if (formData.student_name.length < 3) {
-			alert('Name is too short');
-			return Promise.reject('Name too short');
+			return triggerToast('Name is too short', 'error');
 		}
 
 		return axios
@@ -62,11 +61,10 @@ function App() {
 				console.log('student Added', res.data);
 				setFormData({ student_name: '', email: '' });
 				setPostMode(false);
-				setRefresh((prev) => prev + 1);
+				(setRefresh((prev) => prev + 1),
+					triggerToast('Student Added successfully!', 'success'));
 			})
-			.catch((err) => {
-				console.error('Failed to add the student');
-			});
+			.catch(() => triggerToast('Failed to add student', 'error'));
 	};
 	const handleDelete = (id) => {
 		axios
