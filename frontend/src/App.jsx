@@ -95,9 +95,10 @@ function App() {
 				setIsEditing(false);
 				setFormData({ student_name: '', email: '' });
 				setRefresh((prev) => prev + 1);
-				triggerToast('Student updated!', 'success');
+				(triggerToast('Student updated!', 'success'),
+					triggerToast('Student updated successfully!', 'success'));
 			})
-			.catch((err) => triggerToast('Update failed!', 'error'));
+			.catch(() => triggerToast('Failed to update student', 'error'));
 	};
 	const onClose = () => {
 		setPostMode(false);
