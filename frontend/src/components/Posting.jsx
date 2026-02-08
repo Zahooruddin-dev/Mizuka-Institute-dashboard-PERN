@@ -76,12 +76,17 @@ export default function PostingComponent({
 								width: '75%',
 							}}
 						/>
-						<button
-							type='submit'
-							disabled={isSaving}
-							onClick={handleLocalSubmit}
-						>
-							{isSaving ? <Loader2 className='animate-spin' /> : 'Save Student'}
+						<button type='submit' disabled={isSaving}>
+							{isSaving ? (
+								<div
+									style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+								>
+									<Loader2 className='animate-spin' size={10} />
+									Saving...
+								</div>
+							) : (
+								'Save Student'
+							)}
 						</button>
 						<button
 							type='button'
