@@ -27,11 +27,23 @@ export default function MainComponent({
 					handleDelete={handleDelete}
 				/>
 			) : (
-				<div style={{ padding: '20px', textAlign: 'center', color: 'grey' }}>
+				<div style={{ textAlign: 'center', padding: '20px', color: 'wheat' }}>
+					<h3>No Students Found</h3>
 					{searchTerm ? (
-						<p>
-							No students match the name "<strong>{searchTerm}</strong>
-						</p>
+						<button
+							onClick={() => setSearchTerm('')}
+							style={{
+								cursor: 'pointer',
+								color: '#a3adbd',
+								background: 'none',
+								border: 'none',
+								textDecoration: 'underline',
+								fontSize: '2rem',
+								fontWeight: 'bold',
+							}}
+						>
+							Clear Search For "{searchTerm}"
+						</button>
 					) : (
 						<p>No students found in the database. </p>
 					)}
