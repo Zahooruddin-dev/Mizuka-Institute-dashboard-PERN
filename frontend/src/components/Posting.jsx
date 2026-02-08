@@ -1,6 +1,8 @@
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
-
+const inputStyles ={}
+const overlayStyles ={}
+const modalStyles ={}
 export default function PostingComponent({
 	student_name,
 	email,
