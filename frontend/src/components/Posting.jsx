@@ -8,6 +8,7 @@ export default function PostingComponent({
 	email,
 	handleChange,
 	handleSubmit,
+	onClose
 }) {
 	const [isSaving, setIsSaving] = useState(false);
 	const handleLocalSubmit = async (e) => {
@@ -63,6 +64,7 @@ export default function PostingComponent({
 								borderRadius: '8px',
 								width: '75%',
 							}}
+							required
 						/>
 						<input
 							type='email'
@@ -77,6 +79,7 @@ export default function PostingComponent({
 								borderRadius: '8px',
 								width: '75%',
 							}}
+							required
 						/>
 						<button type='submit' disabled={isSaving}>
 							{isSaving ? (

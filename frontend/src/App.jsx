@@ -37,8 +37,7 @@ function App() {
 			[e.target.name]: e.target.value,
 		});
 	};
-	const handleSubmit = (e) => {
-
+	const handleSubmit = () => {
 		if (formData.student_name.length < 3) {
 			return alert('Name is too short');
 		}
@@ -86,6 +85,9 @@ function App() {
 			})
 			.catch((err) => alert('Update failed!'));
 	};
+	const onClose = ()=>{
+		setPostMode(false)
+	}
 	if (error) {
 		return <h1>Failed</h1>;
 	}
@@ -109,6 +111,7 @@ function App() {
 					email={formData.email}
 					student_name={formData.student_name}
 					handleChange={handleChange}
+					onClose={onClose}
 				/>
 			)}
 			{!postMode && (
