@@ -7,14 +7,16 @@ export default function PostingComponent({
 	handleChange,
 	handleSubmit,
 }) {
-	const [isSaving, SetIsSaving] = useState(false);
+	const [isSaving, setIsSaving] = useState(false);
 	const handleLocalSubmit = async (e) => {
-		e.preventDefault(true);
-		SetIsSaving(true);
+		e.preventDefault();
+		setIsSaving(true);
 		try {
-			await onsubmit(e);
+			await handleSubmit(e);
+		} catch (err) {
+			console.error('Failed to save', err);
 		} finally {
-			SetIsSaving(false);
+			setIsSaving(false);
 		}
 	};
 	return (
@@ -34,49 +36,62 @@ export default function PostingComponent({
 					zIndex: 1000,
 				}}
 			>
-				<div
-					style={{
-						backgroundColor: 'rgba(17, 16, 16, 0.81)',
-						padding: '20px',
-						borderRadius: '20px',
-						color: 'white',
-						width: '300px',
-						fontSize: '1rem',
-					}}
-				>
-					<h3>Add New Student</h3>
-					<input
-						type='text'
-						name='student_name'
-						placeholder='Full Name'
-						value={student_name}
-						onChange={handleChange}
+				<form onSubmit={handleLocalSubmit} style={modalStyles}>
+					<div
 						style={{
-							marginBottom: '12px',
-							padding: '12px',
-							borderColor: 'grey',
-							borderRadius: '8px',
-							width: '75%',
+							backgroundColor: 'rgba(17, 16, 16, 0.81)',
+							padding: '20px',
+							borderRadius: '20px',
+							color: 'white',
+							width: '300px',
+							fontSize: '1rem',
 						}}
-					/>
-					<input
-						type='email'
-						name='email'
-						placeholder='Email Address'
-						value={email}
-						onChange={handleChange}
-						style={{
-							marginBottom: '12px',
-							padding: '12px',
-							borderColor: 'grey',
-							borderRadius: '8px',
-							width: '75%',
-						}}
-					/>
-					<button type='submit' disabled={isSaving}>
-						{isSaving ? <Loader2 className='animate-spin' /> : 'Save Student'}
-					</button>
-				</div>
+					>
+						<h3>Add New Student</h3>
+						<input
+							type='text'
+							name='student_name'
+							placeholder='Full Name'
+							value={student_name}
+							onChange={handleChange}
+							style={{
+								marginBottom: '12px',
+								padding: '12px',
+								borderColor: 'grey',
+								borderRadius: '8px',
+								width: '75%',
+							}}
+						/>
+						<input
+							type='email'
+							name='email'
+							placeholder='Email Address'
+							value={email}
+							onChange={handleChange}
+							style={{
+								marginBottom: '12px',
+								padding: '12px',
+								borderColor: 'grey',
+								borderRadius: '8px',
+								width: '75%',
+							}}
+						/>
+						<button
+							type='submit'
+							disabled={isSaving}
+							onClick={handleLocalSubmit}
+						>
+							{isSaving ? <Loader2 className='animate-spin' /> : 'Save Student'}
+						</button>
+						<button
+							type='button'
+							onClick={onClose}
+							style={{ marginLeft: '10px' }}
+						>
+							Cancel
+						</button>
+					</div>
+				</form>
 			</div>
 		</>
 	);
