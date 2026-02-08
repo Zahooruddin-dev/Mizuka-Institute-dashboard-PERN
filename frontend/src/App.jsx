@@ -38,7 +38,6 @@ function App() {
 		});
 	};
 	const handleSubmit = (e) => {
-		e.preventDefault();
 
 		if (formData.student_name.length < 3) {
 			return alert('Name is too short');
