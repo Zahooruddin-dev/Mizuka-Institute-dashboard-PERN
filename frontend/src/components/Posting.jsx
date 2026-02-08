@@ -1,9 +1,22 @@
+import { Loader2 } from 'lucide-react';
+import { useState } from 'react';
+
 export default function PostingComponent({
 	student_name,
 	email,
 	handleChange,
 	handleSubmit,
 }) {
+	const [isSaving, SetIsSaving] = useState(false);
+	const handleLocalSubmit = async (e) => {
+		e.preventDefault(true);
+		SetIsSaving(true);
+		try {
+			await onsubmit(e);
+		} finally {
+			SetIsSaving(false);
+		}
+	};
 	return (
 		<>
 			<div
@@ -60,7 +73,9 @@ export default function PostingComponent({
 							width: '75%',
 						}}
 					/>
-					<button onClick={handleSubmit}>Save Student</button>
+					<button type='submit' disabled={isSaving}>
+						{isSaving ? <Loader2 className='animate-spin' /> : 'Save Student'}
+					</button>
 				</div>
 			</div>
 		</>

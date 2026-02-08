@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
-import { Edit, Trash2 } from 'lucide-react';
 import EditComponent from './components/Edit';
 import PostingComponent from './components/Posting';
 import MainComponent from './components/Main';
@@ -118,6 +117,7 @@ function App() {
 					handleEdit={handleEdit}
 					searchTerm={searchTerm}
 					students={students}
+					setSearchTerm={setSearchTerm}
 					handleDelete={handleDelete}
 				/>
 			)}
