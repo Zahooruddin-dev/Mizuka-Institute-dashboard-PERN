@@ -107,7 +107,7 @@ function App() {
 	};
 
 	const toggleSort = () => {
-		setSortOrder((prev) => (prev === 'ASC' ? 'ASC' : 'DESC'));
+		setSortOrder((prev) => (prev === 'ASC' ? 'DESC' : 'ASC'));
 	};
 	if (error) {
 		return <h1>Failed</h1>;

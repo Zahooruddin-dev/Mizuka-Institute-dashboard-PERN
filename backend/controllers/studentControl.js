@@ -1,13 +1,16 @@
 const db = require('../db/queryStudents');
 async function getAllStudentsPagination(req, res) {
-	const { limit = 10, page = 1, name = '' } = req.query;
+	const { limit = 10, page = 1, name = '', sort = 'DESC' } = req.query;
 	const searchTerm = `%${name}%`;
 	const offset = Number(page - 1) * Number(limit);
+	const order = sort === 'DESC' ? 'DESC' : 'ASC';
+
 	try {
 		const students = await db.getAllStudentsPaginationQuery(
 			limit,
 			offset,
 			searchTerm,
+			order,
 		);
 		res.status(200).json(students);
 	} catch {
@@ -15,18 +18,10 @@ async function getAllStudentsPagination(req, res) {
 	}
 }
 async function searchStudents(req, res) {
-	const { name, sort } = req.query;
-	if (!name || !sort) {
-		return res
-			.status(400)
-			.json({
-				error:
-					'Name and sorting desire required to be able to search a student',
-			});
-	}
-	const order = (sort === 'DESC' ? 'DESC' : 'ASC');
+	const { name } = req.query;
+	const searchTerm = name || '';
 	try {
-		const results = await db.searchStudentsQuery(name, order);
+		const results = await db.searchStudentsQuery(searchTerm);
 		res.status(200).json(results);
 	} catch (err) {
 		res.status(500).json({ message: 'Internal Server Error' });

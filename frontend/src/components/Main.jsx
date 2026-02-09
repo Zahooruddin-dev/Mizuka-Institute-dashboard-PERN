@@ -8,7 +8,7 @@ export default function MainComponent({
 	students,
 	setSearchTerm,
 	toggleSort,
-	sortOrder
+	sortOrder,
 }) {
 	return (
 		<>
@@ -23,7 +23,7 @@ export default function MainComponent({
 				<Search size={25} color='wheat' style={{ padding: '8px' }} />
 			</div>
 			<button onClick={toggleSort}>
-				Sort: {sortOrder === 'ASC' ? 'A-Z' :'Z-A'}
+				Sort: {sortOrder === 'ASC' ? 'A-Z' : 'Z-A'}
 			</button>
 			{students.length > 0 ? (
 				<StudentTable
@@ -48,15 +48,16 @@ export default function MainComponent({
 							onClick={() => setSearchTerm('')}
 							style={{
 								cursor: 'pointer',
-								color: '#a3adbd',
+								color: '#3b82f6',
 								background: 'none',
 								border: 'none',
 								textDecoration: 'underline',
-								fontSize: '2rem',
-								fontWeight: 'bold',
+								fontSize: '1rem',
+								fontWeight: '500',
+								marginTop: '10px',
 							}}
 						>
-							Clear Search For {searchTerm}
+							Clear Search
 						</button>
 					) : (
 						<p>No students found in the database. </p>

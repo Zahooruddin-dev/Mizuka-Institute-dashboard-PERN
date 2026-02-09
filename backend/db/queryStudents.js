@@ -1,7 +1,7 @@
 const pool = require('./Pool');
-async function getAllStudentsPaginationQuery(limit, offset, searchTerm) {
+async function getAllStudentsPaginationQuery(limit, offset, searchTerm,order) {
 	const data = await pool.query(
-		`SELECT * FROM students WHERE student_name ILIKE $3 ORDER BY id LIMIT $1 OFFSET $2`,
+		`SELECT * FROM students WHERE student_name ILIKE $3 ORDER BY student_name ${order} LIMIT $1 OFFSET $2`,
 		[limit, offset, searchTerm],
 	);
 	const total = await pool.query(
@@ -20,12 +20,12 @@ async function getStudentByIdQuery(id) {
 	]);
 	return rows[0];
 }
-async function searchStudentsQuery(name, order) {
+async function searchStudentsQuery(name) {
 	const { rows } = await pool.query(
-		`SELECT * FROM students WHERE student_name ILIKE $1 ORDER BY student_name ${order}`,
+		`SELECT * FROM students WHERE student_name ILIKE $1`,
 		[name],
 	);
-	return rows;
+	return rows[0];
 }
 async function specificStudentAttendingQuery(id) {
 	const { rows } = await pool.query(
