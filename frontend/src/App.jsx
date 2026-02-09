@@ -21,6 +21,9 @@ function App() {
 	const [refresh, setRefresh] = useState(0);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortOrder, setSortOrder] = useState('ASC'); // Default A-Z
+	const [page, setPage] = useState(1);
+	const [limit, setLimit] = useState(10);
+	const [totalCount, setTotalCount] = useState(0);
 	const [studentToDelete, setStudentToDelete] = useState(null);
 	const [toastConfig, setToastConfig] = useState({
 		show: false,
@@ -34,21 +37,26 @@ function App() {
 		setToastConfig((prev) => ({ ...prev, show: false }));
 	};
 	useEffect(() => {
+		setPage(1);
+	}, [searchTerm]);
+	useEffect(() => {
 		setLoading(true);
 		setError(null); // Clear previous errors on new search
 		axios
 			.get(
-				`http://localhost:3000/api/students?name=${searchTerm}&sort=${sortOrder}`,
+				`http://localhost:3000/api/students?name=${searchTerm}&sort=${sortOrder}&page=${page}&limit=${limit}`,
 			)
 			.then((res) => {
-				(setStudents(res.data.student), setLoading(false));
+				setStudents(res.data.student);
+				setTotalCount(res.data.totalCount);
+				setLoading(false);
 			})
 			.catch((err) => {
 				(console.error('Connection failed', err),
 					setLoading(false),
 					setError(true));
 			});
-	}, [searchTerm, refresh, sortOrder]);
+	}, [searchTerm, refresh, sortOrder, page]);
 	const handleChange = (e) => {
 		setFormData({
 			...formData, //Keeping existing fields
@@ -157,6 +165,9 @@ function App() {
 					handleDelete={openDeleteModal}
 					toggleSort={toggleSort}
 					sortOrder={sortOrder}
+					page={page}
+					setPage={setPage}
+					totalCount={totalCount}
 				/>
 			)}
 			<button

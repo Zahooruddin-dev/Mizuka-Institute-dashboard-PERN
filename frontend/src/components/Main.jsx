@@ -9,7 +9,11 @@ export default function MainComponent({
 	setSearchTerm,
 	toggleSort,
 	sortOrder,
+	page,
+	setPage,
+	totalCount,
 }) {
+	const hasNextPage = page * 10 < totalCount;
 	return (
 		<>
 			<div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -40,11 +44,49 @@ export default function MainComponent({
 			</div>
 
 			{students.length > 0 ? (
-				<StudentTable
-					handleEdit={handleEdit}
-					students={students}
-					handleDelete={handleDelete}
-				/>
+				<>
+					<StudentTable
+						handleEdit={handleEdit}
+						students={students}
+						handleDelete={handleDelete}
+					/>
+					<div
+						style={{
+							marginTop: '20px',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							gap: '20px',
+						}}
+					>
+						<button
+							disabled={page === 1}
+							onClick={() => setPage((prev) => prev - 1)}
+							style={{
+								padding: '8px 16px',
+								cursor: page === 1 ? 'not-allowed' : 'pointer',
+							}}
+						>
+							Previous
+						</button>
+
+						<span style={{ fontWeight: 'bold', color: 'wheat' }}>
+							Page {page}
+						</span>
+
+						<button
+							onClick={() => setPage((prev) => prev + 1)}
+							// If you want to disable "Next" when no more data:
+							disabled={!hasNextPage}
+							style={{
+								padding: '8px 16px',
+								cursor: students.length < 10 ? 'not-allowed' : 'pointer',
+							}}
+						>
+							Next
+						</button>
+					</div>
+				</>
 			) : (
 				<div
 					style={{
