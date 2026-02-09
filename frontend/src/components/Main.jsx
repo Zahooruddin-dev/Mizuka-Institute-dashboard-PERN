@@ -1,4 +1,4 @@
-import { Edit, Search, Trash2 } from 'lucide-react';
+import { Edit, Search, Trash2, ArrowUpAZ, ArrowDownZA } from 'lucide-react';
 import StudentTable from './StudentTable';
 
 export default function MainComponent({
@@ -21,10 +21,24 @@ export default function MainComponent({
 					style={{ marginBottom: '20px', padding: '8px', width: '300px' }}
 				/>
 				<Search size={25} color='wheat' style={{ padding: '8px' }} />
+				<button
+					onClick={toggleSort}
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: '8px',
+						padding: '8px 12px',
+					}}
+				>
+					Sort{' '}
+					{sortOrder === 'ASC' ? (
+						<ArrowUpAZ size={20} />
+					) : (
+						<ArrowDownZA size={20} />
+					)}
+				</button>
 			</div>
-			<button onClick={toggleSort}>
-				Sort: {sortOrder === 'ASC' ? 'A-Z' : 'Z-A'}
-			</button>
+
 			{students.length > 0 ? (
 				<StudentTable
 					handleEdit={handleEdit}
