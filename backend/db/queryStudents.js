@@ -20,10 +20,10 @@ async function getStudentByIdQuery(id) {
 	]);
 	return rows[0];
 }
-async function searchStudentsQuery(name) {
+async function searchStudentsQuery(name, order) {
 	const { rows } = await pool.query(
-		`SELECT * FROM students WHERE student_name ILIKE $1`,
-		[name],
+		`SELECT * FROM students WHERE student_name ILIKE $1 ORDER BY student_name $2`,
+		[name, order],
 	);
 	return rows[0];
 }

@@ -15,14 +15,18 @@ async function getAllStudentsPagination(req, res) {
 	}
 }
 async function searchStudents(req, res) {
-	const { name } = req.query;
-	if (!name) {
+	const { name, sort } = req.query;
+	if (!name || !sort) {
 		return res
 			.status(400)
-			.json({ error: 'Name required to be able to search a student' });
+			.json({
+				error:
+					'Name and sorting desire required to be able to search a student',
+			});
 	}
+	const order = (sort = 'DESC' ? 'DESC' : 'ASC');
 	try {
-		const results = await db.searchStudentsQuery(name);
+		const results = await db.searchStudentsQuery(name, order);
 		res.status(200).json(results);
 	} catch (err) {
 		res.status(500).json({ message: 'Internal Server Error' });
