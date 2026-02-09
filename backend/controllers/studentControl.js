@@ -24,7 +24,7 @@ async function searchStudents(req, res) {
 					'Name and sorting desire required to be able to search a student',
 			});
 	}
-	const order = (sort = 'DESC' ? 'DESC' : 'ASC');
+	const order = (sort === 'DESC' ? 'DESC' : 'ASC');
 	try {
 		const results = await db.searchStudentsQuery(name, order);
 		res.status(200).json(results);
