@@ -19,6 +19,7 @@ function App() {
 	const [error, setError] = useState(null);
 	const [refresh, setRefresh] = useState(0);
 	const [searchTerm, setSearchTerm] = useState('');
+	const [sortOrder, setSortOrder] = useState('ASC'); // Default A-Z
 	const [toastConfig, setToastConfig] = useState({
 		show: false,
 		message: '',
@@ -34,7 +35,7 @@ function App() {
 		setLoading(true);
 		setError(null); // Clear previous errors on new search
 		axios
-			.get(`http://localhost:3000/api/students?name=${searchTerm}`)
+			.get(`http://localhost:3000/api/students?name=${searchTerm}&sort=${sortOrder}`)
 			.then((res) => {
 				(setStudents(res.data.student), setLoading(false));
 			})
@@ -43,7 +44,7 @@ function App() {
 					setLoading(false),
 					setError(true));
 			});
-	}, [searchTerm, refresh]);
+	}, [searchTerm, refresh,sortOrder]);
 	const handleChange = (e) => {
 		setFormData({
 			...formData, //Keeping existing fields
