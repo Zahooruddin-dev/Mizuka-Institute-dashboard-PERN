@@ -154,7 +154,7 @@ function App() {
 					searchTerm={searchTerm}
 					students={students}
 					setSearchTerm={setSearchTerm}
-					handleDelete={confirmDelete}
+					handleDelete={openDeleteModal}
 					toggleSort={toggleSort}
 					sortOrder={sortOrder}
 				/>
@@ -168,9 +168,9 @@ function App() {
 			{/* If array is empty, shows a message */}
 			{studentToDelete && (
 				<DeleteModal
-					studentToDelete={studentToDelete}
-					setStudentToDelete={setStudentToDelete}
-					confirmDelete={confirmDelete}
+					student={studentToDelete}
+					onConfirm={confirmDelete}
+					onCancel={() => setStudentToDelete(null)}
 				/>
 			)}
 			{students.length === 0 && <p>No students found.</p>}

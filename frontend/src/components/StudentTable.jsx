@@ -24,7 +24,7 @@ return(
 							color='red'
 							size={24}
 							strokeWidth={2}
-							onClick={() => handleDelete(student.id)}
+							onClick={() => handleDelete(student)}
 							style={{ cursor: 'pointer' }}
 						/>
 					</td>

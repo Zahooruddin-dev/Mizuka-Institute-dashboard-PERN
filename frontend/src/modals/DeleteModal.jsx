@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function DeleteModal({studentToDelete,setStudentToDelete,confirmDelete}) {
+export default function DeleteModal({ student, onConfirm, onCancel }) {
 	return (
 		<div
 			className='modal-overlay'
@@ -29,7 +29,7 @@ export default function DeleteModal({studentToDelete,setStudentToDelete,confirmD
 				<h2 style={{ color: 'white' }}>Confirm Deletion</h2>
 				<p style={{ color: '#aaa' }}>
 					Are you sure you want to delete{' '}
-					<strong>{studentToDelete.student_name}</strong>?
+					<strong>{student.student_name}</strong>?
 				</p>
 				<div
 					style={{
@@ -40,7 +40,7 @@ export default function DeleteModal({studentToDelete,setStudentToDelete,confirmD
 					}}
 				>
 					<button
-						onClick={() => setStudentToDelete(null)}
+						onClick={onCancel}
 						style={{
 							padding: '10px 20px',
 							cursor: 'pointer',
@@ -50,7 +50,7 @@ export default function DeleteModal({studentToDelete,setStudentToDelete,confirmD
 						Cancel
 					</button>
 					<button
-						onClick={confirmDelete}
+						onClick={onConfirm}
 						style={{
 							padding: '10px 20px',
 							backgroundColor: '#ff4d4d',
