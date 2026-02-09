@@ -7,6 +7,8 @@ export default function MainComponent({
 	searchTerm,
 	students,
 	setSearchTerm,
+	toggleSort,
+	sortOrder
 }) {
 	return (
 		<>
@@ -20,6 +22,9 @@ export default function MainComponent({
 				/>
 				<Search size={25} color='wheat' style={{ padding: '8px' }} />
 			</div>
+			<button onClick={toggleSort}>
+				Sort: {sortOrder === 'ASC' ? 'A-Z' :'Z-A'}
+			</button>
 			{students.length > 0 ? (
 				<StudentTable
 					handleEdit={handleEdit}

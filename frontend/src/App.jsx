@@ -35,7 +35,9 @@ function App() {
 		setLoading(true);
 		setError(null); // Clear previous errors on new search
 		axios
-			.get(`http://localhost:3000/api/students?name=${searchTerm}&sort=${sortOrder}`)
+			.get(
+				`http://localhost:3000/api/students?name=${searchTerm}&sort=${sortOrder}`,
+			)
 			.then((res) => {
 				(setStudents(res.data.student), setLoading(false));
 			})
@@ -44,7 +46,7 @@ function App() {
 					setLoading(false),
 					setError(true));
 			});
-	}, [searchTerm, refresh,sortOrder]);
+	}, [searchTerm, refresh, sortOrder]);
 	const handleChange = (e) => {
 		setFormData({
 			...formData, //Keeping existing fields
@@ -103,6 +105,10 @@ function App() {
 	const onClose = () => {
 		setPostMode(false);
 	};
+
+	const toggleSort = () => {
+		setSortOrder((prev) => (prev === 'ASC' ? 'ASC' : 'DESC'));
+	};
 	if (error) {
 		return <h1>Failed</h1>;
 	}
@@ -143,6 +149,8 @@ function App() {
 					students={students}
 					setSearchTerm={setSearchTerm}
 					handleDelete={handleDelete}
+					toggleSort={toggleSort}
+					sortOrder={sortOrder}
 				/>
 			)}
 			<button
