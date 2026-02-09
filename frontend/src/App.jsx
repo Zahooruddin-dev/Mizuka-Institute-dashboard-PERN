@@ -20,6 +20,7 @@ function App() {
 	const [refresh, setRefresh] = useState(0);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [sortOrder, setSortOrder] = useState('ASC'); // Default A-Z
+	const [studentToDelete, setStudentToDelete] = useState(null);
 	const [toastConfig, setToastConfig] = useState({
 		show: false,
 		message: '',
@@ -69,12 +70,14 @@ function App() {
 			})
 			.catch(() => triggerToast('Failed to add student', 'error'));
 	};
-	const handleDelete = (id) => {
+	const confirmDelete = () => {
+		if (!studentToDelete) return;
 		axios
-			.delete(`http://localhost:3000/api/students/${id}`)
+			.delete(`http://localhost:3000/api/students/${studentToDelete.id}`)
 			.then(
 				() => setRefresh((prev) => prev + 1),
-				triggerToast('Student deleted successfully!', 'success'),
+				triggerToast(`${studentToDelete.student_name} Deleted`, 'success'),
+				setStudentToDelete(null),
 			)
 			.catch(() => triggerToast('Failed to delete student', 'error'));
 	};
@@ -105,9 +108,11 @@ function App() {
 	const onClose = () => {
 		setPostMode(false);
 	};
-
 	const toggleSort = () => {
 		setSortOrder((prev) => (prev === 'ASC' ? 'DESC' : 'ASC'));
+	};
+	const openDeleteModal = (student) => {
+		setStudentToDelete(student);
 	};
 	if (error) {
 		return <h1>Failed</h1>;
@@ -148,7 +153,7 @@ function App() {
 					searchTerm={searchTerm}
 					students={students}
 					setSearchTerm={setSearchTerm}
-					handleDelete={handleDelete}
+					handleDelete={confirmDelete}
 					toggleSort={toggleSort}
 					sortOrder={sortOrder}
 				/>
