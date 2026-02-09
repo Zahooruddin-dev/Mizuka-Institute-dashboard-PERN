@@ -5,6 +5,7 @@ import EditComponent from './components/Edit';
 import PostingComponent from './components/Posting';
 import MainComponent from './components/Main';
 import Toast from './components/Toast';
+import DeleteModal from './modals/DeleteModal';
 
 function App() {
 	const [students, setStudents] = useState([]);
@@ -165,6 +166,13 @@ function App() {
 				{postMode ? 'Cancel ' : 'POST A NEW STUDENT'}
 			</button>
 			{/* If array is empty, shows a message */}
+			{studentToDelete && (
+				<DeleteModal
+					studentToDelete={studentToDelete}
+					setStudentToDelete={setStudentToDelete}
+					confirmDelete={confirmDelete}
+				/>
+			)}
 			{students.length === 0 && <p>No students found.</p>}
 		</div>
 	);
