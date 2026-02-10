@@ -12,6 +12,12 @@ const verifyToken = (req, res, next) => {
 		return res.status(401).json({ message: 'Unauthorized' });
 	}
 };
-/*    return res.status(403).json({message:'Require Teacher or Admin Role to have access!'})
- */
-module.exports={verifyToken}
+const isTeacher = (req,res,next) =>{
+  if(req.user.role === 'teacher' || req.user.role ==='admin'){
+    next()
+  }
+  else{
+    return res.status(403).json({message:'Require Teacher or Admin Role to have access!'})
+  }
+}
+module.exports={verifyToken,isTeacher}
