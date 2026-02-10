@@ -12,6 +12,7 @@ export default function MainComponent({
 	page,
 	setPage,
 	totalCount,
+	limit
 }) {
 	const hasNextPage = page * 10 < totalCount;
 	return (
@@ -49,6 +50,8 @@ export default function MainComponent({
 						handleEdit={handleEdit}
 						students={students}
 						handleDelete={handleDelete}
+						page={page}
+						limit={limit}
 					/>
 					<div
 						style={{

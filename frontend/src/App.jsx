@@ -158,6 +158,7 @@ function App() {
 			)}
 			{!postMode && (
 				<MainComponent
+					limit={limit}
 					handleEdit={handleEdit}
 					searchTerm={searchTerm}
 					students={students}
