@@ -24,67 +24,69 @@ export default function EditComponent({
 	};
 
 	return (
-		<div
-			className="modal-overlay"
-			onClick={handleOverlayClick}
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="edit-student-title"
-		>
-			<div className="modal-content">
-				<form onSubmit={handleFormSubmit} className="edit-form">
-					<h3 id="edit-student-title">Edit Student Details</h3>
-					<div className="form-group">
-						<label htmlFor="student-name" className="visually-hidden">
-							Student Name
-						</label>
-						<input
-							id="student-name"
-							name="student_name"
-							type="text"
-							value={student_name}
-							onChange={handleChange}
-							className="form-input"
-							placeholder="Student Name"
-							required
-							aria-required="true"
-							autoComplete="name"
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="student-email" className="visually-hidden">
-							Email Address
-						</label>
-						<input
-							id="student-email"
-							name="email"
-							type="email"
-							value={email}
-							onChange={handleChange}
-							className="form-input"
-							placeholder="example@school.edu"
-							required
-							aria-required="true"
-							autoComplete="email"
-						/>
-					</div>
-					<div className="form-actions">
-						<button type="submit" className="btn btn-primary">
-							Update
-						</button>
-						<button
-							type="button"
-							onClick={handleCancelClick}
-							className="btn btn-secondary"
-							aria-label="Cancel editing"
-						>
-							Cancel
-						</button>
-					</div>
-				</form>
+		<>
+			<div
+				className="modal-overlay"
+				onClick={handleOverlayClick}
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="edit-student-title"
+			>
+				<div className="modal-content">
+					<form onSubmit={handleFormSubmit} className="edit-form">
+						<h3 id="edit-student-title">Edit Student Details</h3>
+						<div className="form-group">
+							<label htmlFor="student-name" className="visually-hidden">
+								Student Name
+							</label>
+							<input
+								id="student-name"
+								name="student_name"
+								type="text"
+								value={student_name}
+								onChange={handleChange}
+								className="form-input"
+								placeholder="Student Name"
+								required
+								aria-required="true"
+								autoComplete="name"
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="student-email" className="visually-hidden">
+								Email Address
+							</label>
+							<input
+								id="student-email"
+								name="email"
+								type="email"
+								value={email}
+								onChange={handleChange}
+								className="form-input"
+								placeholder="example@school.edu"
+								required
+								aria-required="true"
+								autoComplete="email"
+							/>
+						</div>
+						<div className="form-actions">
+							<button type="submit" className="btn btn-primary">
+								Update
+							</button>
+							<button
+								type="button"
+								onClick={handleCancelClick}
+								className="btn btn-secondary"
+								aria-label="Cancel editing"
+							>
+								Cancel
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 
-			<style jsx>{`
+			<style>{`
 				.visually-hidden {
 					position: absolute;
 					width: 1px;
@@ -224,6 +226,6 @@ export default function EditComponent({
 					}
 				}
 			`}</style>
-		</div>
+		</>
 	);
 }

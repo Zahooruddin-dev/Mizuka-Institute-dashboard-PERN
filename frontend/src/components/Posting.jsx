@@ -35,82 +35,84 @@ export default function PostingComponent({
 	};
 
 	return (
-		<div
-			className="modal-overlay"
-			onClick={handleOverlayClick}
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="add-student-title"
-		>
-			<div className="modal-content">
-				<form onSubmit={handleLocalSubmit} className="add-form">
-					<h3 id="add-student-title">Add New Student</h3>
-					<div className="form-group">
-						<label htmlFor="new-student-name" className="visually-hidden">
-							Full Name
-						</label>
-						<input
-							id="new-student-name"
-							type="text"
-							name="student_name"
-							placeholder="Full Name"
-							value={student_name}
-							onChange={handleChange}
-							className="form-input"
-							required
-							aria-required="true"
-							autoComplete="name"
-							disabled={isSaving}
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="new-student-email" className="visually-hidden">
-							Email Address
-						</label>
-						<input
-							id="new-student-email"
-							type="email"
-							name="email"
-							placeholder="Email Address"
-							value={email}
-							onChange={handleChange}
-							className="form-input"
-							required
-							aria-required="true"
-							autoComplete="email"
-							disabled={isSaving}
-						/>
-					</div>
-					<div className="form-actions">
-						<button
-							type="submit"
-							disabled={isSaving}
-							className="btn btn-primary"
-							aria-busy={isSaving}
-						>
-							{isSaving ? (
-								<span className="loading-content">
-									<Loader2 className="spinner" size={16} aria-hidden="true" />
-									<span>Saving...</span>
-								</span>
-							) : (
-								'Save Student'
-							)}
-						</button>
-						<button
-							type="button"
-							onClick={handleCancelClick}
-							className="btn btn-secondary"
-							disabled={isSaving}
-							aria-label="Cancel adding student"
-						>
-							Cancel
-						</button>
-					</div>
-				</form>
+		<>
+			<div
+				className="modal-overlay"
+				onClick={handleOverlayClick}
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="add-student-title"
+			>
+				<div className="modal-content">
+					<form onSubmit={handleLocalSubmit} className="add-form">
+						<h3 id="add-student-title">Add New Student</h3>
+						<div className="form-group">
+							<label htmlFor="new-student-name" className="visually-hidden">
+								Full Name
+							</label>
+							<input
+								id="new-student-name"
+								type="text"
+								name="student_name"
+								placeholder="Full Name"
+								value={student_name}
+								onChange={handleChange}
+								className="form-input"
+								required
+								aria-required="true"
+								autoComplete="name"
+								disabled={isSaving}
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="new-student-email" className="visually-hidden">
+								Email Address
+							</label>
+							<input
+								id="new-student-email"
+								type="email"
+								name="email"
+								placeholder="Email Address"
+								value={email}
+								onChange={handleChange}
+								className="form-input"
+								required
+								aria-required="true"
+								autoComplete="email"
+								disabled={isSaving}
+							/>
+						</div>
+						<div className="form-actions">
+							<button
+								type="submit"
+								disabled={isSaving}
+								className="btn btn-primary"
+								aria-busy={isSaving}
+							>
+								{isSaving ? (
+									<span className="loading-content">
+										<Loader2 className="spinner" size={16} aria-hidden="true" />
+										<span>Saving...</span>
+									</span>
+								) : (
+									'Save Student'
+								)}
+							</button>
+							<button
+								type="button"
+								onClick={handleCancelClick}
+								className="btn btn-secondary"
+								disabled={isSaving}
+								aria-label="Cancel adding student"
+							>
+								Cancel
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 
-			<style jsx>{`
+			<style>{`
 				.visually-hidden {
 					position: absolute;
 					width: 1px;
@@ -281,6 +283,6 @@ export default function PostingComponent({
 					}
 				}
 			`}</style>
-		</div>
+		</>
 	);
 }

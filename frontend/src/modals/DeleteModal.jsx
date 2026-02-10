@@ -29,41 +29,43 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 	}, []);
 
 	return (
-		<div
-			className="modal-overlay"
-			onClick={handleOverlayClick}
-			role="dialog"
-			aria-modal="true"
-			aria-labelledby="delete-modal-title"
-			aria-describedby="delete-modal-description"
-		>
-			<div className="modal-content">
-				<h2 id="delete-modal-title">Confirm Deletion</h2>
-				<p id="delete-modal-description">
-					Are you sure you want to delete{' '}
-					<strong>{student.student_name}</strong>?
-				</p>
-				<div className="modal-actions">
-					<button
-						onClick={handleCancelClick}
-						className="btn btn-cancel"
-						type="button"
-						aria-label="Cancel deletion"
-					>
-						Cancel
-					</button>
-					<button
-						onClick={handleConfirmClick}
-						className="btn btn-delete"
-						type="button"
-						aria-label={`Confirm deletion of ${student.student_name}`}
-					>
-						Yes, Delete
-					</button>
+		<>
+			<div
+				className="modal-overlay"
+				onClick={handleOverlayClick}
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="delete-modal-title"
+				aria-describedby="delete-modal-description"
+			>
+				<div className="modal-content">
+					<h2 id="delete-modal-title">Confirm Deletion</h2>
+					<p id="delete-modal-description">
+						Are you sure you want to delete{' '}
+						<strong>{student.student_name}</strong>?
+					</p>
+					<div className="modal-actions">
+						<button
+							onClick={handleCancelClick}
+							className="btn btn-cancel"
+							type="button"
+							aria-label="Cancel deletion"
+						>
+							Cancel
+						</button>
+						<button
+							onClick={handleConfirmClick}
+							className="btn btn-delete"
+							type="button"
+							aria-label={`Confirm deletion of ${student.student_name}`}
+						>
+							Yes, Delete
+						</button>
+					</div>
 				</div>
 			</div>
 
-			<style jsx>{`
+			<style>{`
 				.modal-overlay {
 					position: fixed;
 					top: 0;
@@ -180,6 +182,6 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 					}
 				}
 			`}</style>
-		</div>
+		</>
 	);
 }

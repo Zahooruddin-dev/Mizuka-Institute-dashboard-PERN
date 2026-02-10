@@ -39,90 +39,92 @@ export default function MainComponent({
 	};
 
 	return (
-		<div className="main-component">
-			<div className="search-controls">
-				<div className="search-wrapper">
-					<label htmlFor="student-search" className="visually-hidden">
-						Search students by name
-					</label>
-					<input
-						id="student-search"
-						type="text"
-						placeholder="Search student by name"
-						value={searchTerm}
-						onChange={handleSearchChange}
-						className="search-input"
-						aria-label="Search students by name"
-					/>
-					<Search size={25} className="search-icon" aria-hidden="true" />
+		<>
+			<div className="main-component">
+				<div className="search-controls">
+					<div className="search-wrapper">
+						<label htmlFor="student-search" className="visually-hidden">
+							Search students by name
+						</label>
+						<input
+							id="student-search"
+							type="text"
+							placeholder="Search student by name"
+							value={searchTerm}
+							onChange={handleSearchChange}
+							className="search-input"
+							aria-label="Search students by name"
+						/>
+						<Search size={25} className="search-icon" aria-hidden="true" />
+					</div>
+					<button
+						onClick={toggleSort}
+						className="sort-button"
+						aria-label={`Sort ${sortOrder === 'ASC' ? 'descending' : 'ascending'}`}
+					>
+						<span>Sort</span>
+						{sortOrder === 'ASC' ? (
+							<ArrowUpAZ size={20} aria-hidden="true" />
+						) : (
+							<ArrowDownZA size={20} aria-hidden="true" />
+						)}
+					</button>
 				</div>
-				<button
-					onClick={toggleSort}
-					className="sort-button"
-					aria-label={`Sort ${sortOrder === 'ASC' ? 'descending' : 'ascending'}`}
-				>
-					<span>Sort</span>
-					{sortOrder === 'ASC' ? (
-						<ArrowUpAZ size={20} aria-hidden="true" />
-					) : (
-						<ArrowDownZA size={20} aria-hidden="true" />
-					)}
-				</button>
+
+				{students.length > 0 ? (
+					<>
+						<StudentTable
+							handleEdit={handleEdit}
+							students={students}
+							handleDelete={handleDelete}
+							page={page}
+							limit={limit}
+						/>
+						<nav className="pagination" aria-label="Pagination navigation">
+							<button
+								disabled={!hasPrevPage}
+								onClick={handlePrevPage}
+								className="pagination-button"
+								aria-label="Previous page"
+								aria-disabled={!hasPrevPage}
+							>
+								Previous
+							</button>
+
+							<span className="page-indicator" aria-current="page" aria-live="polite">
+								Page {page}
+							</span>
+
+							<button
+								onClick={handleNextPage}
+								disabled={!hasNextPage}
+								className="pagination-button"
+								aria-label="Next page"
+								aria-disabled={!hasNextPage}
+							>
+								Next
+							</button>
+						</nav>
+					</>
+				) : (
+					<div className="no-results" role="status" aria-live="polite">
+						<h3>No Students Found</h3>
+						{searchTerm ? (
+							<button
+								onClick={handleClearSearch}
+								className="clear-search-button"
+								aria-label="Clear search and show all students"
+							>
+								Clear Search
+							</button>
+						) : (
+							<p>No students found in the database.</p>
+						)}
+					</div>
+				)}
 			</div>
 
-			{students.length > 0 ? (
-				<>
-					<StudentTable
-						handleEdit={handleEdit}
-						students={students}
-						handleDelete={handleDelete}
-						page={page}
-						limit={limit}
-					/>
-					<nav className="pagination" aria-label="Pagination navigation">
-						<button
-							disabled={!hasPrevPage}
-							onClick={handlePrevPage}
-							className="pagination-button"
-							aria-label="Previous page"
-							aria-disabled={!hasPrevPage}
-						>
-							Previous
-						</button>
-
-						<span className="page-indicator" aria-current="page" aria-live="polite">
-							Page {page}
-						</span>
-
-						<button
-							onClick={handleNextPage}
-							disabled={!hasNextPage}
-							className="pagination-button"
-							aria-label="Next page"
-							aria-disabled={!hasNextPage}
-						>
-							Next
-						</button>
-					</nav>
-				</>
-			) : (
-				<div className="no-results" role="status" aria-live="polite">
-					<h3>No Students Found</h3>
-					{searchTerm ? (
-						<button
-							onClick={handleClearSearch}
-							className="clear-search-button"
-							aria-label="Clear search and show all students"
-						>
-							Clear Search
-						</button>
-					) : (
-						<p>No students found in the database.</p>
-					)}
-				</div>
-			)}
-
-			<style jsx>{`
+			<style>{`
 				.main-component {
 					max-width: 100%;
 					margin: 0 auto;
@@ -287,6 +289,6 @@ export default function MainComponent({
 					}
 				}
 			`}</style>
-		</div>
+		</>
 	);
 }

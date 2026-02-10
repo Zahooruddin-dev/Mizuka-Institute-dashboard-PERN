@@ -31,26 +31,28 @@ export default function Toast({ message, type = 'success', onToastClose }) {
 	}, []);
 
 	return (
-		<div
-			className={`toast toast-${type}`}
-			role="alert"
-			aria-live="polite"
-			aria-atomic="true"
-		>
-			<div className="toast-icon" aria-hidden="true">
-				{isSuccess ? <CheckCircle size={20} /> : <XCircle size={20} />}
-			</div>
-			<span className="toast-message">{message}</span>
-			<button
-				onClick={handleCloseClick}
-				className="toast-close"
-				aria-label="Close notification"
-				type="button"
+		<>
+			<div
+				className={`toast toast-${type}`}
+				role="alert"
+				aria-live="polite"
+				aria-atomic="true"
 			>
-				<X size={18} aria-hidden="true" />
-			</button>
+				<div className="toast-icon" aria-hidden="true">
+					{isSuccess ? <CheckCircle size={20} /> : <XCircle size={20} />}
+				</div>
+				<span className="toast-message">{message}</span>
+				<button
+					onClick={handleCloseClick}
+					className="toast-close"
+					aria-label="Close notification"
+					type="button"
+				>
+					<X size={18} aria-hidden="true" />
+				</button>
+			</div>
 
-			<style jsx>{`
+			<style>{`
 				@keyframes slideIn {
 					from {
 						transform: translateX(100%);
@@ -153,6 +155,6 @@ export default function Toast({ message, type = 'success', onToastClose }) {
 					}
 				}
 			`}</style>
-		</div>
+		</>
 	);
 }
