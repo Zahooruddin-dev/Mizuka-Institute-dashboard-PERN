@@ -6,13 +6,15 @@ async function login(req, res) {
 	const { email, password } = req.body;
 	try {
 		const user = await db.loginQuery(email);
+    console.log("User found in DB:", user);
 		if (!user) {
 			return res.status(401).json({ message: 'Invalid Email or Password' });
 		}
-		const isMatch = await bcrypt.compare(password, user.password_hash);
-		if (!isMatch) {
-			return res.status(401).json({ message: 'Invalid Email or Password' });
-		}
+const testMatch = await bcrypt.compare("password123", user.password_hash);
+console.log("Hardcoded test match:", testMatch);
+
+const actualMatch = await bcrypt.compare(password, user.password_hash);
+console.log("Request password match:", actualMatch);
 		const token = jwt.sign(
 			{ id: user.id, role: user.role },
 			process.env.JWT_SECRET,
@@ -31,3 +33,4 @@ async function login(req, res) {
 		res.status(500).json({ message: error.message });
 	}
 }
+module.exports={login}
