@@ -18,6 +18,15 @@ async function login(req, res) {
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
+		res.json({
+			message: 'Login Successful',
+			token,
+			user: {
+				id: user.id,
+				username: user.username,
+				role: user.role,
+			},
+		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
