@@ -13,6 +13,11 @@ async function login(req, res) {
 		if (!isMatch) {
 			return res.status(401).json({ message: 'Invalid Email or Password' });
 		}
+		const token = jwt.sign(
+			{ id: user.id, role: user.role },
+			process.env.JWT_SECRET,
+			{ expiresIn: '1d' },
+		);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
