@@ -1,12 +1,13 @@
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Trash2, Eye } from 'lucide-react';
+
 export default function StudentTable({
 	students,
 	handleDelete,
 	handleEdit,
+	handleViewDetails,
 	page,
 	limit
 }) {
-	
 	return (
 		<>
 			<div className="table-container">
@@ -16,8 +17,9 @@ export default function StudentTable({
 							<th scope="col">No</th>
 							<th scope="col">Name</th>
 							<th scope="col">Email</th>
-							<th scope="col">Delete</th>
+							<th scope="col">View</th>
 							<th scope="col">Edit</th>
+							<th scope="col">Delete</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -31,28 +33,32 @@ export default function StudentTable({
 									<td>{student.email}</td>
 									<td>
 										<button
-											className="action-button delete-button"
-											onClick={() => {
-												console.log('DELETE CLICKED', student);
-												handleDelete(student);
-											}}
-											aria-label={`Delete ${student.student_name}`}
+											className="action-button view-button"
+											onClick={() => handleViewDetails(student)}
+											aria-label={`View ${student.student_name} details`}
 											type="button"
 										>
-											<Trash2 size={24} color="red" />
+											<Eye size={20} color="#646cff" strokeWidth={2} />
 										</button>
 									</td>
 									<td>
 										<button
 											className="action-button edit-button"
-											onClick={() => {
-												console.log('EDIT CLICKED', student);
-												handleEdit(student);
-											}}
+											onClick={() => handleEdit(student)}
 											aria-label={`Edit ${student.student_name}`}
 											type="button"
 										>
-											<Edit size={24} color="green" />
+											<Edit size={20} color="green" strokeWidth={2} />
+										</button>
+									</td>
+									<td>
+										<button
+											className="action-button delete-button"
+											onClick={() => handleDelete(student)}
+											aria-label={`Delete ${student.student_name}`}
+											type="button"
+										>
+											<Trash2 size={20} color="red" strokeWidth={2} />
 										</button>
 									</td>
 								</tr>
@@ -60,80 +66,82 @@ export default function StudentTable({
 						})}
 					</tbody>
 				</table>
-			</div><style>{`
-	.table-container {
-		width: 100%;
-		overflow-x: auto;
-	}
+			</div>
 
-	.student-table {
-		width: 100%;
-		border-collapse: collapse;
-		text-align: left;
-		border: 1px solid #ccc;
-		position: relative;
-		z-index: 1;
-	}
+			<style>{`
+				.table-container {
+					width: 100%;
+					overflow-x: auto;
+				}
 
-	.student-table th,
-	.student-table td {
-		padding: 0.625rem;
-		border: 1px solid #ccc;
-		position: relative;
-	}
+				.student-table {
+					width: 100%;
+					border-collapse: collapse;
+					text-align: left;
+					border: 1px solid #ccc;
+					position: relative;
+					z-index: 1;
+				}
 
-	.student-table th {
-		background-color: #f5f5f5;
-		font-weight: bold;
-		color: #213547;
-	}
+				.student-table th,
+				.student-table td {
+					padding: 0.625rem;
+					border: 1px solid #ccc;
+					position: relative;
+				}
 
-	.student-table td {
-		color: #213547;
-	}
+				.student-table th {
+					background-color: #f5f5f5;
+					font-weight: bold;
+					color: #213547;
+				}
 
-	.student-table tbody tr:nth-child(even) {
-		background-color: #fafafa;
-	}
+				.student-table td {
+					color: #213547;
+				}
 
-	.student-table tbody tr:hover {
-		background-color: #f0f0f0;
-	}
+				.student-table tbody tr:nth-child(even) {
+					background-color: #fafafa;
+				}
 
-	.action-button {
-		background: #f0f0f0;
-		border: 1px solid #ccc;
-		cursor: pointer;
-		padding: 0.5rem;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 4px;
-		transition: background-color 0.2s;
-		position: relative;
-		z-index: 10;
-	}
+				.student-table tbody tr:hover {
+					background-color: #f0f0f0;
+				}
 
-	.action-button:hover {
-		background-color: #e0e0e0;
-	}
+				.action-button {
+					background: #f0f0f0;
+					border: 1px solid #ccc;
+					cursor: pointer;
+					padding: 0.5rem;
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 4px;
+					transition: background-color 0.2s;
+					position: relative;
+					z-index: 10;
+				}
 
-	.action-button:focus {
-		outline: 2px solid #3b82f6;
-		outline-offset: 2px;
-	}
+				.action-button:hover {
+					background-color: #e0e0e0;
+				}
 
-	@media (max-width: 640px) {
-		.student-table {
-			font-size: 0.875rem;
-		}
+				.action-button:focus {
+					outline: 2px solid #3b82f6;
+					outline-offset: 2px;
+				}
 
-		.student-table th,
-		.student-table td {
-			padding: 0.5rem;
-		}
-	}
-`}</style>
+				@media (max-width: 640px) {
+					.student-table {
+						font-size: 0.875rem;
+					}
+
+					.student-table th,
+					.student-table td {
+						padding: 0.5rem;
+					}
+				}
+			`}</style>
 		</>
 	);
 }

@@ -12,7 +12,8 @@ export default function MainComponent({
 	page,
 	setPage,
 	totalCount,
-	limit
+	limit,
+	handleViewDetails
 }) {
 	const hasNextPage = page * limit < totalCount;
 	const hasPrevPage = page > 1;
@@ -72,14 +73,14 @@ export default function MainComponent({
 				</div>
 
 				{students.length > 0 ? (
-					<>
-						<StudentTable
-							handleEdit={handleEdit}
-							students={students}
-							handleDelete={handleDelete}
-							page={page}
-							limit={limit}
-						/>
+					<><StudentTable
+	handleEdit={handleEdit}
+	students={students}
+	handleDelete={handleDelete}
+	handleViewDetails={handleViewDetails}
+	page={page}
+	limit={limit}
+/>
 						<nav className="pagination" aria-label="Pagination navigation">
 							<button
 								disabled={!hasPrevPage}
