@@ -1,244 +1,323 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import './App.css';
-import EditComponent from './components/Edit';
-import PostingComponent from './components/Posting';
-import MainComponent from './components/Main';
-import Toast from './components/Toast';
-import DeleteModal from './modals/DeleteModal';
+import { X, User, Mail, Calendar, BookOpen } from 'lucide-react';
 
 const API_BASE_URL = 'http://localhost:3000/api/students';
 
-function App() {
-	const [students, setStudents] = useState([]);
-	const [formData, setFormData] = useState({
-		student_name: '',
-		email: '',
-	});
-	const [isEditing, setIsEditing] = useState(false);
-	const [currentStudent, setCurrentStudent] = useState(null);
-	const [postMode, setPostMode] = useState(false);
+export default function StudentDetails({ studentId, onClose }) {
+	const [student, setStudent] = useState(null);
+	const [classes, setClasses] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
-	const [searchTerm, setSearchTerm] = useState('');
-	const [sortOrder, setSortOrder] = useState('ASC');
-	const [page, setPage] = useState(1);
-	const [limit] = useState(10);
-	const [totalCount, setTotalCount] = useState(0);
-	const [studentToDelete, setStudentToDelete] = useState(null);
-	const [toastConfig, setToastConfig] = useState({
-		show: false,
-		message: '',
-		type: 'success',
-	});
-
-	const triggerToast = useCallback((msg, type = 'success') => {
-		setToastConfig({ show: true, message: msg, type });
-	}, []);
-
-	const handleToastClose = useCallback(() => {
-		setToastConfig((prev) => ({ ...prev, show: false }));
-	}, []);
 
 	useEffect(() => {
-		setPage(1);
-	}, [searchTerm]);
+		const fetchStudentData = async () => {
+			setLoading(true);
+			setError(null);
 
-	const fetchStudents = useCallback(async () => {
-		setLoading(true);
-		setError(null);
-		
-		try {
-			const response = await axios.get(API_BASE_URL, {
-				params: {
-					name: searchTerm,
-					sort: sortOrder,
-					page,
-					limit,
-				},
-			});
-			setStudents(response.data.student);
-			setTotalCount(response.data.totalCount);
-		} catch (err) {
-			console.error('Connection failed', err);
-			setError(true);
-			triggerToast('Failed to load students', 'error');
-		} finally {
-			setLoading(false);
+			try {
+				const studentResponse = await axios.get(`${API_BASE_URL}/${studentId}`);
+				setStudent(studentResponse.data);
+
+				try {
+					const classesResponse = await axios.get(`${API_BASE_URL}/${studentId}/classes`);
+					setClasses(classesResponse.data);
+				} catch (err) {
+					console.log('No classes data available');
+					setClasses([]);
+				}
+			} catch (err) {
+				setError('Failed to load student details');
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		if (studentId) {
+			fetchStudentData();
 		}
-	}, [searchTerm, sortOrder, page, limit, triggerToast]);
+	}, [studentId]);
+
+	const handleOverlayClick = (e) => {
+		if (e.target === e.currentTarget) {
+			onClose();
+		}
+	};
+
+	const handleKeyDown = (e) => {
+		if (e.key === 'Escape') {
+			onClose();
+		}
+	};
 
 	useEffect(() => {
-		fetchStudents();
-	}, [fetchStudents]);
-
-	const handleChange = useCallback((e) => {
-		setFormData((prev) => ({
-			...prev,
-			[e.target.name]: e.target.value,
-		}));
+		document.addEventListener('keydown', handleKeyDown);
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
+		};
 	}, []);
-
-	const handleSubmit = async () => {
-		if (!formData.student_name || formData.student_name.length < 3) {
-			return triggerToast('Name must be at least 3 characters', 'error');
-		}
-
-		if (!formData.email || !formData.email.includes('@')) {
-			return triggerToast('Valid email is required', 'error');
-		}
-
-		try {
-			await axios.post(API_BASE_URL, formData);
-			setFormData({ student_name: '', email: '' });
-			setPostMode(false);
-			fetchStudents();
-			triggerToast('Student added successfully!', 'success');
-		} catch (err) {
-			triggerToast('Failed to add student', 'error');
-		}
-	};
-
-	const confirmDelete = async () => {
-		if (!studentToDelete) return;
-
-		try {
-			await axios.delete(`${API_BASE_URL}/${studentToDelete.id}`);
-			fetchStudents();
-			triggerToast(`${studentToDelete.student_name} deleted`, 'success');
-			setStudentToDelete(null);
-		} catch (err) {
-			triggerToast('Failed to delete student', 'error');
-		}
-	};
-
-	const handleEdit = useCallback((student) => {
-		setFormData({
-			student_name: student.student_name,
-			email: student.email,
-		});
-		setCurrentStudent(student);
-		setIsEditing(true);
-	}, []);
-
-	const handleUpdateSubmit = async (e) => {
-		if (e) e.preventDefault();
-		
-		if (!currentStudent?.id) {
-			console.error('No student selected for editing');
-			return;
-		}
-
-		if (!formData.student_name || formData.student_name.length < 3) {
-			return triggerToast('Name must be at least 3 characters', 'error');
-		}
-
-		if (!formData.email || !formData.email.includes('@')) {
-			return triggerToast('Valid email is required', 'error');
-		}
-
-		try {
-			await axios.put(`${API_BASE_URL}/${currentStudent.id}`, formData);
-			setIsEditing(false);
-			setFormData({ student_name: '', email: '' });
-			setCurrentStudent(null);
-			fetchStudents();
-			triggerToast('Student updated successfully!', 'success');
-		} catch (err) {
-			triggerToast('Failed to update student', 'error');
-		}
-	};
-
-	const onClose = useCallback(() => {
-		setPostMode(false);
-		setFormData({ student_name: '', email: '' });
-	}, []);
-
-	const toggleSort = useCallback(() => {
-		setSortOrder((prev) => (prev === 'ASC' ? 'DESC' : 'ASC'));
-	}, []);
-
-	const openDeleteModal = useCallback((student) => {
-		setStudentToDelete(student);
-	}, []);
-
-	if (error) {
-		return (
-			<div style={{ padding: '20px', textAlign: 'center' }}>
-				<h1>Failed to load students</h1>
-				<button onClick={fetchStudents}>Retry</button>
-			</div>
-		);
-	}
 
 	return (
-		<div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
-			{toastConfig.show && (
-				<Toast
-					message={toastConfig.message}
-					type={toastConfig.type}
-					onToastClose={handleToastClose}
-				/>
-			)}
-
-			{isEditing && (
-				<EditComponent
-					handleUpdateSubmit={handleUpdateSubmit}
-					student_name={formData.student_name}
-					email={formData.email}
-					handleChange={handleChange}
-					editing={() => {
-						setIsEditing(false);
-						setFormData({ student_name: '', email: '' });
-						setCurrentStudent(null);
-					}}
-				/>
-			)}
-
-			{postMode && (
-				<PostingComponent
-					handleSubmit={handleSubmit}
-					email={formData.email}
-					student_name={formData.student_name}
-					handleChange={handleChange}
-					onClose={onClose}
-				/>
-			)}
-
-			{!postMode && !loading && (
-				<MainComponent
-					limit={limit}
-					handleEdit={handleEdit}
-					searchTerm={searchTerm}
-					students={students}
-					setSearchTerm={setSearchTerm}
-					handleDelete={openDeleteModal}
-					toggleSort={toggleSort}
-					sortOrder={sortOrder}
-					page={page}
-					setPage={setPage}
-					totalCount={totalCount}
-				/>
-			)}
-
-			{loading && <p>Loading students...</p>}
-
-			<button
-				style={{ padding: '20px', margin: '20px' }}
-				onClick={() => setPostMode(!postMode)}
+		<>
+			<div
+				className="modal-overlay"
+				onClick={handleOverlayClick}
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="student-details-title"
 			>
-				{postMode ? 'Cancel' : 'Add New Student'}
-			</button>
+				<div className="modal-content">
+					<div className="modal-header">
+						<h2 id="student-details-title">Student Details</h2>
+						<button
+							onClick={onClose}
+							className="close-button"
+							aria-label="Close student details"
+							type="button"
+						>
+							<X size={24} />
+						</button>
+					</div>
 
-			{studentToDelete && (
-				<DeleteModal
-					student={studentToDelete}
-					onConfirm={confirmDelete}
-					onCancel={() => setStudentToDelete(null)}
-				/>
-			)}
-		</div>
+					{loading && <p className="loading-text">Loading student details...</p>}
+
+					{error && <p className="error-text">{error}</p>}
+
+					{!loading && !error && student && (
+						<div className="details-content">
+							<div className="detail-item">
+								<User size={20} className="detail-icon" />
+								<div>
+									<label>Name</label>
+									<p>{student.student_name}</p>
+								</div>
+							</div>
+
+							<div className="detail-item">
+								<Mail size={20} className="detail-icon" />
+								<div>
+									<label>Email</label>
+									<p>{student.email}</p>
+								</div>
+							</div>
+
+							{student.created_at && (
+								<div className="detail-item">
+									<Calendar size={20} className="detail-icon" />
+									<div>
+										<label>Enrolled Since</label>
+										<p>{new Date(student.created_at).toLocaleDateString()}</p>
+									</div>
+								</div>
+							)}
+
+							{classes.length > 0 && (
+								<div className="classes-section">
+									<div className="classes-header">
+										<BookOpen size={20} />
+										<h3>Enrolled Classes</h3>
+									</div>
+									<ul className="classes-list">
+										{classes.map((cls, index) => (
+											<li key={index}>{cls.class_name || cls.name}</li>
+										))}
+									</ul>
+								</div>
+							)}
+						</div>
+					)}
+
+					<div className="modal-footer">
+						<button onClick={onClose} className="btn btn-secondary" type="button">
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<style>{`
+				.modal-overlay {
+					position: fixed;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background-color: rgba(0, 0, 0, 0.7);
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					z-index: 1000;
+					padding: 1rem;
+				}
+
+				.modal-content {
+					background-color: white;
+					padding: 2rem;
+					border-radius: 12px;
+					width: 100%;
+					max-width: 500px;
+					max-height: 80vh;
+					overflow-y: auto;
+					box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+				}
+
+				.modal-header {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-bottom: 1.5rem;
+					padding-bottom: 1rem;
+					border-bottom: 2px solid #f0f0f0;
+				}
+
+				.modal-header h2 {
+					margin: 0;
+					color: #213547;
+					font-size: 1.5rem;
+				}
+
+				.close-button {
+					background: none;
+					border: none;
+					cursor: pointer;
+					padding: 0.5rem;
+					border-radius: 4px;
+					color: #213547;
+					transition: background-color 0.2s;
+				}
+
+				.close-button:hover {
+					background-color: #f0f0f0;
+				}
+
+				.close-button:focus {
+					outline: 2px solid #646cff;
+					outline-offset: 2px;
+				}
+
+				.loading-text,
+				.error-text {
+					text-align: center;
+					padding: 2rem;
+					color: #213547;
+				}
+
+				.error-text {
+					color: #e74c3c;
+				}
+
+				.details-content {
+					display: flex;
+					flex-direction: column;
+					gap: 1.5rem;
+				}
+
+				.detail-item {
+					display: flex;
+					gap: 1rem;
+					align-items: flex-start;
+				}
+
+				.detail-icon {
+					color: #646cff;
+					flex-shrink: 0;
+					margin-top: 0.25rem;
+				}
+
+				.detail-item label {
+					display: block;
+					font-size: 0.875rem;
+					color: #6b7280;
+					margin-bottom: 0.25rem;
+					font-weight: 500;
+				}
+
+				.detail-item p {
+					margin: 0;
+					color: #213547;
+					font-size: 1rem;
+					font-weight: 500;
+				}
+
+				.classes-section {
+					margin-top: 1rem;
+					padding-top: 1rem;
+					border-top: 2px solid #f0f0f0;
+				}
+
+				.classes-header {
+					display: flex;
+					align-items: center;
+					gap: 0.5rem;
+					margin-bottom: 1rem;
+					color: #646cff;
+				}
+
+				.classes-header h3 {
+					margin: 0;
+					font-size: 1.125rem;
+					color: #213547;
+				}
+
+				.classes-list {
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					display: flex;
+					flex-direction: column;
+					gap: 0.5rem;
+				}
+
+				.classes-list li {
+					padding: 0.75rem;
+					background-color: #f9f9f9;
+					border-radius: 6px;
+					color: #213547;
+					border-left: 3px solid #646cff;
+				}
+
+				.modal-footer {
+					margin-top: 2rem;
+					padding-top: 1rem;
+					border-top: 2px solid #f0f0f0;
+					display: flex;
+					justify-content: flex-end;
+				}
+
+				.btn {
+					padding: 0.75rem 1.5rem;
+					font-size: 1rem;
+					font-weight: 500;
+					border-radius: 6px;
+					cursor: pointer;
+					transition: background-color 0.2s;
+					border: none;
+				}
+
+				.btn-secondary {
+					background-color: #6b7280;
+					color: white;
+				}
+
+				.btn-secondary:hover {
+					background-color: #4b5563;
+				}
+
+				.btn:focus {
+					outline: 2px solid #646cff;
+					outline-offset: 2px;
+				}
+
+				@media (max-width: 480px) {
+					.modal-content {
+						padding: 1.5rem;
+					}
+
+					.modal-header h2 {
+						font-size: 1.25rem;
+					}
+				}
+			`}</style>
+		</>
 	);
 }
-
-export default App;
