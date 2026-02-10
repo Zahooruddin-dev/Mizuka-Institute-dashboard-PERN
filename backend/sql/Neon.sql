@@ -6,7 +6,7 @@ CREATE TABLE enrollments (
     UNIQUE(student_id, class_id) 
 );
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(), -- Built-in Postgres 13+ function
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
