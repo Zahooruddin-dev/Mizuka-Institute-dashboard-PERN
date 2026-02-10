@@ -22,7 +22,7 @@ async function getStudentByIdQuery(id) {
 }
 async function searchStudentsQuery(name,order) {
 	const { rows } = await pool.query(
-		`SELECT * FROM students WHERE student_name ILIKE $1 ORDER BY student_name ${order}`,
+		`SELECT * FROM students WHERE email ILIKE $1 ORDER BY email ${order}`,
 		[name],
 	);
 	return rows[0];

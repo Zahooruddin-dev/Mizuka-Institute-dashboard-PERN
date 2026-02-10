@@ -21,8 +21,8 @@ async function getAllStudentsPagination(req, res) {
 }
 
 async function searchStudents(req, res) {
-	const { name, sort = 'ASC' } = req.query;
-	const searchTerm = name || '';
+	const { email, sort = 'ASC' } = req.query;
+	const searchTerm = email || '';
 	const order = sort === 'DESC' ? 'DESC' : 'ASC';
 
 	try {

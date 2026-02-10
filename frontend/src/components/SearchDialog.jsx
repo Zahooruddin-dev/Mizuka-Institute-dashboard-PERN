@@ -18,9 +18,11 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 
 		try {
 			const response = await axios.get(`${API_BASE_URL}/search`, {
-				params: { name: searchTerm, sort: 'ASC' },
+				params: { email: searchTerm, sort: 'ASC' },
 			});
-			setResults(response.data);
+
+			// BACKEND RETURNS SINGLE OBJECT → wrap in array
+			setResults(response.data ? [response.data] : []);
 		} catch (err) {
 			console.error('Search failed:', err);
 			setResults([]);
@@ -44,66 +46,70 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 	return (
 		<>
 			<div
-				className="modal-overlay"
+				className='modal-overlay'
 				onClick={handleOverlayClick}
-				role="dialog"
-				aria-modal="true"
-				aria-labelledby="search-dialog-title"
+				role='dialog'
+				aria-modal='true'
+				aria-labelledby='search-dialog-title'
 			>
-				<div className="modal-content">
-					<div className="modal-header">
-						<h2 id="search-dialog-title">Search Students</h2>
+				<div className='modal-content'>
+					<div className='modal-header'>
+						<h2 id='search-dialog-title'>Search Students</h2>
 						<button
 							onClick={onClose}
-							className="close-button"
-							aria-label="Close search"
-							type="button"
+							className='close-button'
+							aria-label='Close search'
+							type='button'
 						>
 							<X size={24} />
 						</button>
 					</div>
 
-					<div className="search-section">
-						<div className="search-input-wrapper">
+					<div className='search-section'>
+						<div className='search-input-wrapper'>
 							<input
-								type="text"
+								type='text'
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
 								onKeyPress={handleKeyPress}
-								placeholder="Search by name..."
-								className="search-input"
+								placeholder='Search by email...'
+								className='search-input'
 								autoFocus
 							/>
-							<button onClick={handleSearch} className="search-button" type="button">
+							<button
+								onClick={handleSearch}
+								className='search-button'
+								type='button'
+							>
 								<Search size={20} />
 								Search
 							</button>
 						</div>
 					</div>
 
-					<div className="results-section">
-						{loading && <p className="status-text">Searching...</p>}
+					<div className='results-section'>
+						{loading && <p className='status-text'>Searching...</p>}
 
 						{!loading && searched && results.length === 0 && (
-							<p className="status-text">No students found</p>
+							<p className='status-text'>No students found</p>
 						)}
 
 						{!loading && results.length > 0 && (
-							<div className="results-list">
+							<div className='results-list'>
 								{results.map((student) => (
 									<div
 										key={student.id}
-										className="result-item"
+										className='result-item'
 										onClick={() => onSelectStudent(student)}
-										role="button"
+										role='button'
 										tabIndex={0}
 										onKeyPress={(e) => {
 											if (e.key === 'Enter') onSelectStudent(student);
 										}}
 									>
-										<div className="result-info">
-											<p className="result-name">{student.student_name}</p>
-											<p className="result-email">{student.email}</p>
+										<div className='result-info'>
+											<p className='result-name'>{student.student_name}</p>
+											<p className='result-email'>{student.email}</p>
 										</div>
 									</div>
 								))}
