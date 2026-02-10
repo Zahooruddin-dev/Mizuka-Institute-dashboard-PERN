@@ -5,11 +5,14 @@ const db = require('../db/queryAuth');
 async function login(req, res) {
 	const { email, password } = req.body;
 	try {
-		const rows = await db.loginQuery(email);
-    if(rows.length === 0){
-      return res.status(401).json({message:'Invalid Email or Password'})
-    }
-    const user = rows[0]
+		const user = await db.loginQuery(email);
+		if (!user) {
+			return res.status(401).json({ message: 'Invalid Email or Password' });
+		}
+		const isMatch = await bcrypt.compare(password, user.password_hash);
+		if (!isMatch) {
+			return res.status(401).json({ message: 'Invalid Email or Password' });
+		}
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
