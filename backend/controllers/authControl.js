@@ -5,7 +5,10 @@ const db = require('../db/queryAuth');
 async function login(req, res) {
 	const { email, password } = req.body;
 	try {
-		const userResult = await db.loginQuery(email);
+		const rows = await db.loginQuery(email);
+    if(rows.length === 0){
+      return res.status(401).json({message:'Unauthorized'})
+    }
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
