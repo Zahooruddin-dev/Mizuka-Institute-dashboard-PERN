@@ -9,6 +9,7 @@ async function login(req, res) {
     if(rows.length === 0){
       return res.status(401).json({message:'Invalid Email or Password'})
     }
+    const user = rows[0]
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

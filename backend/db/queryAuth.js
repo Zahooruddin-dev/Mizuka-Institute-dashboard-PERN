@@ -4,7 +4,7 @@ async function loginQuery(email) {
 	const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [
 		email,
 	]);
-	return rows;
+	return rows[0] || null;
 }
 
 module.exports = {
