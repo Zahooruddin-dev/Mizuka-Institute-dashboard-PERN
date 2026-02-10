@@ -53,40 +53,6 @@ async function getStudentById(req, res) {
 	}
 }
 
-async function getTotalStudentsCount(req, res) {
-	try {
-		const count = await db.getTotalStudentsCountQuery();
-		res.status(200).json({ count });
-	} catch (err) {
-		console.error('Error getting count:', err);
-		res.status(500).json({ message: 'Internal Server Error' });
-	}
-}
-
-async function getRecentStudents(req, res) {
-	const { limit = 5 } = req.query;
-
-	try {
-		const students = await db.getRecentStudentsQuery(limit);
-		res.status(200).json(students);
-	} catch (err) {
-		console.error('Error fetching recent students:', err);
-		res.status(500).json({ message: 'Internal Server Error' });
-	}
-}
-
-async function getStudentGrades(req, res) {
-	const { id } = req.params;
-
-	try {
-		const grades = await db.getStudentGradesQuery(id);
-		res.status(200).json(grades);
-	} catch (err) {
-		console.error('Error fetching grades:', err);
-		res.status(500).json({ message: 'Internal Server Error' });
-	}
-}
-
 async function addStudent(req, res) {
 	const { student_name, email } = req.body;
 
@@ -96,10 +62,6 @@ async function addStudent(req, res) {
 
 	if (student_name.length < 3) {
 		return res.status(400).json({ error: 'Name must be at least 3 characters' });
-	}
-
-	if (!email.includes('@')) {
-		return res.status(400).json({ error: 'Invalid email format' });
 	}
 
 	try {
@@ -123,10 +85,6 @@ async function updateStudent(req, res) {
 		return res.status(400).json({ error: 'Name must be at least 3 characters' });
 	}
 
-	if (!email.includes('@')) {
-		return res.status(400).json({ error: 'Invalid email format' });
-	}
-
 	try {
 		const updatedStudent = await db.updateStudentQuery(student_name, email, id);
 		if (!updatedStudent) {
@@ -136,26 +94,6 @@ async function updateStudent(req, res) {
 	} catch (err) {
 		console.error('Error updating student:', err);
 		res.status(500).json({ message: 'Database error. Could not update the student' });
-	}
-}
-
-async function updateStudentEmail(req, res) {
-	const { id } = req.params;
-	const { email } = req.body;
-
-	if (!email || !email.includes('@')) {
-		return res.status(400).json({ error: 'Valid email is required' });
-	}
-
-	try {
-		const updatedStudent = await db.updateStudentEmailQuery(email, id);
-		if (!updatedStudent) {
-			return res.status(404).json({ error: 'Student not found' });
-		}
-		res.status(200).json(updatedStudent);
-	} catch (err) {
-		console.error('Error updating email:', err);
-		res.status(500).json({ message: 'Database error. Could not update email' });
 	}
 }
 
@@ -177,35 +115,11 @@ async function deleteStudent(req, res) {
 	}
 }
 
-async function bulkDeleteStudents(req, res) {
-	const { ids } = req.body;
-
-	if (!ids || !Array.isArray(ids) || ids.length === 0) {
-		return res.status(400).json({ error: 'Array of student IDs is required' });
-	}
-
-	try {
-		const deleted = await db.bulkDeleteStudentsQuery(ids);
-		res.status(200).json({
-			message: `${deleted.length} students deleted successfully`,
-			deletedStudents: deleted,
-		});
-	} catch (err) {
-		console.error('Error bulk deleting students:', err);
-		res.status(500).json({ message: 'Database error. Could not delete students' });
-	}
-}
-
 module.exports = {
 	getAllStudentsPagination,
 	searchStudents,
 	getStudentById,
-	getTotalStudentsCount,
-	getRecentStudents,
-	getStudentGrades,
 	addStudent,
 	updateStudent,
-	updateStudentEmail,
 	deleteStudent,
-	bulkDeleteStudents,
 };
