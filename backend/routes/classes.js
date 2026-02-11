@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controllers/classControl');
+const { isTeacher, verifyToken } = require('../middleware/authMiddleware');
+
 require('dotenv').config;
 
 router.get('/', controller.getClasses);
-router.post('/', controller.createClasses);
+router.post('/', verifyToken, isTeacher, controller.createClasses);
 
 router.get('/:id', controller.getSpecificClass);
 router.put('/:id', controller.editSpecificClass);
-router.delete('/:id', controller.deleteClass);
+router.delete('/:id', verifyToken, isTeacher, controller.deleteClass);
 
 module.exports = router;

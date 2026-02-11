@@ -14,6 +14,10 @@ const verifyToken = (req, res, next) => {
 	}
 };
 const isTeacher = (req, res, next) => {
+	if(!req.user) {return res
+			.status(403)
+			.json({ message: 'Require Teacher or Admin Role to have access!' });
+	}
 	if (req.user.role === 'teacher' || req.user.role === 'admin') {
 		next();
 	} else {
