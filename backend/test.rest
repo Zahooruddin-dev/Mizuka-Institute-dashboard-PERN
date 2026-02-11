@@ -64,3 +64,14 @@ Content-Type: application/json
   "email": "teacher@mizuka.edu",
   "password": "password123"
 }
+
+### REgister 
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "first@mizuka.edu",
+  "username":"First Teacher",
+  "password": "password123",
+  "role":"teacher"
+}

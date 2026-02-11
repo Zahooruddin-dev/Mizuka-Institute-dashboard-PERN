@@ -9,7 +9,7 @@ async function loginQuery(email) {
 async function registerQuery(username, email, password_hash, role = 'student') {
 	const { rows } = await pool.query(
 		`
-		INSERT INTO users (username,email,password_hash,role) VALUE ($1,$2,$3,$4)`,
+		INSERT INTO users (username,email,password_hash,role) VALUES ($1,$2,$3,$4) RETURNING id, username, email, role`,
 		[username, email, password_hash, role],
 	);
 	return rows[0];
