@@ -30,7 +30,7 @@ export default function Login() {
 	};
 	return (
 		<div className='auth-container'>
-			<form className='auth-form'>
+			<form className='auth-form' onSubmit={handleSubmit}>
 				<h2>Login</h2>
 				{error && <p className='error'>{error}</p>}
 				<input
