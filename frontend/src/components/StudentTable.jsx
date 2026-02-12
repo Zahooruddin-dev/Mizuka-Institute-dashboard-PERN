@@ -6,20 +6,24 @@ export default function StudentTable({
 	handleEdit,
 	handleViewDetails,
 	page,
-	limit
+	limit,
 }) {
 	return (
 		<>
-			<div className="table-container">
-				<table className="student-table" role="table" aria-label="Students list">
+			<div className='table-container'>
+				<table
+					className='student-table'
+					role='table'
+					aria-label='Students list'
+				>
 					<thead>
 						<tr>
-							<th scope="col">No</th>
-							<th scope="col">Name</th>
-							<th scope="col">Email</th>
-							<th scope="col">View</th>
-							<th scope="col">Edit</th>
-							<th scope="col">Delete</th>
+							<th scope='col'>No</th>
+							<th scope='col'>Name</th>
+							<th scope='col'>Email</th>
+							<th scope='col'>View</th>
+							<th scope='col'>Edit</th>
+							<th scope='col'>Delete</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,32 +37,32 @@ export default function StudentTable({
 									<td>{student.email}</td>
 									<td>
 										<button
-											className="action-button view-button"
+											className='action-button view-button'
 											onClick={() => handleViewDetails(student)}
 											aria-label={`View ${student.student_name} details`}
-											type="button"
+											type='button'
 										>
-											<Eye size={20} color="#646cff" strokeWidth={2} />
+											<Eye size={20} color='#646cff' strokeWidth={2} />
 										</button>
 									</td>
 									<td>
 										<button
-											className="action-button edit-button"
+											className='action-button edit-button'
 											onClick={() => handleEdit(student)}
 											aria-label={`Edit ${student.student_name}`}
-											type="button"
+											type='button'
 										>
-											<Edit size={20} color="green" strokeWidth={2} />
+											<Edit size={20} color='green' strokeWidth={2} />
 										</button>
 									</td>
 									<td>
 										<button
-											className="action-button delete-button"
+											className='action-button delete-button'
 											onClick={() => handleDelete(student)}
 											aria-label={`Delete ${student.student_name}`}
-											type="button"
+											type='button'
 										>
-											<Trash2 size={20} color="red" strokeWidth={2} />
+											<Trash2 size={20} color='red' strokeWidth={2} />
 										</button>
 									</td>
 								</tr>
@@ -107,7 +111,11 @@ export default function StudentTable({
 				.student-table tbody tr:hover {
 					background-color: #f0f0f0;
 				}
-
+				.action-button svg {
+			  display: block;
+ 				 width: 20px;
+  			height: 20px;
+}
 				.action-button {
 					background: #f0f0f0;
 					border: 1px solid #ccc;
