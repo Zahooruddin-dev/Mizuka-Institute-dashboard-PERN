@@ -8,7 +8,7 @@ import Toast from './components/Toast';
 import DeleteModal from './modals/DeleteModal';
 import StudentDetails from './components/StudentDetails';
 import SearchDialog from './components/SearchDialog';
-
+import Login from './Auth/Login';
 const API_BASE_URL = 'http://localhost:3000/api/students';
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
 		message: '',
 		type: 'success',
 	});
-
+	const [test,setTest] = useState(true)
 	const triggerToast = useCallback((msg, type = 'success') => {
 		setToastConfig({ show: true, message: msg, type });
 	}, []);
@@ -183,9 +183,15 @@ function App() {
 			</div>
 		);
 	}
-
+	if(test){
+		return (
+			<Login/>
+		)
+	}
 	return (
-		<div style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}>
+		<div
+			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
+		>
 			{toastConfig.show && (
 				<Toast
 					message={toastConfig.message}
@@ -240,7 +246,6 @@ function App() {
 					students={students}
 					setSearchTerm={setSearchTerm}
 					handleDelete={openDeleteModal}
-					
 					handleViewDetails={handleViewDetails}
 					toggleSort={toggleSort}
 					sortOrder={sortOrder}
@@ -266,7 +271,7 @@ function App() {
 					Advanced Search
 				</button>
 			</div>
-
+			
 			{studentToDelete && (
 				<DeleteModal
 					student={studentToDelete}
