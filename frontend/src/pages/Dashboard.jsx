@@ -8,7 +8,7 @@ import Toast from '../components/Toast';
 import DeleteModal from '../modals/DeleteModal';
 import StudentDetails from '../components/StudentDetails';
 import SearchDialog from '../components/SearchDialog';
-import Login from '../Auth/Login';
+import Login from './Login';
 import {
 	getStudents,
 	createStudent,

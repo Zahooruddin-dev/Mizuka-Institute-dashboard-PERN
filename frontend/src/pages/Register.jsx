@@ -1,13 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
-import { loginUser } from '../api/authApi';
+import { registerUser } from '../api/authApi';
 import { useNavigate } from 'react-router';
 
 export default function Login() {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
 		username: '',
+		email: '',
 		password: '',
+		role: 'user',
 	});
 	const [error, setError] = useState('');
 	const handleChange = (e) => {
