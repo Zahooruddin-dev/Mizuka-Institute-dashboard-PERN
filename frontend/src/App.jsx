@@ -9,7 +9,12 @@ import DeleteModal from './modals/DeleteModal';
 import StudentDetails from './components/StudentDetails';
 import SearchDialog from './components/SearchDialog';
 import Login from './Auth/Login';
-const API_BASE_URL = 'http://localhost:3000/api/students';
+import {
+	getStudents,
+	createStudent,
+	updateStudent,
+	deleteStudent,
+} from './api/api';
 
 function App() {
 	const [students, setStudents] = useState([]);
@@ -53,13 +58,11 @@ function App() {
 		setError(null);
 
 		try {
-			const response = await axios.get(API_BASE_URL, {
-				params: {
-					name: searchTerm,
-					sort: sortOrder,
-					page,
-					limit,
-				},
+			const response = await getStudents({
+				name: searchTerm,
+				sort: sortOrder,
+				page,
+				limit,
 			});
 			setStudents(response.data.student);
 			setTotalCount(response.data.totalCount);
@@ -93,7 +96,7 @@ function App() {
 		}
 
 		try {
-			await axios.post(API_BASE_URL, formData);
+			await createStudent(formData);
 			setFormData({ student_name: '', email: '' });
 			setPostMode(false);
 			fetchStudents();
@@ -107,7 +110,8 @@ function App() {
 		if (!studentToDelete) return;
 
 		try {
-			await axios.delete(`${API_BASE_URL}/${studentToDelete.id}`);
+			await deleteStudent(studentToDelete.id);
+
 			fetchStudents();
 			triggerToast(`${studentToDelete.student_name} deleted`, 'success');
 			setStudentToDelete(null);
@@ -146,7 +150,8 @@ function App() {
 		}
 
 		try {
-			await axios.put(`${API_BASE_URL}/${currentStudent.id}`, formData);
+			await updateStudent(currentStudent.id, formData);
+
 			setIsEditing(false);
 			setFormData({ student_name: '', email: '' });
 			setCurrentStudent(null);
@@ -267,7 +272,7 @@ function App() {
 					Advanced Search
 				</button>
 			</div>
-			
+
 			{studentToDelete && (
 				<DeleteModal
 					student={studentToDelete}
