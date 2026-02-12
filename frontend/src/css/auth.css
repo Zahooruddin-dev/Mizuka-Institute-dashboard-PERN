@@ -1,46 +1,123 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
 .auth-container {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f4f4f4;
+  padding: 20px;
 }
 
+/* Larger card */
 .auth-form {
-  background: white;
-  padding: 40px;
-  border-radius: 8px;
-  width: 350px;
+  background: #ffffff;
+  width: 100%;
+  max-width: 480px; /* increased */
+  padding: 50px 40px; /* bigger padding */
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  gap: 22px;
 }
 
+/* Title */
 .auth-form h2 {
   text-align: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 10px;
 }
 
-.auth-form input,
-.auth-form select {
-  padding: 10px;
-  font-size: 14px;
+/* Bigger inputs */
+.auth-form input {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px; /* larger text */
+  transition: 0.3s ease;
 }
 
+.auth-form input:focus {
+  outline: none;
+  border-color: #2a5298;
+  box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.2);
+}
+
+/* Bigger button */
 .auth-form button {
-  padding: 10px;
-  background-color: #2f80ed;
-  color: white;
+  padding: 14px;
+  border-radius: 10px;
   border: none;
+  background-color: #2a5298;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .auth-form button:hover {
-  background-color: #1c60b3;
+  background-color: #1e3c72;
 }
 
+/* Error */
 .error {
-  color: red;
-  font-size: 13px;
+  color: #e74c3c;
+  font-size: 14px;
   text-align: center;
+}
+
+/* Link */
+.auth-form p {
+  text-align: center;
+  font-size: 15px;
+}
+
+.auth-form a {
+  color: #2a5298;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .auth-form {
+    max-width: 420px;
+    padding: 40px 30px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .auth-form {
+    max-width: 100%;
+    padding: 35px 25px;
+  }
+
+  .auth-form h2 {
+    font-size: 22px;
+  }
+
+  .auth-form input {
+    font-size: 15px;
+  }
+
+  .auth-form button {
+    font-size: 15px;
+  }
 }

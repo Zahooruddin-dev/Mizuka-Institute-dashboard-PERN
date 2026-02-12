@@ -1,17 +1,17 @@
 import api from './axiosConfig';
 
 export const getStudents = (params) => {
-	return api.get('/', { params });
+  return api.get('/api/students', { params });
 };
 
 export const createStudent = (data) => {
-	return api.post('/', data);
+  return api.post('/api/students', data);
 };
 
 export const updateStudent = (id, data) => {
-	return api.put(`/${id}`, data);
+  return api.put(`/api/students/${id}`, data);
 };
 
 export const deleteStudent = (id) => {
-	return api.delete(`/${id}`);
+  return api.delete(`/api/students/${id}`);
 };
