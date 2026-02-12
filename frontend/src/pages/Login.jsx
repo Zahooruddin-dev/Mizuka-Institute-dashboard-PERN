@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { loginUser } from '../api/authApi';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
+import '../css/auth.css';
 export default function Login() {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
