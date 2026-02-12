@@ -9,7 +9,7 @@ export default function Login() {
 		username: '',
 		email: '',
 		password: '',
-		role: 'user',
+		role: 'student',
 	});
 	const [error, setError] = useState('');
 	const handleChange = (e) => {
@@ -22,7 +22,7 @@ export default function Login() {
 		e.preventDefault();
 		setError('');
 		try {
-			const response = await loginUser(formData);
+			const response = await registerUser(formData);
 			const token = response.data.token;
 			localStorage.setItem('token', token);
 			navigate('/');
@@ -32,9 +32,17 @@ export default function Login() {
 	};
 	return (
 		<div className='auth-container'>
-			<form className='auth-form'>
-				<h2>Login</h2>
+			<form className='auth-form' onSubmit={handleSubmit}>
+				<h2>Register</h2>
 				{error && <p className='error'>{error}</p>}
+				<input
+					type='email'
+					name='email'
+					placeholder='Email'
+					value={formData.email}
+					onChange={handleChange}
+					required
+				/>
 				<input
 					type='email'
 					name='email'
@@ -51,9 +59,14 @@ export default function Login() {
 					onChange={handleChange}
 					required
 				/>
-				<button type='submit'>Login</button>
+				<select name='role' value={formData.role} onChange={handleChange}>
+					<option value='student'>Student</option>
+					<option value='teacher'>Teacher</option>
+					<option value='admin'>Admin</option>
+				</select>
+				<button type='submit'>Register</button>
 				<p>
-					Don't have an account? <Link to='/register'>Register</Link>
+					Don't have an account? <Link to='/login'>Login</Link>
 				</p>
 			</form>
 		</div>
