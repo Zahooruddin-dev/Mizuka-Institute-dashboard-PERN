@@ -35,7 +35,7 @@ function App() {
 		message: '',
 		type: 'success',
 	});
-	const [test,setTest] = useState(true)
+
 	const triggerToast = useCallback((msg, type = 'success') => {
 		setToastConfig({ show: true, message: msg, type });
 	}, []);
@@ -183,11 +183,7 @@ function App() {
 			</div>
 		);
 	}
-	if(test){
-		return (
-			<Login/>
-		)
-	}
+
 	return (
 		<div
 			style={{ padding: '20px', border: '1px solid #ccc', borderRadius: '8px' }}
