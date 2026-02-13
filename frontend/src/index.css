@@ -1,10 +1,10 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color: #213547;
-  background-color: #ffffff;
+  color: #1e293b;
+  background-color: #fafafa;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -43,14 +43,15 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  color: #213547;
-  background-color: #ffffff;
+  color: #1e293b;
+  background-color: #fafafa;
 }
 
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   font-weight: 600;
-  color: #213547;
+  color: #1e293b;
+  letter-spacing: -0.025em;
 }
 
 h1 {
@@ -68,83 +69,106 @@ h3 {
 
 p {
   margin-bottom: 1em;
-  color: #213547;
+  color: #334155;
+  line-height: 1.6;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-  transition: color 0.25s ease-in-out;
+  color: #6366f1;
+  text-decoration: none;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 a:hover {
-  color: #535bf2;
+  color: #4f46e5;
 }
 
 a:focus-visible {
-  outline: 2px solid #646cff;
+  outline: 2px solid #6366f1;
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
   font-family: inherit;
-  background-color: #f9f9f9;
-  color: #213547;
+  background: #ffffff;
+  color: #334155;
   cursor: pointer;
-  transition: border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.01em;
 }
 
 button:hover:not(:disabled) {
-  border-color: #646cff;
-  background-color: #e9e9e9;
+  border-color: #6366f1;
+  background: #f8fafc;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 }
 
 button:focus-visible {
-  outline: 2px solid #646cff;
+  outline: 2px solid #6366f1;
   outline-offset: 2px;
 }
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
+  background: #f8fafc;
+  color: #94a3b8;
 }
 
 button:active:not(:disabled) {
-  transform: scale(0.98);
+  transform: translateY(0);
 }
 
 input,
 textarea,
 select {
   font-family: inherit;
-  font-size: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
   line-height: inherit;
-  color: #213547;
-  background-color: #ffffff;
-  border: 1px solid #d1d5db;
+  color: #1e293b;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+input:hover:not(:disabled),
+textarea:hover:not(:disabled),
+select:hover:not(:disabled) {
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  outline: 2px solid #646cff;
-  outline-offset: 2px;
-  border-color: #646cff;
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 input:disabled,
 textarea:disabled,
 select:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
-  background-color: #f3f4f6;
+  opacity: 0.5;
+  background: #f8fafc;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
 }
 
 img,
@@ -158,9 +182,10 @@ svg {
 }
 
 table {
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   width: 100%;
-  color: #213547;
+  color: #334155;
 }
 
 [role="button"],
@@ -190,8 +215,14 @@ table {
   }
   
   button {
-    padding: 0.5em 1em;
-    font-size: 0.95em;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 0.75rem 0.875rem;
   }
 }
 
@@ -201,7 +232,14 @@ table {
   }
   
   button {
-    padding: 0.5em 0.8em;
-    font-size: 0.9em;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
   }
 }
