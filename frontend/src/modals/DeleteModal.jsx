@@ -96,7 +96,7 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 				}
 
 				.modal-content {
-					background: #fafafa;
+					background: var(--surface);
 					padding: 2.5rem;
 					border-radius: 20px;
 					text-align: center;
@@ -123,7 +123,7 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 					width: 64px;
 					height: 64px;
 					margin: 0 auto 1.5rem;
-					background: rgba(239, 68, 68, 0.1);
+					background: rgba(239, 68, 68, 0.08);
 					border-radius: 50%;
 					display: flex;
 					align-items: center;
@@ -140,7 +140,7 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 				}
 
 				.modal-content p {
-					color: #64748b;
+					color: var(--muted);
 					margin: 0 0 2rem 0;
 					font-size: 0.9375rem;
 					line-height: 1.6;
@@ -171,7 +171,7 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 				}
 
 				.btn:focus {
-					outline: 2px solid #6366f1;
+					outline: 2px solid var(--primary-500);
 					outline-offset: 2px;
 				}
 
@@ -188,7 +188,7 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 
 				.btn-cancel:hover {
 					background: #f8fafc;
-					border-color: #6366f1;
+					border-color: var(--primary-500);
 					transform: translateY(-1px);
 					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 				}

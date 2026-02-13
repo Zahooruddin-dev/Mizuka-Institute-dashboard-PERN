@@ -243,7 +243,7 @@
 }
 
 .mobile-toggle:focus {
-  outline: 2px solid #667eea;
+  outline: 2px solid var(--primary-500);
   outline-offset: 2px;
 }
 
@@ -262,6 +262,7 @@
 
   .mobile-toggle {
     display: flex;
+    left: 1rem; /* ensure toggle appears at screen edge on mobile */
   }
 
   .sidebar-overlay {

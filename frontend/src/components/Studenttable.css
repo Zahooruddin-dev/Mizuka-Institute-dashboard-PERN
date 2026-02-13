@@ -1,9 +1,9 @@
 .table-container {
 	width: 100%;
-	background: #ffffff;
+	background: var(--surface);
 	border-radius: 16px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-	border: 1px solid rgba(0, 0, 0, 0.06);
+	box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+	border: 1px solid rgba(15, 23, 42, 0.04);
 	overflow: hidden;
 }
 
@@ -20,30 +20,22 @@
 }
 
 .student-table thead {
-	background: linear-gradient(
-		135deg,
-		rgba(102, 126, 234, 0.05) 0%,
-		rgba(118, 75, 162, 0.05) 100%
-	);
+	background: linear-gradient(135deg, rgba(6,182,212,0.05) 0%, rgba(45,212,191,0.05) 100%);
 }
 
 .student-table th {
 	padding: 1.25rem 1.5rem;
-	border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+	border-bottom: 2px solid rgba(6,182,212,0.08);
 	position: sticky;
 	top: 0;
 	z-index: 10;
-	background: linear-gradient(
-		135deg,
-		rgba(102, 126, 234, 0.05) 0%,
-		rgba(118, 75, 162, 0.05) 100%
-	);
+	background: linear-gradient(135deg, rgba(6,182,212,0.05) 0%, rgba(45,212,191,0.05) 100%);
 }
 
 .th-content {
 	display: block;
 	font-weight: 700;
-	color: #1e293b;
+	color: var(--text);
 	font-size: 0.8125rem;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
@@ -51,8 +43,8 @@
 
 .student-table td {
 	padding: 1.25rem 1.5rem;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-	background: #ffffff;
+	border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+	background: var(--surface);
 }
 
 .student-table tbody tr {
@@ -60,11 +52,7 @@
 }
 
 .student-table tbody tr:hover {
-	background: linear-gradient(
-		135deg,
-		rgba(102, 126, 234, 0.02) 0%,
-		rgba(118, 75, 162, 0.02) 100%
-	);
+	background: linear-gradient(135deg, rgba(6,182,212,0.02) 0%, rgba(45,212,191,0.02) 100%);
 	transform: scale(1.001);
 }
 
@@ -82,14 +70,10 @@
 	justify-content: center;
 	width: 32px;
 	height: 32px;
-	background: linear-gradient(
-		135deg,
-		rgba(102, 126, 234, 0.1) 0%,
-		rgba(118, 75, 162, 0.1) 100%
-	);
+	background: linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(45,212,191,0.1) 100%);
 	border-radius: 8px;
 	font-weight: 600;
-	color: #667eea;
+	color: var(--primary-500);
 	font-size: 0.875rem;
 }
 
@@ -103,7 +87,7 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 10px;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: linear-gradient(135deg, var(--primary-500) 0%, var(--accent-1) 100%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -111,17 +95,17 @@
 	font-weight: 700;
 	font-size: 0.875rem;
 	flex-shrink: 0;
-	box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+	box-shadow: 0 4px 8px rgba(6,182,212,0.14);
 }
 
 .student-name {
 	font-weight: 600;
-	color: #1e293b;
+	color: var(--text);
 	font-size: 0.9375rem;
 }
 
 .student-email {
-	color: #64748b;
+	color: var(--muted);
 	font-size: 0.9375rem;
 	font-weight: 500;
 }
@@ -158,19 +142,15 @@
 }
 
 .view-button {
-	color: #667eea;
-	border-color: rgba(102, 126, 234, 0.2);
+	color: var(--primary-500);
+	border-color: rgba(6,182,212,0.16);
 }
 
 .view-button:hover {
-	background: linear-gradient(
-		135deg,
-		rgba(102, 126, 234, 0.1) 0%,
-		rgba(118, 75, 162, 0.1) 100%
-	);
-	border-color: #667eea;
+	background: linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(45,212,191,0.08) 100%);
+	border-color: var(--primary-500);
 	transform: translateY(-1px);
-	box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+	box-shadow: 0 2px 8px rgba(6,182,212,0.14);
 }
 
 .view-button:hover svg {
@@ -214,7 +194,7 @@
 }
 
 .action-button:focus {
-	outline: 2px solid #667eea;
+	outline: 2px solid var(--primary-500);
 	outline-offset: 2px;
 }
 

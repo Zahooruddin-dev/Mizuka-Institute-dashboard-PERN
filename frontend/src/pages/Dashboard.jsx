@@ -200,17 +200,17 @@ function Dashboard(User) {
 						align-items: center;
 						justify-content: center;
 						padding: 2rem;
-						background: #fafafa;
+						background: var(--bg);
 					}
 
 					.error-content {
 						text-align: center;
 						max-width: 480px;
 						padding: 3rem 2rem;
-						background: #ffffff;
+						background: var(--surface);
 						border-radius: 20px;
-						box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-						border: 1px solid rgba(0, 0, 0, 0.06);
+						box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+						border: 1px solid rgba(15, 23, 42, 0.04);
 					}
 
 					.error-content h1 {
@@ -232,20 +232,20 @@ function Dashboard(User) {
 						padding: 0.875rem 2rem;
 						font-size: 0.9375rem;
 						font-weight: 600;
-						background: #6366f1;
+						background: var(--primary-500);
 						color: #ffffff;
 						border: none;
 						border-radius: 12px;
 						cursor: pointer;
 						transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-						box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+						box-shadow: 0 6px 16px rgba(6,182,212,0.12);
 						letter-spacing: 0.01em;
 					}
 
 					.retry-button:hover {
-						background: #4f46e5;
+						background: var(--primary-600);
 						transform: translateY(-1px);
-						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+						box-shadow: 0 8px 18px rgba(6,182,212,0.12);
 					}
 
 					.retry-button:active {
@@ -253,7 +253,7 @@ function Dashboard(User) {
 					}
 
 					.retry-button:focus {
-						outline: 2px solid #6366f1;
+						outline: 2px solid var(--primary-500);
 						outline-offset: 2px;
 					}
 				`}</style>
@@ -383,8 +383,8 @@ function Dashboard(User) {
 				.loading-spinner {
 					width: 48px;
 					height: 48px;
-					border: 4px solid rgba(99, 102, 241, 0.1);
-					border-top-color: #6366f1;
+					border: 4px solid rgba(6,182,212,0.08);
+					border-top-color: var(--primary-500);
 					border-radius: 50%;
 					animation: spin 0.8s linear infinite;
 				}
@@ -397,7 +397,7 @@ function Dashboard(User) {
 
 				.loading-text {
 					margin: 0;
-					color: #64748b;
+					color: var(--muted);
 					font-size: 0.9375rem;
 					font-weight: 500;
 				}
@@ -422,12 +422,12 @@ function Dashboard(User) {
 				}
 
 				.primary-btn {
-					background: #6366f1;
-					color: #ffffff;
+					background: var(--primary-500);
+					color: var(--surface);
 				}
 
 				.primary-btn:hover {
-					background: #4f46e5;
+					background: var(--primary-600);
 					transform: translateY(-2px);
 					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
 				}
@@ -440,7 +440,7 @@ function Dashboard(User) {
 
 				.secondary-btn:hover {
 					background: #f8fafc;
-					border-color: #6366f1;
+					border-color: var(--primary-500);
 					transform: translateY(-2px);
 					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 				}
@@ -450,7 +450,7 @@ function Dashboard(User) {
 				}
 
 				.action-btn:focus {
-					outline: 2px solid #6366f1;
+					outline: 2px solid var(--primary-500);
 					outline-offset: 2px;
 				}
 

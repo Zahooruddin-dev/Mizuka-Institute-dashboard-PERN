@@ -110,7 +110,7 @@ export default function EditComponent({
 				}
 
 				.modal-content {
-					background: #fafafa;
+					background: var(--surface);
 					padding: 2.5rem;
 					border-radius: 20px;
 					width: 100%;
@@ -167,8 +167,8 @@ export default function EditComponent({
 					font-weight: 500;
 					border: 1px solid rgba(0, 0, 0, 0.08);
 					border-radius: 12px;
-					background: #ffffff;
-					color: #1e293b;
+					background: var(--surface);
+					color: var(--text);
 					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 				}
@@ -179,8 +179,8 @@ export default function EditComponent({
 
 				.form-input:focus {
 					outline: none;
-					border-color: #6366f1;
-					box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+					border-color: var(--primary-500);
+					box-shadow: 0 0 0 3px rgba(6,182,212,0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
 				}
 
 				.form-input::placeholder {
@@ -206,7 +206,7 @@ export default function EditComponent({
 				}
 
 				.btn:focus {
-					outline: 2px solid #6366f1;
+					outline: 2px solid var(--primary-500);
 					outline-offset: 2px;
 				}
 
@@ -215,15 +215,15 @@ export default function EditComponent({
 				}
 
 				.btn-primary {
-					background: #6366f1;
-					color: #ffffff;
-					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+					background: var(--primary-500);
+					color: var(--surface);
+					box-shadow: 0 6px 16px rgba(6,182,212,0.12);
 				}
 
 				.btn-primary:hover {
-					background: #4f46e5;
+					background: var(--primary-600);
 					transform: translateY(-1px);
-					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+					box-shadow: 0 8px 18px rgba(6,182,212,0.12);
 				}
 
 				.btn-secondary {

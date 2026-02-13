@@ -137,7 +137,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				.modal-overlay {
 					position: fixed;
 					inset: 0;
-					background: rgba(30, 41, 59, 0.5);
+					background: rgba(0, 0, 0, 0.35);
 					backdrop-filter: blur(8px);
 					display: flex;
 					justify-content: center;
@@ -157,7 +157,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				}
 
 				.modal-content {
-					background: #fafafa;
+					background: var(--surface, #fafafa);
 					padding: 2.5rem;
 					border-radius: 20px;
 					width: 100%;
@@ -192,7 +192,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 
 				.modal-header h2 {
 					margin: 0;
-					color: #1e293b;
+					color: var(--text, #1e293b);
 					font-size: 1.875rem;
 					font-weight: 600;
 					letter-spacing: -0.025em;
@@ -204,7 +204,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 					cursor: pointer;
 					padding: 0.5rem;
 					border-radius: 10px;
-					color: #64748b;
+					color: var(--muted, #64748b);
 					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 					display: flex;
 					align-items: center;
@@ -222,7 +222,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				}
 
 				.close-button:focus {
-					outline: 2px solid #6366f1;
+					outline: 2px solid var(--primary-500, #6366f1);
 					outline-offset: 2px;
 				}
 
@@ -242,8 +242,8 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 					font-weight: 500;
 					border: 1px solid rgba(0, 0, 0, 0.08);
 					border-radius: 12px;
-					background: #ffffff;
-					color: #1e293b;
+					background: var(--surface, #ffffff);
+					color: var(--text, #1e293b);
 					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 				}
@@ -254,8 +254,8 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 
 				.search-input:focus {
 					outline: none;
-					border-color: #6366f1;
-					box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+					border-color: var(--primary-500, #6366f1);
+					box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
 				}
 
 				.search-input::placeholder {
@@ -264,7 +264,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 
 				.search-button {
 					padding: 0.875rem 1.5rem;
-					background: #6366f1;
+					background: var(--primary-500, #6366f1);
 					color: #ffffff;
 					border: none;
 					border-radius: 12px;
@@ -280,7 +280,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				}
 
 				.search-button:hover {
-					background: #4f46e5;
+					background: var(--primary-600, #4f46e5);
 					transform: translateY(-1px);
 					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
 				}
@@ -301,7 +301,7 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				.status-text {
 					text-align: center;
 					padding: 3rem 2rem;
-					color: #64748b;
+					color: var(--muted, #64748b);
 					font-size: 0.9375rem;
 					font-weight: 500;
 				}
@@ -370,14 +370,14 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				}
 
 				.result-item:hover {
-					background: #ffffff;
-					border-color: #6366f1;
+					background: var(--surface, #ffffff);
+					border-color: var(--primary-500, #6366f1);
 					transform: translateX(4px);
 					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 				}
 
 				.result-item:focus {
-					outline: 2px solid #6366f1;
+					outline: 2px solid var(--primary-500, #6366f1);
 					outline-offset: 2px;
 				}
 
@@ -394,14 +394,14 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				.result-name {
 					margin: 0;
 					font-weight: 600;
-					color: #1e293b;
+					color: var(--text, #1e293b);
 					font-size: 1rem;
 					letter-spacing: -0.01em;
 				}
 
 				.result-email {
 					margin: 0;
-					color: #64748b;
+					color: var(--muted, #64748b);
 					font-size: 0.875rem;
 					font-weight: 500;
 				}

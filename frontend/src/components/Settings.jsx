@@ -37,7 +37,7 @@ const Settings = () => {
           width: 56px;
           height: 56px;
           padding: 12px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, var(--primary-500) 0%, var(--accent-1) 100%);
           color: #ffffff;
           border-radius: 16px;
           flex-shrink: 0;

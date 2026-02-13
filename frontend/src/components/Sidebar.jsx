@@ -117,8 +117,8 @@ const Sidebar = ({ activePage, onPageChange, userName = 'Guest', userRole = 'Use
               <User size={20} />
             </div>
             <div className="user-details">
-              <p className="user-name">{userName || 'Guest'}</p>
-              <p className="user-role">{userRole || 'User'}</p>
+              <p className="user-name" title={userName || 'Guest'}>{userName || 'Guest'}</p>
+              <p className="user-role" title={userRole || 'User'}>{userRole || 'User'}</p>
             </div>
           </div>
         </div>

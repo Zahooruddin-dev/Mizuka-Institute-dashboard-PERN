@@ -165,7 +165,7 @@ export default function StudentDetails({ studentId, onClose }) {
   .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(30, 41, 59, 0.5);
+    background: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
@@ -175,7 +175,7 @@ export default function StudentDetails({ studentId, onClose }) {
   }
 
   .modal-content {
-    background: #fafafa;
+    background: var(--surface, #fafafa);
     width: 100%;
     max-width: 640px;
     max-height: 90vh;
@@ -212,7 +212,7 @@ export default function StudentDetails({ studentId, onClose }) {
     margin: 0;
     font-size: 1.875rem;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text, #1e293b);
     letter-spacing: -0.025em;
   }
 
@@ -223,7 +223,7 @@ export default function StudentDetails({ studentId, onClose }) {
     padding: 0.5rem;
     border-radius: 10px;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    color: #64748b;
+    color: var(--muted, #64748b);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -240,7 +240,7 @@ export default function StudentDetails({ studentId, onClose }) {
   }
 
   .close-button:focus {
-    outline: 2px solid #6366f1;
+    outline: 2px solid var(--primary-500, #6366f1);
     outline-offset: 2px;
   }
 
@@ -340,7 +340,7 @@ export default function StudentDetails({ studentId, onClose }) {
   }
 
   .detail-icon {
-    color: #6366f1;
+    color: var(--primary-500, #6366f1);
     flex-shrink: 0;
     margin-top: 0.3rem;
   }
@@ -349,7 +349,7 @@ export default function StudentDetails({ studentId, onClose }) {
     display: block;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #64748b;
+    color: var(--muted, #64748b);
     margin-bottom: 0.4rem;
     letter-spacing: 0.025em;
     text-transform: uppercase;
@@ -359,7 +359,7 @@ export default function StudentDetails({ studentId, onClose }) {
     margin: 0;
     font-size: 1.0625rem;
     font-weight: 500;
-    color: #1e293b;
+    color: var(--text, #1e293b);
     line-height: 1.5;
   }
 
@@ -374,14 +374,14 @@ export default function StudentDetails({ studentId, onClose }) {
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1.25rem;
-    color: #6366f1;
+    color: var(--primary-500, #6366f1);
   }
 
   .classes-header h3 {
     margin: 0;
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1e293b;
+    color: var(--text, #1e293b);
     letter-spacing: -0.025em;
   }
 
@@ -396,18 +396,18 @@ export default function StudentDetails({ studentId, onClose }) {
 
   .classes-list li {
     padding: 1rem 1.25rem;
-    background: #ffffff;
+    background: var(--surface, #ffffff);
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.06);
     font-weight: 500;
-    color: #334155;
+    color: var(--text, #334155);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
   }
 
   .classes-list li:hover {
-    background: #ffffff;
-    border-color: #6366f1;
+    background: var(--surface, #ffffff);
+    border-color: var(--primary-500, #6366f1);
     transform: translateX(4px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
   }
@@ -432,13 +432,13 @@ export default function StudentDetails({ studentId, onClose }) {
   }
 
   .btn-secondary {
-    background: #334155;
+    background: var(--muted, #334155);
     color: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   .btn-secondary:hover {
-    background: #1e293b;
+    background: var(--text, #1e293b);
     transform: translateY(-2px);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
   }
@@ -448,7 +448,7 @@ export default function StudentDetails({ studentId, onClose }) {
   }
 
   .btn:focus {
-    outline: 2px solid #6366f1;
+    outline: 2px solid var(--primary-500, #6366f1);
     outline-offset: 2px;
   }
 

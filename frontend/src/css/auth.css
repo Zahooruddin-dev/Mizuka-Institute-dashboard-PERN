@@ -6,9 +6,9 @@
 }
 
 body {
-  /* Updated to a cleaner, modern and human-friendly gradient */
-  background: linear-gradient(135deg, #0f172a 0%, #2dd4bf 100%);
-  color: #0f172a;
+  /* use app theme variables where available, fallback to light teal */
+  background: linear-gradient(135deg, var(--accent-2, #ccfbf1) 0%, var(--bg, #f8fafc) 100%);
+  color: var(--text, #0f172a);
 }
 
 .auth-container {
@@ -21,12 +21,12 @@ body {
 
 /* Larger card */
 .auth-form {
-  background: #ffffff;
+  background: var(--surface, #ffffff);
   width: 100%;
   max-width: 480px; /* increased */
   padding: 50px 40px; /* bigger padding */
   border-radius: 14px;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -61,7 +61,7 @@ body {
   padding: 14px;
   border-radius: 10px;
   border: none;
-  background-color: #2a5298;
+  background-color: var(--primary-500, #06b6d4);
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -70,7 +70,7 @@ body {
 }
 
 .auth-form button:hover {
-  background-color: #1e3c72;
+  background-color: var(--primary-600, #0891b2);
 }
 
 /* Error */
