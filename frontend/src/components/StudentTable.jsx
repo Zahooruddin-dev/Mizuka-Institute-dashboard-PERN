@@ -47,7 +47,9 @@ export default function StudentTable({
 											<div className='student-avatar'>
 												{student.student_name.charAt(0).toUpperCase()}
 											</div>
-											<span className='student-name'>{student.student_name}</span>
+											<span className='student-name'>
+												{student.student_name}
+											</span>
 										</div>
 									</td>
 									<td>

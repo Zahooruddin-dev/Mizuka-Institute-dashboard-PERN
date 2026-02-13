@@ -30,7 +30,11 @@
 	align-items: center;
 	gap: 1rem;
 	padding: 1.25rem 1.5rem;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.05) 0%,
+		rgba(118, 75, 162, 0.05) 100%
+	);
 	border: 1px solid rgba(102, 126, 234, 0.1);
 	border-radius: 16px;
 	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -105,7 +109,9 @@
 
 .search-wrapper:focus-within {
 	border-color: #667eea;
-	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05);
+	box-shadow:
+		0 0 0 3px rgba(102, 126, 234, 0.1),
+		0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .search-input {
@@ -149,7 +155,11 @@
 }
 
 .sort-button:hover {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.08) 0%,
+		rgba(118, 75, 162, 0.08) 100%
+	);
 	border-color: #667eea;
 	transform: translateY(-1px);
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
@@ -191,7 +201,11 @@
 }
 
 .pagination-button:hover:not(:disabled) {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.08) 0%,
+		rgba(118, 75, 162, 0.08) 100%
+	);
 	border-color: #667eea;
 	transform: translateY(-1px);
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
@@ -219,7 +233,11 @@
 	color: #1e293b;
 	font-size: 0.9375rem;
 	padding: 0.875rem 1.25rem;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.08) 0%,
+		rgba(118, 75, 162, 0.08) 100%
+	);
 	border-radius: 12px;
 	letter-spacing: 0.01em;
 }
@@ -228,7 +246,11 @@
 	margin-top: 3rem;
 	padding: 4rem 2.5rem;
 	border-radius: 20px;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.03) 0%,
+		rgba(118, 75, 162, 0.03) 100%
+	);
 	border: 2px dashed rgba(102, 126, 234, 0.2);
 	text-align: center;
 }
@@ -240,7 +262,11 @@
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.1) 0%,
+		rgba(118, 75, 162, 0.1) 100%
+	);
 	color: #667eea;
 	margin-bottom: 1.5rem;
 }

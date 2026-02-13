@@ -20,7 +20,11 @@
 }
 
 .student-table thead {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.05) 0%,
+		rgba(118, 75, 162, 0.05) 100%
+	);
 }
 
 .student-table th {
@@ -29,7 +33,11 @@
 	position: sticky;
 	top: 0;
 	z-index: 10;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.05) 0%,
+		rgba(118, 75, 162, 0.05) 100%
+	);
 }
 
 .th-content {
@@ -52,7 +60,11 @@
 }
 
 .student-table tbody tr:hover {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.02) 0%,
+		rgba(118, 75, 162, 0.02) 100%
+	);
 	transform: scale(1.001);
 }
 
@@ -70,7 +82,11 @@
 	justify-content: center;
 	width: 32px;
 	height: 32px;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.1) 0%,
+		rgba(118, 75, 162, 0.1) 100%
+	);
 	border-radius: 8px;
 	font-weight: 600;
 	color: #667eea;
@@ -147,7 +163,11 @@
 }
 
 .view-button:hover {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.1) 0%,
+		rgba(118, 75, 162, 0.1) 100%
+	);
 	border-color: #667eea;
 	transform: translateY(-1px);
 	box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
