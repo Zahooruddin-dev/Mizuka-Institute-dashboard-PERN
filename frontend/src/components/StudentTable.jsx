@@ -1,5 +1,6 @@
 import { Edit, Trash2, Eye } from 'lucide-react';
 import './studenttable.css';
+import { useState } from 'react';
 
 export default function StudentTable({
 	students,
@@ -8,7 +9,13 @@ export default function StudentTable({
 	handleViewDetails,
 	page,
 	limit,
+	userRole,
 }) {
+	const role = userRole;
+	const [priveledge, setPrivelege] = useState(false);
+	if (role === 'teacher') {
+		setPrivelege(true);
+	}
 	return (
 		<div className='table-container'>
 			<div className='table-wrapper'>
@@ -66,24 +73,28 @@ export default function StudentTable({
 												<Eye size={18} />
 												<span className='button-text'>View</span>
 											</button>
-											<button
-												className='action-button edit-button'
-												onClick={() => handleEdit(student)}
-												aria-label={`Edit ${student.student_name}`}
-												type='button'
-											>
-												<Edit size={18} />
-												<span className='button-text'>Edit</span>
-											</button>
-											<button
-												className='action-button delete-button'
-												onClick={() => handleDelete(student)}
-												aria-label={`Delete ${student.student_name}`}
-												type='button'
-											>
-												<Trash2 size={18} />
-												<span className='button-text'>Delete</span>
-											</button>
+											{priveledge && (
+												<>
+													<button
+														className='action-button edit-button'
+														onClick={() => handleEdit(student)}
+														aria-label={`Edit ${student.student_name}`}
+														type='button'
+													>
+														<Edit size={18} />
+														<span className='button-text'>Edit</span>
+													</button>
+													<button
+														className='action-button delete-button'
+														onClick={() => handleDelete(student)}
+														aria-label={`Delete ${student.student_name}`}
+														type='button'
+													>
+														<Trash2 size={18} />
+														<span className='button-text'>Delete</span>
+													</button>
+												</>
+											)}
 										</div>
 									</td>
 								</tr>

@@ -15,6 +15,7 @@ export default function MainComponent({
 	totalCount,
 	limit,
 	handleViewDetails,
+	userRole,
 }) {
 	const hasNextPage = page * limit < totalCount;
 	const hasPrevPage = page > 1;
@@ -104,6 +105,7 @@ export default function MainComponent({
 						handleViewDetails={handleViewDetails}
 						page={page}
 						limit={limit}
+						userRole={userRole}
 					/>
 					<nav className='pagination' aria-label='Pagination navigation'>
 						<button

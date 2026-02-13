@@ -339,6 +339,7 @@ function Dashboard() {
 						page={page}
 						setPage={setPage}
 						totalCount={totalCount}
+						userRole={userRole}
 					/>
 				)}
 
