@@ -8,7 +8,7 @@ import Toast from '../components/Toast';
 import DeleteModal from '../modals/DeleteModal';
 import StudentDetails from '../components/StudentDetails';
 import SearchDialog from '../components/SearchDialog';
-import Login from './Login';
+
 import {
 	getStudents,
 	createStudent,
@@ -183,11 +183,11 @@ function Dashboard() {
 	if (error) {
 		return (
 			<>
-				<div className="error-container">
-					<div className="error-content">
+				<div className='error-container'>
+					<div className='error-content'>
 						<h1>Failed to Load Students</h1>
 						<p>Unable to connect to the server. Please try again.</p>
-						<button onClick={fetchStudents} className="retry-button">
+						<button onClick={fetchStudents} className='retry-button'>
 							Retry
 						</button>
 					</div>
@@ -263,7 +263,7 @@ function Dashboard() {
 
 	return (
 		<>
-			<div className="dashboard-container">
+			<div className='dashboard-container'>
 				{toastConfig.show && (
 					<Toast
 						message={toastConfig.message}
@@ -328,21 +328,21 @@ function Dashboard() {
 				)}
 
 				{loading && (
-					<div className="loading-container">
-						<div className="loading-spinner"></div>
-						<p className="loading-text">Loading students...</p>
+					<div className='loading-container'>
+						<div className='loading-spinner'></div>
+						<p className='loading-text'>Loading students...</p>
 					</div>
 				)}
 
-				<div className="action-buttons">
+				<div className='action-buttons'>
 					<button
-						className="action-btn primary-btn"
+						className='action-btn primary-btn'
 						onClick={() => setPostMode(!postMode)}
 					>
 						{postMode ? 'Cancel' : 'Add New Student'}
 					</button>
 					<button
-						className="action-btn secondary-btn"
+						className='action-btn secondary-btn'
 						onClick={() => setShowSearchDialog(true)}
 					>
 						Advanced Search
@@ -365,6 +365,7 @@ function Dashboard() {
 					margin: 0 auto;
 					background: #fafafa;
 					min-height: 100vh;
+					    border-radius: 20px;
 				}
 
 				.loading-container {
