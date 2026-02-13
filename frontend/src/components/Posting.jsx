@@ -47,14 +47,14 @@ export default function PostingComponent({
 					<form onSubmit={handleLocalSubmit} className="add-form">
 						<h3 id="add-student-title">Add New Student</h3>
 						<div className="form-group">
-							<label htmlFor="new-student-name" className="visually-hidden">
+							<label htmlFor="new-student-name" className="form-label">
 								Full Name
 							</label>
 							<input
 								id="new-student-name"
 								type="text"
 								name="student_name"
-								placeholder="Full Name"
+								placeholder="Enter full name"
 								value={student_name}
 								onChange={handleChange}
 								className="form-input"
@@ -65,14 +65,14 @@ export default function PostingComponent({
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="new-student-email" className="visually-hidden">
+							<label htmlFor="new-student-email" className="form-label">
 								Email Address
 							</label>
 							<input
 								id="new-student-email"
 								type="email"
 								name="email"
-								placeholder="Email Address"
+								placeholder="example@school.edu"
 								value={email}
 								onChange={handleChange}
 								className="form-input"
@@ -113,85 +113,110 @@ export default function PostingComponent({
 			</div>
 
 			<style>{`
-				.visually-hidden {
-					position: absolute;
-					width: 1px;
-					height: 1px;
-					padding: 0;
-					margin: -1px;
-					overflow: hidden;
-					clip: rect(0, 0, 0, 0);
-					white-space: nowrap;
-					border: 0;
-				}
-
 				.modal-overlay {
 					position: fixed;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: rgba(0, 0, 0, 0.7);
+					inset: 0;
+					background: rgba(30, 41, 59, 0.5);
+					backdrop-filter: blur(8px);
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					z-index: 1000;
-					padding: 1rem;
+					padding: 1.5rem;
+					animation: fadeIn 0.2s ease-out;
+				}
+
+				@keyframes fadeIn {
+					from {
+						opacity: 0;
+					}
+					to {
+						opacity: 1;
+					}
 				}
 
 				.modal-content {
-					background-color: rgba(17, 16, 16, 0.95);
-					padding: 2rem;
-					border-radius: 12px;
-					color: white;
+					background: #fafafa;
+					padding: 2.5rem;
+					border-radius: 20px;
 					width: 100%;
-					max-width: 400px;
-					box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+					max-width: 480px;
+					box-shadow: 
+						0 25px 50px -12px rgba(0, 0, 0, 0.15),
+						0 0 0 1px rgba(0, 0, 0, 0.05);
+					animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+				}
+
+				@keyframes slideUp {
+					from {
+						opacity: 0;
+						transform: translateY(20px) scale(0.96);
+					}
+					to {
+						opacity: 1;
+						transform: translateY(0) scale(1);
+					}
 				}
 
 				.add-form {
 					display: flex;
 					flex-direction: column;
-					gap: 1rem;
+					gap: 1.5rem;
 				}
 
 				.add-form h3 {
-					margin: 0 0 1rem 0;
-					font-size: 1.5rem;
-					color: white;
+					margin: 0;
+					font-size: 1.875rem;
+					font-weight: 600;
+					color: #1e293b;
+					letter-spacing: -0.025em;
 				}
 
 				.form-group {
 					display: flex;
 					flex-direction: column;
-					gap: 0.25rem;
+					gap: 0.5rem;
+				}
+
+				.form-label {
+					font-size: 0.8125rem;
+					font-weight: 600;
+					color: #64748b;
+					letter-spacing: 0.025em;
+					text-transform: uppercase;
 				}
 
 				.form-input {
 					width: 100%;
-					padding: 0.75rem;
-					font-size: 1rem;
-					border: 1px solid #d1d5db;
-					border-radius: 6px;
-					background-color: #ffffff;
-					color: #213547;
-					transition: border-color 0.2s, box-shadow 0.2s, opacity 0.2s;
+					padding: 0.875rem 1rem;
+					font-size: 0.9375rem;
+					font-weight: 500;
+					border: 1px solid rgba(0, 0, 0, 0.08);
+					border-radius: 12px;
+					background: #ffffff;
+					color: #1e293b;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+				}
+
+				.form-input:hover:not(:disabled) {
+					border-color: rgba(0, 0, 0, 0.12);
 				}
 
 				.form-input:focus {
 					outline: none;
-					border-color: #646cff;
-					box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+					border-color: #6366f1;
+					box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
 				}
 
 				.form-input:disabled {
-					opacity: 0.6;
+					opacity: 0.5;
 					cursor: not-allowed;
-					background-color: #f3f4f6;
+					background: #f8fafc;
 				}
 
 				.form-input::placeholder {
-					color: #9ca3af;
+					color: #94a3b8;
 				}
 
 				.form-actions {
@@ -202,17 +227,18 @@ export default function PostingComponent({
 
 				.btn {
 					flex: 1;
-					padding: 0.75rem 1.25rem;
-					font-size: 1rem;
-					font-weight: 500;
+					padding: 0.875rem 1.5rem;
+					font-size: 0.9375rem;
+					font-weight: 600;
 					border: none;
-					border-radius: 6px;
+					border-radius: 12px;
 					cursor: pointer;
-					transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					letter-spacing: 0.01em;
 				}
 
-				.btn:focus-visible {
-					outline: 2px solid white;
+				.btn:focus {
+					outline: 2px solid #6366f1;
 					outline-offset: 2px;
 				}
 
@@ -221,26 +247,32 @@ export default function PostingComponent({
 				}
 
 				.btn:disabled {
-					opacity: 0.6;
+					opacity: 0.5;
 					cursor: not-allowed;
 				}
 
 				.btn-primary {
-					background-color: #646cff;
-					color: white;
+					background: #6366f1;
+					color: #ffffff;
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 				}
 
 				.btn-primary:hover:not(:disabled) {
-					background-color: #535bf2;
+					background: #4f46e5;
+					transform: translateY(-1px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
 				}
 
 				.btn-secondary {
-					background-color: #6b7280;
-					color: white;
+					background: #334155;
+					color: #ffffff;
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 				}
 
 				.btn-secondary:hover:not(:disabled) {
-					background-color: #4b5563;
+					background: #1e293b;
+					transform: translateY(-1px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
 				}
 
 				.loading-content {
@@ -264,22 +296,31 @@ export default function PostingComponent({
 				}
 
 				@media (max-width: 480px) {
+					.modal-overlay {
+						padding: 1rem;
+					}
+
 					.modal-content {
-						padding: 1.5rem;
+						padding: 2rem 1.5rem;
+						border-radius: 16px;
 					}
 
 					.add-form h3 {
-						font-size: 1.25rem;
+						font-size: 1.5rem;
 					}
 
 					.form-input {
-						padding: 0.625rem;
-						font-size: 0.95rem;
+						padding: 0.75rem 0.875rem;
+						font-size: 0.9375rem;
 					}
 
 					.btn {
-						padding: 0.625rem 1rem;
-						font-size: 0.95rem;
+						padding: 0.75rem 1.25rem;
+						font-size: 0.9375rem;
+					}
+
+					.form-actions {
+						flex-direction: column;
 					}
 				}
 			`}</style>
