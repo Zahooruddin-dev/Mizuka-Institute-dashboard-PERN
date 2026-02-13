@@ -21,7 +21,6 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				params: { email: searchTerm, sort: 'ASC' },
 			});
 
-			// BACKEND RETURNS SINGLE OBJECT → wrap in array
 			setResults(response.data ? [response.data] : []);
 		} catch (err) {
 			console.error('Search failed:', err);
@@ -88,7 +87,22 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 					</div>
 
 					<div className='results-section'>
-						{loading && <p className='status-text'>Searching...</p>}
+						{loading && (
+							<div className='skeleton-results'>
+								<div className='skeleton-item'>
+									<div className='skeleton-line skeleton-name'></div>
+									<div className='skeleton-line skeleton-email'></div>
+								</div>
+								<div className='skeleton-item'>
+									<div className='skeleton-line skeleton-name'></div>
+									<div className='skeleton-line skeleton-email'></div>
+								</div>
+								<div className='skeleton-item'>
+									<div className='skeleton-line skeleton-name'></div>
+									<div className='skeleton-line skeleton-email'></div>
+								</div>
+							</div>
+						)}
 
 						{!loading && searched && results.length === 0 && (
 							<p className='status-text'>No students found</p>
@@ -122,63 +136,98 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 			<style>{`
 				.modal-overlay {
 					position: fixed;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: rgba(0, 0, 0, 0.7);
+					inset: 0;
+					background: rgba(30, 41, 59, 0.5);
+					backdrop-filter: blur(8px);
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					z-index: 1000;
-					padding: 1rem;
+					padding: 1.5rem;
+					animation: fadeIn 0.2s ease-out;
+				}
+
+				@keyframes fadeIn {
+					from {
+						opacity: 0;
+					}
+					to {
+						opacity: 1;
+					}
 				}
 
 				.modal-content {
-					background-color: white;
-					padding: 2rem;
-					border-radius: 12px;
+					background: #fafafa;
+					padding: 2.5rem;
+					border-radius: 20px;
 					width: 100%;
-					max-width: 600px;
-					max-height: 80vh;
+					max-width: 640px;
+					max-height: 85vh;
 					overflow-y: auto;
-					box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+					box-shadow: 
+						0 25px 50px -12px rgba(0, 0, 0, 0.15),
+						0 0 0 1px rgba(0, 0, 0, 0.05);
+					animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+				}
+
+				@keyframes slideUp {
+					from {
+						opacity: 0;
+						transform: translateY(20px) scale(0.96);
+					}
+					to {
+						opacity: 1;
+						transform: translateY(0) scale(1);
+					}
 				}
 
 				.modal-header {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					margin-bottom: 1.5rem;
+					margin-bottom: 2rem;
+					padding-bottom: 1.25rem;
+					border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 				}
 
 				.modal-header h2 {
 					margin: 0;
-					color: #213547;
-					font-size: 1.5rem;
+					color: #1e293b;
+					font-size: 1.875rem;
+					font-weight: 600;
+					letter-spacing: -0.025em;
 				}
 
 				.close-button {
-					background: none;
+					background: transparent;
 					border: none;
 					cursor: pointer;
 					padding: 0.5rem;
-					border-radius: 4px;
-					color: #213547;
-					transition: background-color 0.2s;
+					border-radius: 10px;
+					color: #64748b;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					display: flex;
+					align-items: center;
+					justify-content: center;
 				}
 
 				.close-button:hover {
-					background-color: #f0f0f0;
+					background: rgba(0, 0, 0, 0.04);
+					color: #334155;
+					transform: scale(1.05);
+				}
+
+				.close-button:active {
+					transform: scale(0.95);
 				}
 
 				.close-button:focus {
-					outline: 2px solid #646cff;
+					outline: 2px solid #6366f1;
 					outline-offset: 2px;
 				}
 
 				.search-section {
-					margin-bottom: 1.5rem;
+					margin-bottom: 2rem;
 				}
 
 				.search-input-wrapper {
@@ -188,50 +237,120 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 
 				.search-input {
 					flex: 1;
-					padding: 0.75rem;
-					font-size: 1rem;
-					border: 1px solid #d1d5db;
-					border-radius: 6px;
-					color: #213547;
+					padding: 0.875rem 1rem;
+					font-size: 0.9375rem;
+					font-weight: 500;
+					border: 1px solid rgba(0, 0, 0, 0.08);
+					border-radius: 12px;
+					background: #ffffff;
+					color: #1e293b;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+				}
+
+				.search-input:hover {
+					border-color: rgba(0, 0, 0, 0.12);
 				}
 
 				.search-input:focus {
 					outline: none;
-					border-color: #646cff;
-					box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+					border-color: #6366f1;
+					box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+				}
+
+				.search-input::placeholder {
+					color: #94a3b8;
 				}
 
 				.search-button {
-					padding: 0.75rem 1.5rem;
-					background-color: #646cff;
-					color: white;
+					padding: 0.875rem 1.5rem;
+					background: #6366f1;
+					color: #ffffff;
 					border: none;
-					border-radius: 6px;
+					border-radius: 12px;
 					cursor: pointer;
 					display: flex;
 					align-items: center;
 					gap: 0.5rem;
-					font-weight: 500;
-					transition: background-color 0.2s;
+					font-weight: 600;
+					font-size: 0.9375rem;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+					letter-spacing: 0.01em;
 				}
 
 				.search-button:hover {
-					background-color: #535bf2;
+					background: #4f46e5;
+					transform: translateY(-1px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+				}
+
+				.search-button:active {
+					transform: translateY(0);
 				}
 
 				.search-button:focus {
-					outline: 2px solid #646cff;
+					outline: 2px solid #6366f1;
 					outline-offset: 2px;
 				}
 
 				.results-section {
-					min-height: 200px;
+					min-height: 240px;
 				}
 
 				.status-text {
 					text-align: center;
-					padding: 2rem;
-					color: #6b7280;
+					padding: 3rem 2rem;
+					color: #64748b;
+					font-size: 0.9375rem;
+					font-weight: 500;
+				}
+
+				.skeleton-results {
+					display: flex;
+					flex-direction: column;
+					gap: 0.75rem;
+				}
+
+				.skeleton-item {
+					padding: 1rem 1.25rem;
+					background: #ffffff;
+					border-radius: 12px;
+					border: 1px solid rgba(0, 0, 0, 0.06);
+					display: flex;
+					flex-direction: column;
+					gap: 0.5rem;
+				}
+
+				.skeleton-line {
+					background: linear-gradient(
+						90deg,
+						rgba(0, 0, 0, 0.04) 25%,
+						rgba(0, 0, 0, 0.06) 50%,
+						rgba(0, 0, 0, 0.04) 75%
+					);
+					background-size: 200% 100%;
+					animation: shimmer 1.5s infinite;
+					border-radius: 6px;
+				}
+
+				.skeleton-name {
+					width: 60%;
+					height: 18px;
+				}
+
+				.skeleton-email {
+					width: 80%;
+					height: 14px;
+				}
+
+				@keyframes shimmer {
+					0% {
+						background-position: 200% 0;
+					}
+					100% {
+						background-position: -200% 0;
+					}
 				}
 
 				.results-list {
@@ -241,21 +360,24 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				}
 
 				.result-item {
-					padding: 1rem;
-					background-color: #f9f9f9;
-					border-radius: 8px;
+					padding: 1rem 1.25rem;
+					background: #ffffff;
+					border-radius: 12px;
 					cursor: pointer;
-					transition: background-color 0.2s, transform 0.1s;
-					border: 2px solid transparent;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					border: 1px solid rgba(0, 0, 0, 0.06);
+					box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 				}
 
 				.result-item:hover {
-					background-color: #e9e9e9;
-					border-color: #646cff;
+					background: #ffffff;
+					border-color: #6366f1;
+					transform: translateX(4px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 				}
 
 				.result-item:focus {
-					outline: 2px solid #646cff;
+					outline: 2px solid #6366f1;
 					outline-offset: 2px;
 				}
 
@@ -266,25 +388,36 @@ export default function SearchDialog({ onClose, onSelectStudent }) {
 				.result-info {
 					display: flex;
 					flex-direction: column;
-					gap: 0.25rem;
+					gap: 0.375rem;
 				}
 
 				.result-name {
 					margin: 0;
 					font-weight: 600;
-					color: #213547;
+					color: #1e293b;
 					font-size: 1rem;
+					letter-spacing: -0.01em;
 				}
 
 				.result-email {
 					margin: 0;
-					color: #6b7280;
+					color: #64748b;
 					font-size: 0.875rem;
+					font-weight: 500;
 				}
 
 				@media (max-width: 480px) {
+					.modal-overlay {
+						padding: 1rem;
+					}
+
 					.modal-content {
-						padding: 1.5rem;
+						padding: 2rem 1.5rem;
+						border-radius: 16px;
+					}
+
+					.modal-header h2 {
+						font-size: 1.5rem;
 					}
 
 					.search-input-wrapper {
