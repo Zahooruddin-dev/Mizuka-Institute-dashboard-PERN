@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { X, User, Mail, Calendar, BookOpen } from 'lucide-react';
-
-const API_BASE_URL = 'http://localhost:3000/api/students';
+import { getStudentById, getStudentClasses } from '../api/api';
 
 export default function StudentDetails({ studentId, onClose }) {
 	const [student, setStudent] = useState(null);
@@ -16,13 +14,11 @@ export default function StudentDetails({ studentId, onClose }) {
 			setError(null);
 
 			try {
-				const studentResponse = await axios.get(`${API_BASE_URL}/${studentId}`);
+				const studentResponse = await getStudentById(studentId);
 				setStudent(studentResponse.data);
 
 				try {
-					const classesResponse = await axios.get(
-						`${API_BASE_URL}/${studentId}/classes`,
-					);
+					const classesResponse = await getStudentClasses(studentId);
 					setClasses(classesResponse.data);
 				} catch (err) {
 					console.log('No classes data available');
