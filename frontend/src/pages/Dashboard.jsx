@@ -15,7 +15,7 @@ import {
 	deleteStudent,
 } from '../api/api';
 
-function Dashboard(userRole, userName) {
+function Dashboard(User) {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
 		student_name: '',
@@ -324,7 +324,7 @@ function Dashboard(userRole, userName) {
 						page={page}
 						setPage={setPage}
 						totalCount={totalCount}
-						userRole={userRole}
+						User={User}
 						
 					/>
 				)}

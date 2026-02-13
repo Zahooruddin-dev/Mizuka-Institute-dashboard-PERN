@@ -1,6 +1,6 @@
 import { Edit, Trash2, Eye } from 'lucide-react';
 import './studenttable.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function StudentTable({
 	students,
@@ -9,13 +9,10 @@ export default function StudentTable({
 	handleViewDetails,
 	page,
 	limit,
-	userRole,
+	User,
 }) {
-	const role = userRole;
-	const [priveledge, setPrivelege] = useState(false);
-	if (role === 'teacher') {
-		setPrivelege(true);
-	}
+	const priveledge = User.User	
+	
 	return (
 		<div className='table-container'>
 			<div className='table-wrapper'>
@@ -73,7 +70,7 @@ export default function StudentTable({
 												<Eye size={18} />
 												<span className='button-text'>View</span>
 											</button>
-											{priveledge && (
+											{priveledge === 'teacher' && (
 												<>
 													<button
 														className='action-button edit-button'

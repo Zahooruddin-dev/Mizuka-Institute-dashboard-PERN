@@ -18,22 +18,27 @@ const Layout = () => {
 	};
 	useEffect(() => {
 		const token = localStorage.getItem('token');
-		if (token) {
+		if (token && token !== 'undefined' && token !== 'null') {
 			try {
-				const decoded = jwtDecode('token');
-				setUserRole(decoded.role || 'student');
-				setUserRole(decoded.username || 'User');
-			} catch (error) {
-				console.error('Invalid Token');
-				setUserRole('student');
+        const decoded = jwtDecode(token);
+        const role = decoded.role || 'student';
+        const name = decoded.username || 'Guest';
+        setUserRole(role);
+        setUserName(name);
+      }catch (err) {
+				console.error('Token is malformed:', err);
+				localStorage.removeItem('token');
 			}
+		} else {
+			setUserRole('student');
 		}
 	}, []);
+	
 
 	const renderPage = () => {
 		switch (activePage) {
 			case 'students':
-				return <Dashboard userRole={userRole} userName={userName} />;
+				return <Dashboard User={userRole}   />;//User here only has User ROLE
 			case 'classes':
 				return <Classes />;
 			case 'enroll':

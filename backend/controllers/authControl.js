@@ -16,7 +16,7 @@ async function login(req, res) {
 		const actualMatch = await bcrypt.compare(password, user.password_hash);
 		console.log('Request password match:', actualMatch);
 		const token = jwt.sign(
-			{ id: user.id, role: user.role },
+			{ id: user.id, role: user.role,username: user.student_name },
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);

@@ -15,11 +15,11 @@ export default function MainComponent({
 	totalCount,
 	limit,
 	handleViewDetails,
-	userRole,
+User
 }) {
 	const hasNextPage = page * limit < totalCount;
 	const hasPrevPage = page > 1;
-
+	
 	const handleSearchChange = (e) => {
 		const value = e.target.value;
 		setSearchTerm(value);
@@ -105,7 +105,7 @@ export default function MainComponent({
 						handleViewDetails={handleViewDetails}
 						page={page}
 						limit={limit}
-						userRole={userRole}
+						User={User}
 					/>
 					<nav className='pagination' aria-label='Pagination navigation'>
 						<button
