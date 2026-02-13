@@ -39,10 +39,17 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 				aria-describedby="delete-modal-description"
 			>
 				<div className="modal-content">
+					<div className="warning-icon">
+						<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<line x1="12" y1="8" x2="12" y2="12"></line>
+							<line x1="12" y1="16" x2="12.01" y2="16"></line>
+						</svg>
+					</div>
 					<h2 id="delete-modal-title">Confirm Deletion</h2>
 					<p id="delete-modal-description">
 						Are you sure you want to delete{' '}
-						<strong>{student.student_name}</strong>?
+						<strong>{student.student_name}</strong>? This action cannot be undone.
 					</p>
 					<div className="modal-actions">
 						<button
@@ -68,66 +75,103 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 			<style>{`
 				.modal-overlay {
 					position: fixed;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: rgba(0, 0, 0, 0.8);
+					inset: 0;
+					background: rgba(30, 41, 59, 0.5);
+					backdrop-filter: blur(8px);
 					display: flex;
 					justify-content: center;
 					align-items: center;
 					z-index: 1000;
-					padding: 1rem;
+					padding: 1.5rem;
+					animation: fadeIn 0.2s ease-out;
+				}
+
+				@keyframes fadeIn {
+					from {
+						opacity: 0;
+					}
+					to {
+						opacity: 1;
+					}
 				}
 
 				.modal-content {
-					background-color: #1e1e1e;
-					padding: 2rem;
-					border-radius: 12px;
-					border: 2px solid #ff4d4d;
+					background: #fafafa;
+					padding: 2.5rem;
+					border-radius: 20px;
 					text-align: center;
-					max-width: 450px;
+					max-width: 480px;
 					width: 100%;
-					box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+					box-shadow: 
+						0 25px 50px -12px rgba(0, 0, 0, 0.15),
+						0 0 0 1px rgba(0, 0, 0, 0.05);
+					animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+				}
+
+				@keyframes slideUp {
+					from {
+						opacity: 0;
+						transform: translateY(20px) scale(0.96);
+					}
+					to {
+						opacity: 1;
+						transform: translateY(0) scale(1);
+					}
+				}
+
+				.warning-icon {
+					width: 64px;
+					height: 64px;
+					margin: 0 auto 1.5rem;
+					background: rgba(239, 68, 68, 0.1);
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color: #ef4444;
 				}
 
 				.modal-content h2 {
-					color: white;
+					color: #1e293b;
 					margin: 0 0 1rem 0;
-					font-size: 1.5rem;
+					font-size: 1.875rem;
+					font-weight: 600;
+					letter-spacing: -0.025em;
 				}
 
 				.modal-content p {
-					color: #aaa;
-					margin: 0 0 1.5rem 0;
-					font-size: 1rem;
-					line-height: 1.5;
+					color: #64748b;
+					margin: 0 0 2rem 0;
+					font-size: 0.9375rem;
+					line-height: 1.6;
+					font-weight: 500;
 				}
 
 				.modal-content strong {
-					color: #ff4d4d;
+					color: #1e293b;
 					font-weight: 600;
 				}
 
 				.modal-actions {
-					margin-top: 1.5rem;
 					display: flex;
 					gap: 0.75rem;
 					justify-content: center;
 				}
 
 				.btn {
-					padding: 0.75rem 1.5rem;
-					font-size: 1rem;
-					font-weight: 500;
-					border-radius: 6px;
+					flex: 1;
+					padding: 0.875rem 1.5rem;
+					font-size: 0.9375rem;
+					font-weight: 600;
+					border-radius: 12px;
 					cursor: pointer;
-					transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 					border: none;
+					letter-spacing: 0.01em;
 				}
 
-				.btn:focus-visible {
-					outline: 2px solid white;
+				.btn:focus {
+					outline: 2px solid #6366f1;
 					outline-offset: 2px;
 				}
 
@@ -136,49 +180,66 @@ export default function DeleteModal({ student, onConfirm, onCancel }) {
 				}
 
 				.btn-cancel {
-					background-color: #4b5563;
-					color: white;
-					border: 1px solid #6b7280;
+					background: #ffffff;
+					color: #334155;
+					border: 1px solid rgba(0, 0, 0, 0.08);
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 				}
 
 				.btn-cancel:hover {
-					background-color: #374151;
+					background: #f8fafc;
+					border-color: #6366f1;
+					transform: translateY(-1px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 				}
 
 				.btn-delete {
-					background-color: #ff4d4d;
-					color: white;
+					background: #ef4444;
+					color: #ffffff;
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 				}
 
 				.btn-delete:hover {
-					background-color: #e63946;
-					box-shadow: 0 2px 8px rgba(255, 77, 77, 0.3);
+					background: #dc2626;
+					transform: translateY(-1px);
+					box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.3);
 				}
 
 				@media (max-width: 480px) {
+					.modal-overlay {
+						padding: 1rem;
+					}
+
 					.modal-content {
-						padding: 1.5rem;
+						padding: 2rem 1.5rem;
+						border-radius: 16px;
+					}
+
+					.warning-icon {
+						width: 56px;
+						height: 56px;
+						margin-bottom: 1.25rem;
+					}
+
+					.warning-icon svg {
+						width: 40px;
+						height: 40px;
 					}
 
 					.modal-content h2 {
-						font-size: 1.25rem;
+						font-size: 1.5rem;
 					}
 
 					.modal-content p {
-						font-size: 0.95rem;
+						font-size: 0.875rem;
 					}
 
 					.btn {
-						padding: 0.625rem 1.25rem;
-						font-size: 0.95rem;
+						padding: 0.75rem 1.25rem;
 					}
 
 					.modal-actions {
-						flex-direction: column;
-					}
-
-					.btn {
-						width: 100%;
+						flex-direction: column-reverse;
 					}
 				}
 			`}</style>
