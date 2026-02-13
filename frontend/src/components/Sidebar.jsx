@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import './Sidebar.css';
 
-const Sidebar = ({ activePage, onPageChange }) => {
+const Sidebar = ({ activePage, onPageChange, userName = 'Guest', userRole = 'User' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -112,13 +112,13 @@ const Sidebar = ({ activePage, onPageChange }) => {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="user-info">
-            <div className="user-avatar">
+          <div className="user-info" role="region" aria-label="User info">
+            <div className="user-avatar" aria-hidden="true">
               <User size={20} />
             </div>
             <div className="user-details">
-              <p className="user-name">Admin User</p>
-              <p className="user-role">Administrator</p>
+              <p className="user-name">{userName || 'Guest'}</p>
+              <p className="user-role">{userRole || 'User'}</p>
             </div>
           </div>
         </div>

@@ -6,7 +6,9 @@
 }
 
 body {
-  background: linear-gradient(135deg, #481e72, #af97cf);
+  /* Updated to a cleaner, modern and human-friendly gradient */
+  background: linear-gradient(135deg, #0f172a 0%, #2dd4bf 100%);
+  color: #0f172a;
 }
 
 .auth-container {

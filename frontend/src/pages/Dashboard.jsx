@@ -363,11 +363,12 @@ function Dashboard(User) {
 			<style>{`
 				.dashboard-container {
 					padding: 2rem;
-					max-width: 1400px;
-					margin: 0 auto;
-					background: #fafafa;
+					/* use full available width so right pane can occupy space next to sidebar */
+					max-width: none;
+					width: 100%;
+					margin: 0;
+					background: transparent;
 					min-height: 100vh;
-					    border-radius: 20px;
 				}
 
 				.loading-container {

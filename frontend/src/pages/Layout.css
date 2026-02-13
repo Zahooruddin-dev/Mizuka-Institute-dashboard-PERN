@@ -1,24 +1,37 @@
 .layout {
+  --sidebar-width: 280px;
   min-height: 100vh;
   background: #fafafa;
 }
 
 .layout-main {
-  margin-left: 280px;
+  /* make main content respect the fixed sidebar width */
+  margin-left: var(--sidebar-width);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .layout-content {
   flex: 1;
   margin-top: 72px;
   padding: 2rem;
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
+  /* allow content to use remaining space fully (no unnecessary centering max-width) */
+  max-width: none;
+  width: calc(100% - 2rem);
+  margin-left: 0;
+}
+
+/* For very wide screens, constrain content and add breathing room */
+@media (min-width: 1600px) {
+  .layout-content {
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3rem;
+    width: 100%;
+  }
 }
 
 @media (max-width: 767px) {

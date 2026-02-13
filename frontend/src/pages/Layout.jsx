@@ -10,9 +10,9 @@ import { jwtDecode } from 'jwt-decode';
 import './Layout.css';
 
 const Layout = () => {
-	const [activePage, setActivePage] = useState('students');
-	const [userRole, setUserRole] = useState('student');
-	const [userName, setUserName] = useState('');
+  const [activePage, setActivePage] = useState('students');
+  const [userRole, setUserRole] = useState('student');
+  const [userName, setUserName] = useState('');
 	const handlePageChange = (pageId) => {
 		setActivePage(pageId);
 	};
@@ -54,7 +54,7 @@ const Layout = () => {
 
 	return (
 		<div className='layout'>
-			<Sidebar activePage={activePage} onPageChange={handlePageChange} />
+			<Sidebar activePage={activePage} onPageChange={handlePageChange} userName={userName} userRole={userRole} />
 			<div className='layout-main'>
 				<main className='layout-content' role='main'>
 					{renderPage()}
