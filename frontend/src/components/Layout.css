@@ -1,0 +1,38 @@
+.layout {
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+.layout-main {
+  margin-left: 280px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-content {
+  flex: 1;
+  margin-top: 72px;
+  padding: 2rem;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .layout-main {
+    margin-left: 0;
+  }
+
+  .layout-content {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout-content {
+    padding: 1rem;
+  }
+}
