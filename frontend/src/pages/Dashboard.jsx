@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback } from 'react';
-import { jwtDecode } from 'jwt-decode';
 import '../App.css';
 import EditComponent from '../components/Edit';
 import PostingComponent from '../components/Posting';
@@ -16,14 +15,13 @@ import {
 	deleteStudent,
 } from '../api/api';
 
-function Dashboard() {
+function Dashboard(userRole, userName) {
 	const [students, setStudents] = useState([]);
 	const [formData, setFormData] = useState({
 		student_name: '',
 		email: '',
 	});
-	const [userRole, setUserRole] = useState('student');
-	const [userName, setUserName] = useState('');
+
 	const [isEditing, setIsEditing] = useState(false);
 	const [currentStudent, setCurrentStudent] = useState(null);
 	const [postMode, setPostMode] = useState(false);
@@ -54,19 +52,6 @@ function Dashboard() {
 	useEffect(() => {
 		setPage(1);
 	}, [searchTerm]);
-	useEffect(() => {
-		const token = localStorage.getItem('token');
-		if (token) {
-			try {
-				const decoded = jwtDecode('token');
-				setUserRole(decoded.role || 'student');
-				setUserRole(decoded.username || 'User');
-			} catch (error) {
-				console.error('Invalid Token');
-				setUserRole('student');
-			}
-		}
-	}, []);
 
 	const fetchStudents = useCallback(async () => {
 		setLoading(true);
@@ -340,6 +325,7 @@ function Dashboard() {
 						setPage={setPage}
 						totalCount={totalCount}
 						userRole={userRole}
+						
 					/>
 				)}
 
