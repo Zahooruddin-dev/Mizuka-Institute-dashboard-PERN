@@ -20,7 +20,7 @@ const Layout = () => {
 		const token = localStorage.getItem('token');
 		if (token && token !== 'undefined' && token !== 'null') {
 			try {
-        const decoded = jwtDecode(token);
+        const decoded = jwtDecode(token);				
         const role = decoded.role || 'student';
         const name = decoded.username || 'Guest';
         setUserRole(role);
