@@ -5,7 +5,6 @@ import Classes from '../components/Classes';
 import Enroll from '../components/Enroll';
 import Profile from '../components/Profile';
 import Settings from '../components/Settings';
-import { jwtDecode } from 'jwt-decode';
 import { getUserFromToken } from '../utils/auth';
 import './Layout.css';
 
@@ -21,6 +20,8 @@ const Layout = () => {
 			setUser(userData);
 		}
 	}, []);
+	console.log(user);
+	
 
 	const renderPage = () => {
 		switch (activePage) {

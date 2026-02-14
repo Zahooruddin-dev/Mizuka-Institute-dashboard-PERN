@@ -21,7 +21,6 @@ function Dashboard(User) {
 		student_name: '',
 		email: '',
 	});
-
 	const [isEditing, setIsEditing] = useState(false);
 	const [currentStudent, setCurrentStudent] = useState(null);
 	const [postMode, setPostMode] = useState(false);
