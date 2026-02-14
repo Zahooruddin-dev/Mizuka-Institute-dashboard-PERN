@@ -9,7 +9,7 @@ import {
 	X,
 } from 'lucide-react';
 import './Sidebar.css';
-import { logout } from '../utils/auth';
+import { logout } from '../../utils/auth';
 
 const Sidebar = ({
 	activePage,

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 import Dashboard from '../components/Dashboard';
-import Classes from '../components/Classes';
-import Enroll from '../components/Enroll';
-import Profile from '../components/Profile';
-import Settings from '../components/Settings';
+import Classes from '../components/Sidebar/Classes/Classes';
+import Enroll from '../components/Sidebar/Enroll/Enroll';
+import Profile from '../components/Sidebar/Profile/Profile';
+import Settings from '../components/Sidebar/Settings/Settings';
 import { getUserFromToken } from '../utils/auth';
 import './Layout.css';
 
