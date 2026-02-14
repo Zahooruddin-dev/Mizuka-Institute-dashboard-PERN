@@ -3,7 +3,7 @@ import '../App.css';
 import EditComponent from '../components/Sidebar/Dashboard/Edit';
 import PostingComponent from '../components/Sidebar/Dashboard/Posting';
 import MainComponent from '../components/Sidebar/Dashboard/Main';
-import Toast from '../components/Toast';
+import Toast from '../components/Toast/Toast';
 import DeleteModal from '../modals/DeleteModal';
 import StudentDetails from '../components/Sidebar/Dashboard/StudentDetails';
 import SearchDialog from '../components/Sidebar/Dashboard/SearchDialog';
