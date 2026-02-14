@@ -1,13 +1,38 @@
-import { User } from 'lucide-react';
+import { User, Mail, Shield, Calendar, Edit2, Camera } from 'lucide-react';
+import { useState } from 'react';
+import './Profile.css';
 
 const Profile = ({ user }) => {
-  console.log(user?.role,user?.email);
-  
+	const [isEditing, setIsEditing] = useState(false);
+
+	const formatDate = (dateString) => {
+		if (!dateString) return 'N/A';
+		const date = new Date(dateString);
+		return date.toLocaleDateString('en-US', { 
+			year: 'numeric', 
+			month: 'long', 
+			day: 'numeric' 
+		});
+	};
+
+	const getRoleBadgeColor = (role) => {
+		switch (role?.toLowerCase()) {
+			case 'admin':
+				return 'role-admin';
+			case 'teacher':
+				return 'role-teacher';
+			case 'student':
+				return 'role-student';
+			default:
+				return 'role-default';
+		}
+	};
+
 	return (
 		<div className='page-container'>
 			<div className='page-header'>
 				<User size={32} className='page-icon' />
-				<div>
+				<div className='header-content'>
 					<h1 className='page-heading'>Profile</h1>
 					<p className='page-description'>
 						View and manage your profile information
@@ -15,77 +40,131 @@ const Profile = ({ user }) => {
 				</div>
 			</div>
 
-			<div className='profile-container'>
-				<h1>{user?.username}'s Profile</h1>
-				<p>Role: {user?.role}</p>
-				<p>Email: {user?.email}</p>
+			<div className='profile-content'>
+				<div className='profile-card'>
+					<div className='profile-header-section'>
+						<div className='avatar-section'>
+							<div className='avatar-large'>
+								{user?.username ? user.username.charAt(0).toUpperCase() : 'U'}
+							</div>
+							<button className='avatar-edit-button' aria-label='Change profile picture'>
+								<Camera size={16} />
+							</button>
+						</div>
+						<div className='profile-header-info'>
+							<h2 className='profile-name'>{user?.username || 'User'}</h2>
+							<span className={`role-badge ${getRoleBadgeColor(user?.role)}`}>
+								<Shield size={14} />
+								{user?.role || 'User'}
+							</span>
+						</div>
+					</div>
+
+					<div className='profile-details'>
+						<div className='detail-section'>
+							<h3 className='section-title'>Personal Information</h3>
+							<div className='detail-grid'>
+								<div className='detail-item'>
+									<div className='detail-icon'>
+										<User size={18} />
+									</div>
+									<div className='detail-content'>
+										<p className='detail-label'>Username</p>
+										<p className='detail-value'>{user?.username || 'Not set'}</p>
+									</div>
+								</div>
+
+								<div className='detail-item'>
+									<div className='detail-icon'>
+										<Mail size={18} />
+									</div>
+									<div className='detail-content'>
+										<p className='detail-label'>Email Address</p>
+										<p className='detail-value'>{user?.email || 'Not set'}</p>
+									</div>
+								</div>
+
+								<div className='detail-item'>
+									<div className='detail-icon'>
+										<Shield size={18} />
+									</div>
+									<div className='detail-content'>
+										<p className='detail-label'>Role</p>
+										<p className='detail-value'>{user?.role || 'Not assigned'}</p>
+									</div>
+								</div>
+
+								<div className='detail-item'>
+									<div className='detail-icon'>
+										<Calendar size={18} />
+									</div>
+									<div className='detail-content'>
+										<p className='detail-label'>Member Since</p>
+										<p className='detail-value'>{formatDate(user?.createdAt) || 'N/A'}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div className='detail-section'>
+							<h3 className='section-title'>Account Status</h3>
+							<div className='status-grid'>
+								<div className='status-card'>
+									<div className='status-indicator active'></div>
+									<div>
+										<p className='status-label'>Account Status</p>
+										<p className='status-value'>Active</p>
+									</div>
+								</div>
+								<div className='status-card'>
+									<div className='status-indicator verified'></div>
+									<div>
+										<p className='status-label'>Email Verified</p>
+										<p className='status-value'>Verified</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className='profile-actions'>
+						<button className='action-btn primary' onClick={() => setIsEditing(true)}>
+							<Edit2 size={18} />
+							Edit Profile
+						</button>
+						<button className='action-btn secondary'>
+							Change Password
+						</button>
+					</div>
+				</div>
+
+				<div className='activity-card'>
+					<h3 className='activity-title'>Recent Activity</h3>
+					<div className='activity-list'>
+						<div className='activity-item'>
+							<div className='activity-dot'></div>
+							<div className='activity-content'>
+								<p className='activity-text'>Profile viewed</p>
+								<p className='activity-time'>Just now</p>
+							</div>
+						</div>
+						<div className='activity-item'>
+							<div className='activity-dot'></div>
+							<div className='activity-content'>
+								<p className='activity-text'>Logged in successfully</p>
+								<p className='activity-time'>2 hours ago</p>
+							</div>
+						</div>
+						<div className='activity-item'>
+							<div className='activity-dot'></div>
+							<div className='activity-content'>
+								<p className='activity-text'>Password changed</p>
+								<p className='activity-time'>3 days ago</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-
-			<style>{`
-        .page-container {
-          background: #ffffff;
-          border-radius: 20px;
-          padding: 2rem;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-          border: 1px solid rgba(0, 0, 0, 0.06);
-        }
-
-        .page-header {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-          padding-bottom: 2rem;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-          margin-bottom: 2rem;
-        }
-
-        .page-icon {
-          width: 56px;
-          height: 56px;
-          padding: 12px;
-          background: linear-gradient(135deg, var(--primary-500) 0%, var(--accent-1) 100%);
-          color: #ffffff;
-          border-radius: 16px;
-          flex-shrink: 0;
-        }
-
-        .page-heading {
-          margin: 0;
-          font-size: 2rem;
-          font-weight: 700;
-          color: #1e293b;
-          letter-spacing: -0.02em;
-        }
-
-        .page-description {
-          margin: 0.25rem 0 0 0;
-          font-size: 0.9375rem;
-          color: #64748b;
-        }
-
-        .placeholder-content {
-          padding: 4rem 2rem;
-          text-align: center;
-          color: #64748b;
-          font-size: 1rem;
-        }
-
-        @media (max-width: 640px) {
-          .page-container {
-            padding: 1.5rem;
-          }
-
-          .page-heading {
-            font-size: 1.5rem;
-          }
-
-          .page-icon {
-            width: 48px;
-            height: 48px;
-            padding: 10px;
-          }
-        }
-      `}</style>
 		</div>
 	);
 };
