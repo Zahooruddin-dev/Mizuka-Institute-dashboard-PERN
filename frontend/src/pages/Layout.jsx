@@ -11,8 +11,6 @@ import './Layout.css';
 
 const Layout = () => {
 	const [activePage, setActivePage] = useState('students');
-	const [userRole, setUserRole] = useState('student');
-	const [userName, setUserName] = useState('');
 	const [user, setUser] = useState(null);
 	const handlePageChange = (pageId) => {
 		setActivePage(pageId);

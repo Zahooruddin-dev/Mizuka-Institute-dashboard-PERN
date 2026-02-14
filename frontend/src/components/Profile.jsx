@@ -1,21 +1,27 @@
 import { User } from 'lucide-react';
 
-const Profile = () => {
-  return (
-    <div className="page-container">
-      <div className="page-header">
-        <User size={32} className="page-icon" />
-        <div>
-          <h1 className="page-heading">Profile</h1>
-          <p className="page-description">View and manage your profile information</p>
-        </div>
-      </div>
+const Profile = ({ user }) => {
+  console.log(user?.role,user?.email);
+  
+	return (
+		<div className='page-container'>
+			<div className='page-header'>
+				<User size={32} className='page-icon' />
+				<div>
+					<h1 className='page-heading'>Profile</h1>
+					<p className='page-description'>
+						View and manage your profile information
+					</p>
+				</div>
+			</div>
 
-      <div className="placeholder-content">
-        <p>Profile management interface coming soon...</p>
-      </div>
+			<div className='profile-container'>
+				<h1>{user?.username}'s Profile</h1>
+				<p>Role: {user?.role}</p>
+				<p>Email: {user?.email}</p>
+			</div>
 
-      <style>{`
+			<style>{`
         .page-container {
           background: #ffffff;
           border-radius: 20px;
@@ -80,8 +86,8 @@ const Profile = () => {
           }
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 };
 
 export default Profile;
