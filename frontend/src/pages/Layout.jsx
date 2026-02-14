@@ -19,9 +19,7 @@ const Layout = () => {
 		if (userData) {
 			setUser(userData);
 		}
-	}, []);
-	console.log(user);
-	
+	}, []);	
 
 	const renderPage = () => {
 		switch (activePage) {

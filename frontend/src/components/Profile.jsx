@@ -1,6 +1,29 @@
-import { User, Mail, Shield, Calendar, Edit2, Camera } from 'lucide-react';
 import { useState } from 'react';
 import './Profile.css';
+
+// Simple emoji icon component
+const Icon = ({ type, size = 24 }) => {
+	const icons = {
+		user: '👤',
+		mail: '✉️',
+		shield: '🛡️',
+		calendar: '📅',
+		edit: '✏️',
+		camera: '📷'
+	};
+	
+	return (
+		<span style={{ 
+			fontSize: `${size}px`, 
+			display: 'inline-flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			lineHeight: 1
+		}}>
+			{icons[type] || '•'}
+		</span>
+	);
+};
 
 const Profile = ({ user }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -31,7 +54,9 @@ const Profile = ({ user }) => {
 	return (
 		<div className='page-container'>
 			<div className='page-header'>
-				<User size={32} className='page-icon' />
+				<div className='page-icon'>
+					<Icon type='user' size={32} />
+				</div>
 				<div className='header-content'>
 					<h1 className='page-heading'>Profile</h1>
 					<p className='page-description'>
@@ -48,13 +73,13 @@ const Profile = ({ user }) => {
 								{user?.username ? user.username.charAt(0).toUpperCase() : 'U'}
 							</div>
 							<button className='avatar-edit-button' aria-label='Change profile picture'>
-								<Camera size={16} />
+								<Icon type='camera' size={16} />
 							</button>
 						</div>
 						<div className='profile-header-info'>
 							<h2 className='profile-name'>{user?.username || 'User'}</h2>
 							<span className={`role-badge ${getRoleBadgeColor(user?.role)}`}>
-								<Shield size={14} />
+								<Icon type='shield' size={14} />
 								{user?.role || 'User'}
 							</span>
 						</div>
@@ -66,7 +91,7 @@ const Profile = ({ user }) => {
 							<div className='detail-grid'>
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<User size={18} />
+										<Icon type='user' size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Username</p>
@@ -76,7 +101,7 @@ const Profile = ({ user }) => {
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Mail size={18} />
+										<Icon type='mail' size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Email Address</p>
@@ -86,7 +111,7 @@ const Profile = ({ user }) => {
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Shield size={18} />
+										<Icon type='shield' size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Role</p>
@@ -96,7 +121,7 @@ const Profile = ({ user }) => {
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Calendar size={18} />
+										<Icon type='calendar' size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Member Since</p>
@@ -129,7 +154,7 @@ const Profile = ({ user }) => {
 
 					<div className='profile-actions'>
 						<button className='action-btn primary' onClick={() => setIsEditing(true)}>
-							<Edit2 size={18} />
+							<Icon type='edit' size={18} />
 							Edit Profile
 						</button>
 						<button className='action-btn secondary'>
