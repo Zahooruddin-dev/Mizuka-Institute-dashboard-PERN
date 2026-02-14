@@ -1,6 +1,5 @@
 import { Edit, Trash2, Eye } from 'lucide-react';
 import './studenttable.css';
-import { useEffect, useState } from 'react';
 
 export default function StudentTable({
 	students,
@@ -11,8 +10,8 @@ export default function StudentTable({
 	limit,
 	User,
 }) {
-	const priveledge = User.User	
-	
+	const priveledge = User.userRole;
+
 	return (
 		<div className='table-container'>
 			<div className='table-wrapper'>
