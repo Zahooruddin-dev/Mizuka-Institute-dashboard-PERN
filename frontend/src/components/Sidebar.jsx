@@ -9,6 +9,7 @@ import {
 	X,
 } from 'lucide-react';
 import './Sidebar.css';
+import { logout } from '../utils/auth';
 
 const Sidebar = ({
 	activePage,
@@ -130,6 +131,7 @@ const Sidebar = ({
 							<p className='user-role' title={userName || 'Guest'}>
 								{userName || 'Guest'}
 							</p>
+              <button onClick={logout}>Logout</button>
 						</div>
 					</div>
 				</div>
