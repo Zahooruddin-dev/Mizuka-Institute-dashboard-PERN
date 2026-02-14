@@ -36,10 +36,10 @@ export default function Login() {
 				<h2>Register</h2>
 				{error && <p className='error'>{error}</p>}
 				<input
-					type='email'
-					name='email'
-					placeholder='Email'
-					value={formData.email}
+					name='username'
+					type='username'
+					placeholder='Username'
+					value={formData.username}
 					onChange={handleChange}
 					required
 				/>
