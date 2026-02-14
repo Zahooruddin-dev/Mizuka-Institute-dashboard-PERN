@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
-import Dashboard from '../components/Dashboard';
+import Dashboard from './Dashboard';
 import Classes from '../components/Sidebar/Classes/Classes';
 import Enroll from '../components/Sidebar/Enroll/Enroll';
 import Profile from '../components/Sidebar/Profile/Profile';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { X, User, Mail, Calendar, BookOpen } from 'lucide-react';
-import { getStudentById, getStudentClasses } from '../api/api';
+import { getStudentById, getStudentClasses } from '../../../api/api';
 
 export default function StudentDetails({ studentId, onClose }) {
 	const [student, setStudent] = useState(null);

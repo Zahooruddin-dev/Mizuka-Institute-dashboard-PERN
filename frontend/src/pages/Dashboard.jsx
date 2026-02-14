@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react';
 import '../App.css';
-import EditComponent from '../components/Edit';
-import PostingComponent from '../components/Posting';
-import MainComponent from '../components/Main';
+import EditComponent from '../components/Sidebar/Dashboard/Edit';
+import PostingComponent from '../components/Sidebar/Dashboard/Posting';
+import MainComponent from '../components/Sidebar/Dashboard/Main';
 import Toast from '../components/Toast';
 import DeleteModal from '../modals/DeleteModal';
-import StudentDetails from '../components/StudentDetails';
-import SearchDialog from '../components/SearchDialog';
+import StudentDetails from '../components/Sidebar/Dashboard/StudentDetails';
+import SearchDialog from '../components/Sidebar/Dashboard/SearchDialog';
 
 import {
 	getStudents,
@@ -361,11 +361,12 @@ function Dashboard(User) {
 
 			<style>{`
 				.dashboard-container {
-					padding: 2rem;
-					/* use full available width so right pane can occupy space next to sidebar */
-					max-width: none;
+					/* Take up full available width next to sidebar */
 					width: 100%;
+					max-width: none;
 					margin: 0;
+					padding: 2rem;
+					box-sizing: border-box;
 					background: transparent;
 					min-height: 100vh;
 				}
