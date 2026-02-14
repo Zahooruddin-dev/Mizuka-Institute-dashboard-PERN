@@ -29,15 +29,17 @@ body {
   line-height: 1.5;
   background: linear-gradient(135deg, var(--accent-2, #f0fffb) 0%, var(--bg, #f8fafc) 100%);
   color: var(--text);
+  margin: 0;
+  padding: 0;
 }
 
 #root {
-  /* Allow app pages (like the dashboard layout) to use full viewport width
-     while inner components control their own padding for layout stability */
+  /* Allow full viewport width - let Layout and Dashboard control their own spacing */
   max-width: none;
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  width: 100%;
 }
 
 .logo {
@@ -176,10 +178,6 @@ table {
 }
 
 @media (max-width: 768px) {
-  #root {
-    padding: 1.5rem;
-  }
-
   .card {
     padding: 1.5rem;
     border-radius: 12px;
@@ -192,10 +190,6 @@ table {
 }
 
 @media (max-width: 480px) {
-  #root {
-    padding: 1rem;
-  }
-
   .card {
     padding: 1.25rem;
   }

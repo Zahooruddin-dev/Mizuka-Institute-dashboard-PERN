@@ -73,7 +73,7 @@
 	width: 96px;
 	height: 96px;
 	border-radius: 20px;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: linear-gradient(135deg, #66e6ea 0%, #4ba29e 100%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -316,7 +316,7 @@
 }
 
 .action-btn.primary {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	background: linear-gradient(135deg, #66e6ea 0%, #4ba29e 100%);
 	color: #ffffff;
 	box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
 }

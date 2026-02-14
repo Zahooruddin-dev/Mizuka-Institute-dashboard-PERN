@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import '../App.css';
 import EditComponent from '../components/Edit';
 import PostingComponent from '../components/Posting';
 import MainComponent from '../components/Main';
@@ -193,11 +194,12 @@ function Dashboard(User) {
 
 				<style>{`
 					.error-container {
-						min-height: 60vh;
+						min-height: 100vh;
 						display: flex;
 						align-items: center;
 						justify-content: center;
 						padding: 2rem;
+						background: var(--bg);
 					}
 
 					.error-content {
@@ -229,20 +231,20 @@ function Dashboard(User) {
 						padding: 0.875rem 2rem;
 						font-size: 0.9375rem;
 						font-weight: 600;
-						background: #667eea;
+						background: var(--primary-500);
 						color: #ffffff;
 						border: none;
 						border-radius: 12px;
 						cursor: pointer;
 						transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-						box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+						box-shadow: 0 6px 16px rgba(6,182,212,0.12);
 						letter-spacing: 0.01em;
 					}
 
 					.retry-button:hover {
-						background: #5568d3;
+						background: var(--primary-600);
 						transform: translateY(-1px);
-						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+						box-shadow: 0 8px 18px rgba(6,182,212,0.12);
 					}
 
 					.retry-button:active {
@@ -250,7 +252,7 @@ function Dashboard(User) {
 					}
 
 					.retry-button:focus {
-						outline: 2px solid #667eea;
+						outline: 2px solid var(--primary-500);
 						outline-offset: 2px;
 					}
 				`}</style>
@@ -321,7 +323,8 @@ function Dashboard(User) {
 						page={page}
 						setPage={setPage}
 						totalCount={totalCount}
-            User={User}
+						User={User}
+						
 					/>
 				)}
 
@@ -358,11 +361,14 @@ function Dashboard(User) {
 
 			<style>{`
 				.dashboard-container {
-					background: var(--surface);
-					border-radius: 20px;
+					/* Take up full available width next to sidebar */
+					width: 100%;
+					max-width: none;
+					margin: 0;
 					padding: 2rem;
-					box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
-					border: 1px solid rgba(15, 23, 42, 0.04);
+					box-sizing: border-box;
+					background: transparent;
+					min-height: 100vh;
 				}
 
 				.loading-container {
@@ -402,42 +408,42 @@ function Dashboard(User) {
 					margin-top: 2rem;
 				}
 
-					retry-button {
-						padding: 0.875rem 2rem;
-						font-size: 0.9375rem;
-						font-weight: 600;
-						background: var(--primary-500);
-						color: #ffffff;
-						border: none;
-						border-radius: 12px;
-						cursor: pointer;
-						transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-						box-shadow: 0 6px 16px rgba(6,182,212,0.12);
-						letter-spacing: 0.01em;
-					}
-
-					retry-button:hover {
-						background: var(--primary-600);
-						transform: translateY(-1px);
-						box-shadow: 0 8px 18px rgba(6,182,212,0.12);
-					}
-
-					retry-button:active {
-						transform: translateY(0);
-					}
-
-					retry-button:focus {
-						outline: 2px solid var(--primary-500);
-						outline-offset: 2px;
-					}
+				.action-btn {
+					flex: 1;
+					padding: 1rem 1.5rem;
+					font-size: 0.9375rem;
+					font-weight: 600;
+					border: none;
+					border-radius: 12px;
+					cursor: pointer;
+					transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+					letter-spacing: 0.01em;
+					box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 				}
 
-					secondary-btn:hover {
-						background: #f8fafc;
-						border-color: var(--primary-500);
-						transform: translateY(-2px);
-						box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
-					}
+				.primary-btn {
+					background: var(--primary-500);
+					color: var(--surface);
+				}
+
+				.primary-btn:hover {
+					background: var(--primary-600);
+					transform: translateY(-2px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
+				}
+
+				.secondary-btn {
+					background: #ffffff;
+					color: #334155;
+					border: 1px solid rgba(0, 0, 0, 0.08);
+				}
+
+				.secondary-btn:hover {
+					background: #f8fafc;
+					border-color: var(--primary-500);
+					transform: translateY(-2px);
+					box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+				}
 
 				.action-btn:active {
 					transform: translateY(0);
@@ -450,7 +456,7 @@ function Dashboard(User) {
 
 				@media (max-width: 640px) {
 					.dashboard-container {
-						padding: 1.5rem;
+						padding: 1rem;
 					}
 
 					.action-buttons {

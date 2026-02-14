@@ -2,12 +2,15 @@
   --sidebar-width: 280px;
   min-height: 100vh;
   background: #fafafa;
+  display: flex;
 }
 
 .layout-main {
-  /* make main content respect the fixed sidebar width */
+  /* Make main content take remaining space after sidebar */
+  flex: 1;
   margin-left: var(--sidebar-width);
   min-height: 100vh;
+  width: calc(100% - var(--sidebar-width));
   display: flex;
   flex-direction: column;
   transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -15,37 +18,24 @@
 
 .layout-content {
   flex: 1;
-  margin-top: 72px;
-  padding: 2rem;
-  /* allow content to use remaining space fully (no unnecessary centering max-width) */
+  /* Remove max-width constraint to allow full-width usage */
   max-width: none;
-  width: calc(100% - 2rem);
-  margin-left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-/* For very wide screens, constrain content and add breathing room */
-@media (min-width: 1600px) {
+/* For very wide screens, you can optionally add max-width to prevent ultra-wide layouts */
+@media (min-width: 1920px) {
   .layout-content {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 3rem;
-    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
   }
 }
 
 @media (max-width: 767px) {
   .layout-main {
     margin-left: 0;
-  }
-
-  .layout-content {
-    padding: 1.5rem 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .layout-content {
-    padding: 1rem;
+    width: 100%;
   }
 }
