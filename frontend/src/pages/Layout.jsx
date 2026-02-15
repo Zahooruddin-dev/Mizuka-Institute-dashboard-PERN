@@ -11,26 +11,47 @@ import '../css/Layout.css';
 const Layout = () => {
 	const [activePage, setActivePage] = useState('students');
 	const [user, setUser] = useState(null);
-	const handlePageChange = (pageId) => {
-		setActivePage(pageId);
-	};
-	useEffect(() => {
+
+	const loadUserData = () => {
 		const userData = getUserFromToken();
 		if (userData) {
 			setUser(userData);
 		}
-	}, []);	
+	};
+
+	const handlePageChange = (pageId) => {
+		setActivePage(pageId);
+		if (pageId === 'profile') {
+			loadUserData();
+		}
+	};
+
+	useEffect(() => {
+		loadUserData();
+	}, []);
+
+	useEffect(() => {
+		const handleStorageChange = () => {
+			loadUserData();
+		};
+
+		window.addEventListener('storage', handleStorageChange);
+		
+		return () => {
+			window.removeEventListener('storage', handleStorageChange);
+		};
+	}, []);
 
 	const renderPage = () => {
 		switch (activePage) {
 			case 'students':
-				return <Dashboard userRole={user?.role} />; //User here only has User ROLE
+				return <Dashboard userRole={user?.role} />;
 			case 'classes':
 				return <Classes />;
 			case 'enroll':
 				return <Enroll />;
 			case 'profile':
-				return <Profile user={user}/>;
+				return <Profile user={user} key={user?.profile} />;
 			case 'settings':
 				return <Settings />;
 			default:

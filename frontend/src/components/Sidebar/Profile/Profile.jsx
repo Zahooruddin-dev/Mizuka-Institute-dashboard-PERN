@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
 
-// Simple emoji icon component
 const Icon = ({ type, size = 24 }) => {
 	const icons = {
 		user: '👤',
@@ -33,6 +32,16 @@ const Profile = ({ user }) => {
 	const [newName, setNewName] = useState(user?.username || '');
 	const [selectedFile, setSelectedFile] = useState(null);
 	const [previewUrl, setPreviewUrl] = useState(null);
+	const [currentUser, setCurrentUser] = useState(user);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
+	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
+
+	useEffect(() => {
+		setCurrentUser(user);
+		setNewName(user?.username || '');
+	}, [user]);
+
 	const formatDate = (dateString) => {
 		if (!dateString) return 'N/A';
 		const date = new Date(dateString);
@@ -42,35 +51,68 @@ const Profile = ({ user }) => {
 			day: 'numeric',
 		});
 	};
+
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		if (file) {
 			setSelectedFile(file);
-			setPreviewUrl(URL.createObjectURL(file));
+			const url = URL.createObjectURL(file);
+			setPreviewUrl(url);
 		}
 	};
+
 	const handleSave = async () => {
+		setLoading(true);
+		setError('');
+
 		try {
 			const formData = new FormData();
-			formData.append('id', user.id);
+			formData.append('id', currentUser.id);
 			formData.append('newUsername', newName);
+			
 			if (selectedFile) {
 				formData.append('image', selectedFile);
 			}
+
 			const response = await updateUsername(formData);
-			localStorage.setItem('token', response.data.token);
+			
+			if (response.data.token) {
+				localStorage.setItem('token', response.data.token);
+			}
+
+			if (response.data.user) {
+				setCurrentUser(response.data.user);
+			}
+
 			setIsEditing(false);
+			setSelectedFile(null);
+			setImageTimestamp(Date.now());
+			
+			if (previewUrl) {
+				URL.revokeObjectURL(previewUrl);
+				setPreviewUrl(null);
+			}
+
 			window.location.reload();
 		} catch (err) {
-			console.error(
-				'update failed:',
-				err.response?.data?.message || err.message,
-			);
+			console.error('Update failed:', err);
+			setError(err.response?.data?.message || 'Failed to update profile');
+		} finally {
+			setLoading(false);
 		}
 	};
+
 	const handleCancel = () => {
-		setNewName(user?.username || '');
+		setNewName(currentUser?.username || '');
+		setSelectedFile(null);
+		
+		if (previewUrl) {
+			URL.revokeObjectURL(previewUrl);
+			setPreviewUrl(null);
+		}
+		
 		setIsEditing(false);
+		setError('');
 	};
 
 	const getRoleBadgeColor = (role) => {
@@ -84,6 +126,16 @@ const Profile = ({ user }) => {
 			default:
 				return 'role-default';
 		}
+	};
+
+	const getProfileImageUrl = () => {
+		if (previewUrl) {
+			return previewUrl;
+		}
+		if (currentUser?.profile) {
+			return `http://localhost:3000${currentUser.profile}?t=${imageTimestamp}`;
+		}
+		return null;
 	};
 
 	return (
@@ -102,23 +154,57 @@ const Profile = ({ user }) => {
 
 			<div className='profile-content'>
 				<div className='profile-card'>
+					{error && (
+						<div style={{
+							padding: '12px',
+							marginBottom: '16px',
+							background: '#fee',
+							color: '#c00',
+							borderRadius: '8px',
+							fontSize: '14px'
+						}}>
+							{error}
+						</div>
+					)}
+
 					<div className='profile-header-section'>
 						<div className='avatar-section'>
 							<div className='avatar-large'>
-								{user?.username ? user.username.charAt(0).toUpperCase() : 'U'}
+								{getProfileImageUrl() ? (
+									<img 
+										src={getProfileImageUrl()} 
+										alt='Profile' 
+										className='avatar-img'
+										onError={(e) => {
+											e.target.style.display = 'none';
+											e.target.parentElement.textContent = currentUser?.username?.charAt(0).toUpperCase();
+										}}
+									/>
+								) : (
+									currentUser?.username?.charAt(0).toUpperCase()
+								)}
 							</div>
-							<button
-								className='avatar-edit-button'
-								aria-label='Change profile picture'
-							>
-								<Icon type='camera' size={16} />
-							</button>
+
+							{isEditing && (
+								<>
+									<label htmlFor='file-upload' className='avatar-edit-button'>
+										<Icon type='camera' size={16} />
+									</label>
+									<input
+										id='file-upload'
+										type='file'
+										accept='image/*'
+										style={{ display: 'none' }}
+										onChange={handleFileChange}
+									/>
+								</>
+							)}
 						</div>
 						<div className='profile-header-info'>
-							<h2 className='profile-name'>{user?.username || 'User'}</h2>
-							<span className={`role-badge ${getRoleBadgeColor(user?.role)}`}>
+							<h2 className='profile-name'>{currentUser?.username || 'User'}</h2>
+							<span className={`role-badge ${getRoleBadgeColor(currentUser?.role)}`}>
 								<Icon type='shield' size={14} />
-								{user?.role || 'User'}
+								{currentUser?.role || 'User'}
 							</span>
 						</div>
 					</div>
@@ -141,7 +227,7 @@ const Profile = ({ user }) => {
 											/>
 										) : (
 											<p className='detail-value'>
-												{user?.username || 'Not set'}
+												{currentUser?.username || 'Not set'}
 											</p>
 										)}
 									</div>
@@ -153,7 +239,7 @@ const Profile = ({ user }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Email Address</p>
-										<p className='detail-value'>{user?.email || 'Not set'}</p>
+										<p className='detail-value'>{currentUser?.email || 'Not set'}</p>
 									</div>
 								</div>
 
@@ -164,7 +250,7 @@ const Profile = ({ user }) => {
 									<div className='detail-content'>
 										<p className='detail-label'>Role</p>
 										<p className='detail-value'>
-											{user?.role || 'Not assigned'}
+											{currentUser?.role || 'Not assigned'}
 										</p>
 									</div>
 								</div>
@@ -176,7 +262,7 @@ const Profile = ({ user }) => {
 									<div className='detail-content'>
 										<p className='detail-label'>Member Since</p>
 										<p className='detail-value'>
-											{formatDate(user?.createdAt) || 'N/A'}
+											{formatDate(currentUser?.createdAt) || 'N/A'}
 										</p>
 									</div>
 								</div>
@@ -206,11 +292,19 @@ const Profile = ({ user }) => {
 					<div className='profile-actions'>
 						{isEditing ? (
 							<>
-								<button className='action-btn primary' onClick={handleSave}>
+								<button 
+									className='action-btn primary' 
+									onClick={handleSave}
+									disabled={loading}
+								>
 									<Icon type='edit' size={18} />
-									Save Changes
+									{loading ? 'Saving...' : 'Save Changes'}
 								</button>
-								<button className='action-btn secondary' onClick={handleCancel}>
+								<button 
+									className='action-btn secondary' 
+									onClick={handleCancel}
+									disabled={loading}
+								>
 									Cancel
 								</button>
 							</>

@@ -49,7 +49,11 @@
 }
 
 .profile-card {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.02) 0%,
+		rgba(118, 75, 162, 0.02) 100%
+	);
 	border: 1px solid rgba(0, 0, 0, 0.06);
 	border-radius: 16px;
 	padding: 2rem;
@@ -67,7 +71,12 @@
 .avatar-section {
 	position: relative;
 }
-
+.avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 20px;
+}
 .avatar-large {
 	width: 96px;
 	height: 96px;
@@ -133,25 +142,41 @@
 }
 
 .role-admin {
-	background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(239, 68, 68, 0.1) 0%,
+		rgba(220, 38, 38, 0.1) 100%
+	);
 	color: #dc2626;
 	border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .role-teacher {
-	background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(16, 185, 129, 0.1) 0%,
+		rgba(5, 150, 105, 0.1) 100%
+	);
 	color: #059669;
 	border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .role-student {
-	background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(59, 130, 246, 0.1) 0%,
+		rgba(37, 99, 235, 0.1) 100%
+	);
 	color: #2563eb;
 	border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .role-default {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.1) 0%,
+		rgba(118, 75, 162, 0.1) 100%
+	);
 	color: #667eea;
 	border: 1px solid rgba(102, 126, 234, 0.2);
 }
@@ -203,7 +228,11 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 10px;
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.1) 0%,
+		rgba(118, 75, 162, 0.1) 100%
+	);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -230,28 +259,28 @@
 	color: #1e293b;
 }
 .edit-input {
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: #1e293b;
-  background: #f8fafc;
-  border: 2px solid #667eea;
-  border-radius: 8px;
-  outline: none;
-  transition: all 0.2s ease;
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	font-size: 0.9375rem;
+	font-weight: 600;
+	color: #1e293b;
+	background: #f8fafc;
+	border: 2px solid #667eea;
+	border-radius: 8px;
+	outline: none;
+	transition: all 0.2s ease;
 }
 
 .edit-input:focus {
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+	background: #ffffff;
+	box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
 
 .detail-content {
-  min-height: 42px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+	min-height: 42px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 .status-grid {
 	display: grid;
@@ -288,7 +317,8 @@
 }
 
 @keyframes pulse {
-	0%, 100% {
+	0%,
+	100% {
 		opacity: 1;
 	}
 	50% {
@@ -366,7 +396,11 @@
 }
 
 .activity-card {
-	background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+	background: linear-gradient(
+		135deg,
+		rgba(102, 126, 234, 0.02) 0%,
+		rgba(118, 75, 162, 0.02) 100%
+	);
 	border: 1px solid rgba(0, 0, 0, 0.06);
 	border-radius: 16px;
 	padding: 1.5rem;
