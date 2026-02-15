@@ -31,6 +31,8 @@ const Icon = ({ type, size = 24 }) => {
 const Profile = ({ user }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [newName, setNewName] = useState(user?.username || '');
+	const [selectedFile, setSelectedFile] = useState(null);
+	const [previewUrl, setPreviewUrl] = useState(null);
 	const formatDate = (dateString) => {
 		if (!dateString) return 'N/A';
 		const date = new Date(dateString);
@@ -40,12 +42,22 @@ const Profile = ({ user }) => {
 			day: 'numeric',
 		});
 	};
+	const handleFileChange = (e) => {
+		const file = e.target.files[0];
+		if (file) {
+			setSelectedFile(file);
+			setPreviewUrl(URL.createObjectURL(file));
+		}
+	};
 	const handleSave = async () => {
 		try {
-			const response = await updateUsername({
-				id: user.id,
-				newUsername: newName,
-			});
+			const formData = new FormData();
+			formData.append('id', user.id);
+			formData.append('newUsername', newName);
+			if (selectedFile) {
+				formData.append('image', selectedFile);
+			}
+			const response = await updateUsername(formData);
 			localStorage.setItem('token', response.data.token);
 			setIsEditing(false);
 			window.location.reload();
@@ -60,6 +72,7 @@ const Profile = ({ user }) => {
 		setNewName(user?.username || '');
 		setIsEditing(false);
 	};
+
 	const getRoleBadgeColor = (role) => {
 		switch (role?.toLowerCase()) {
 			case 'admin':
