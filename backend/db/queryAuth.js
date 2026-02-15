@@ -16,7 +16,7 @@ async function registerQuery(username, email, password_hash, role = 'student') {
 }
 async function updateUsername(id, username, profilePic) {
 	const query = profilePic
-		? `UPDATE users SET username = $1 ,profile_pic = $ 2 WHERE id = $3 RETURNING * `
+		? `UPDATE users SET username = $1 ,profile_pic = $2 WHERE id = $3 RETURNING * `
 		: `UPDATE users SET username = $1 WHERE id =$2 RETURNING *`;
 	const params = profilePic ? [username, profilePic, id] : [username, id];
 	const { rows } = await pool.query(query, params);
