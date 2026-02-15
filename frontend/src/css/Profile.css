@@ -229,7 +229,30 @@
 	font-weight: 600;
 	color: #1e293b;
 }
+.edit-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #1e293b;
+  background: #f8fafc;
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+}
 
+.edit-input:focus {
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+}
+
+.detail-content {
+  min-height: 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .status-grid {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);

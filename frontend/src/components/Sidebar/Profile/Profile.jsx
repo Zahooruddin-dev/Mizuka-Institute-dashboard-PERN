@@ -56,7 +56,10 @@ const Profile = ({ user }) => {
 			);
 		}
 	};
-
+const handleCancel = () => {
+  setNewName(user?.username || ''); 
+  setIsEditing(false);
+};
 	const getRoleBadgeColor = (role) => {
 		switch (role?.toLowerCase()) {
 			case 'admin':
@@ -117,9 +120,17 @@ const Profile = ({ user }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Username</p>
-										<p className='detail-value'>
-											{user?.username || 'Not set'}
-										</p>
+										{isEditing ? (
+											<input
+												className='edit-input'
+												value={newName}
+												onChange={(e) => setNewName(e.target.value)}
+											/>
+										) : (
+											<p className='detail-value'>
+												{user?.username || 'Not set'}
+											</p>
+										)}
 									</div>
 								</div>
 
