@@ -7,24 +7,31 @@ async function login(req, res) {
 	try {
 		const user = await db.loginQuery(email);
 		console.log('User found in DB:', user);
+		
 		if (!user) {
 			return res.status(401).json({ message: 'Invalid Email or Password' });
 		}
-		const testMatch = await bcrypt.compare('password123', user.password_hash);
-		console.log('Hardcoded test match:', testMatch);
-
+		
 		const actualMatch = await bcrypt.compare(password, user.password_hash);
-		console.log('Request password match:', actualMatch);
+		console.log('Password match:', actualMatch);
+		
+		if (!actualMatch) {
+			return res.status(401).json({ message: 'Invalid Email or Password' });
+		}
+		
 		const token = jwt.sign(
 			{
 				id: user.id,
 				role: user.role,
 				username: user.username,
 				email: user.email,
+				profile: user.profile_pic,
+				createdAt: user.created_at,
 			},
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
+		
 		res.json({
 			message: 'Login Successful',
 			token,
@@ -32,16 +39,19 @@ async function login(req, res) {
 				id: user.id,
 				username: user.username,
 				role: user.role,
+				email: user.email,
+				profile: user.profile_pic,
+				createdAt: user.created_at,
 			},
 		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
 }
+
 async function register(req, res) {
 	const { username, email, password, role } = req.body;
 	try {
-		//HASH PASSWORD BEFORE SAVING
 		const saltRounds = 10;
 		const password_hash = await bcrypt.hash(password, saltRounds);
 		const newUser = await db.registerQuery(
@@ -56,22 +66,27 @@ async function register(req, res) {
 		});
 	} catch (error) {
 		if (error.code === '23505') {
-			res.status(400).json({ message: 'Email Already exists' });
+			return res.status(400).json({ message: 'Email Already exists' });
 		}
 		res.status(400).json({ message: error.message });
 	}
 }
+
 async function changeUsername(req, res) {
 	const { id, newUsername } = req.body;
-	const imagePath = req.file ? `/uploads/${req.file.filename}` : null
+	const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+	
 	if (!newUsername) {
 		return res.status(400).json({ message: 'Username cannot be empty' });
 	}
+	
 	try {
-		const updatedUser = await db.updateUsername(id, newUsername,imagePath);
+		const updatedUser = await db.updateUsername(id, newUsername, imagePath);
+		
 		if (!updatedUser) {
 			return res.status(404).json({ message: 'User not found' });
 		}
+		
 		const token = jwt.sign(
 			{
 				id: updatedUser.id,
@@ -79,14 +94,27 @@ async function changeUsername(req, res) {
 				username: updatedUser.username,
 				email: updatedUser.email,
 				createdAt: updatedUser.created_at,
-				profile:updatedUser.profile_pic
+				profile: updatedUser.profile_pic,
 			},
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
-		res.json({ message: 'Profile updated!', token, user: updatedUser });
+		
+		res.json({ 
+			message: 'Profile updated!', 
+			token, 
+			user: {
+				id: updatedUser.id,
+				username: updatedUser.username,
+				email: updatedUser.email,
+				role: updatedUser.role,
+				createdAt: updatedUser.created_at,
+				profile: updatedUser.profile_pic,
+			}
+		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
 }
+
 module.exports = { login, register, changeUsername };

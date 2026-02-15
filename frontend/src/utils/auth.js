@@ -16,6 +16,8 @@ export const getUserFromToken = () => {
 			role: decoded.role || 'student',
 			username: decoded.username || 'Guest',
 			email: decoded.email || '',
+			profile: decoded.profile || null,
+			createdAt: decoded.createdAt || null,
 		};
 	} catch (error) {
 		console.error('Invalid token format');
