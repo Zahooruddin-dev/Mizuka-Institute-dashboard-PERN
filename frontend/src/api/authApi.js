@@ -1,12 +1,16 @@
 import api from './axiosConfig';
 
 export const loginUser = (data) => {
-  return api.post('/api/auth/login', data);
+	return api.post('/api/auth/login', data);
 };
 
 export const registerUser = (data) => {
-  return api.post('/api/auth/register', data);
+	return api.post('/api/auth/register', data);
 };
 export const updateUsername = (data) => {
-  return api.put('/api/auth/update-profile', data);
+	return api.put('/api/auth/update-profile', data, {
+		headers: {
+			'Content-Type': 'multipart/form-data',
+		},
+	});
 };
