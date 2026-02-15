@@ -16,8 +16,8 @@ async function registerQuery(username, email, password_hash, role = 'student') {
 }
 async function updateUsername(id, username, profilePic) {
 	const query = profilePic
-		? `UPDATE users SET username = $1 ,profile_pic = $2 WHERE id = $3 RETURNING * `
-		: `UPDATE users SET username = $1 WHERE id =$2 RETURNING *`;
+		? `UPDATE users SET username = $1 ,profile_pic = $2 WHERE id = $3 RETURNING * ` // If Profile picture exits in update username request this query would be used
+		: `UPDATE users SET username = $1 WHERE id =$2 RETURNING *`; // If it doesn't exist  that this query would be run
 	const params = profilePic ? [username, profilePic, id] : [username, id];
 	const { rows } = await pool.query(query, params);
 	return rows[0];
