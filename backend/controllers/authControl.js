@@ -63,11 +63,12 @@ async function register(req, res) {
 }
 async function changeUsername(req, res) {
 	const { id, newUsername } = req.body;
+	const imagePath = req.file ? `/uploads/${req.file.filename}` : null
 	if (!newUsername) {
 		return res.status(400).json({ message: 'Username cannot be empty' });
 	}
 	try {
-		const updatedUser = await db.updateUsername(id, newUsername);
+		const updatedUser = await db.updateUsername(id, newUsername,imagePath);
 		if (!updatedUser) {
 			return res.status(404).json({ message: 'User not found' });
 		}
@@ -78,11 +79,12 @@ async function changeUsername(req, res) {
 				username: updatedUser.username,
 				email: updatedUser.email,
 				createdAt: updatedUser.created_at,
+				profile:updatedUser.profile_pic
 			},
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
-		res.json({ message: 'Username updated!', token, user: updatedUser });
+		res.json({ message: 'Profile updated!', token, user: updatedUser });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

@@ -17,6 +17,7 @@ app.use('/api/class-stats', classStatsRoute);
 app.use('/api/students', studentsRoute);
 app.use('/api/enroll', enrollRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/uploads', express.static('uploads'));
 
 app.listen(PORT, () => {
 	console.log(`${PORT} is running`);

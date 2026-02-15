@@ -4,7 +4,6 @@ const authController = require('../controllers/authControl');
 
 router.post('/login', authController.login);
 router.post('/register', authController.register);
-router.put('/update-profile', authController.changeUsername);
-
+router.put('/update-profile', upload.single('image'), authController.changeUsername);
 
 module.exports = router;
