@@ -56,4 +56,19 @@ async function register(req, res) {
 		res.status(400).json({ message: error.message });
 	}
 }
-module.exports = { login, register };
+async function changeUsername(req,res) {
+	const {id, username} = req.body
+	try {
+		const updatedUser = await db.updateUsername(id,username)
+		const token = jwt.sign({
+			id:db.updateUsername.id,
+			role:db.updateUsername.role,
+			username:db.updateUsername.username,
+			email:db.updateUsername.email,
+		}, process.env.JWT_SECRET,{expiresIn:'1d'})
+		res.json({message:'Username updated!', token, user:updatedUser})
+	} catch (error) {
+		res.status(500).json({message:error.message})
+	}
+}
+module.exports = { login, register,changeUsername };
