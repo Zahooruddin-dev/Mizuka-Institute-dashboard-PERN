@@ -57,7 +57,10 @@ async function register(req, res) {
 	}
 }
 async function changeUsername(req,res) {
-	const {id, username} = req.body
+	const {id, newUsername} = req.body
+	if (!newUsername) {
+    return res.status(400).json({ message: "Username cannot be empty" });
+  }
 	try {
 		const updatedUser = await db.updateUsername(id,username)
 		const token = jwt.sign({

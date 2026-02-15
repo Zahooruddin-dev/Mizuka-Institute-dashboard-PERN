@@ -190,17 +190,29 @@ const handleCancel = () => {
 							</div>
 						</div>
 					</div>
-
-					<div className='profile-actions'>
-						<button
-							className='action-btn primary'
-							onClick={() => setIsEditing(true)}
-						>
-							<Icon type='edit' size={18} />
-							Edit Profile
-						</button>
-						<button className='action-btn secondary'>Change Password</button>
-					</div>
+<div className='profile-actions'>
+  {isEditing ? (
+    <>
+      <button className='action-btn primary' onClick={handleSave}>
+        <Icon type='edit' size={18} />
+        Save Changes
+      </button>
+      <button className='action-btn secondary' onClick={handleCancel}>
+        Cancel
+      </button>
+    </>
+  ) : (
+    <>
+      <button className='action-btn primary' onClick={() => setIsEditing(true)}>
+        <Icon type='edit' size={18} />
+        Edit Profile
+      </button>
+      <button className='action-btn secondary'>
+        Change Password
+      </button>
+    </>
+  )}
+</div>
 				</div>
 
 				<div className='activity-card'>
