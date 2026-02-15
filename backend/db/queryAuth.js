@@ -14,7 +14,14 @@ async function registerQuery(username, email, password_hash, role = 'student') {
 	);
 	return rows[0];
 }
+async function updateUsername(id, newUsername) {
+	const { rows } = await pool.query(
+		`UPDATE users SET username = $1 WHERE id = $2 RETURNING id,username,email,role`,
+		[newUsername, id],
+	);
+}
 module.exports = {
 	loginQuery,
 	registerQuery,
+	updateUsername,
 };
