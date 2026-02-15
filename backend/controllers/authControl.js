@@ -16,7 +16,12 @@ async function login(req, res) {
 		const actualMatch = await bcrypt.compare(password, user.password_hash);
 		console.log('Request password match:', actualMatch);
 		const token = jwt.sign(
-			{ id: user.id, role: user.role,username: user.username,email: user.email},
+			{
+				id: user.id,
+				role: user.role,
+				username: user.username,
+				email: user.email,
+			},
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
@@ -56,22 +61,30 @@ async function register(req, res) {
 		res.status(400).json({ message: error.message });
 	}
 }
-async function changeUsername(req,res) {
-	const {id, newUsername} = req.body
+async function changeUsername(req, res) {
+	const { id, newUsername } = req.body;
 	if (!newUsername) {
-    return res.status(400).json({ message: "Username cannot be empty" });
-  }
+		return res.status(400).json({ message: 'Username cannot be empty' });
+	}
 	try {
-		const updatedUser = await db.updateUsername(id,username)
-		const token = jwt.sign({
-			id:db.updateUsername.id,
-			role:db.updateUsername.role,
-			username:db.updateUsername.username,
-			email:db.updateUsername.email,
-		}, process.env.JWT_SECRET,{expiresIn:'1d'})
-		res.json({message:'Username updated!', token, user:updatedUser})
+		const updatedUser = await db.updateUsername(id, newUsername);
+		if (!updatedUser) {
+			return res.status(404).json({ message: 'User not found' });
+		}
+		const token = jwt.sign(
+			{
+				id: updatedUser.id,
+				role: updatedUser.role,
+				username: updatedUser.username,
+				email: updatedUser.email,
+				createdAt: updatedUser.created_at,
+			},
+			process.env.JWT_SECRET,
+			{ expiresIn: '1d' },
+		);
+		res.json({ message: 'Username updated!', token, user: updatedUser });
 	} catch (error) {
-		res.status(500).json({message:error.message})
+		res.status(500).json({ message: error.message });
 	}
 }
-module.exports = { login, register,changeUsername };
+module.exports = { login, register, changeUsername };
