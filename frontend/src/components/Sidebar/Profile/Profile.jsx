@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../../../css/Profile.css';
+import { updateUsername } from '../../../api/authApi';
 
 // Simple emoji icon component
 const Icon = ({ type, size = 24 }) => {
@@ -9,17 +10,19 @@ const Icon = ({ type, size = 24 }) => {
 		shield: '🛡️',
 		calendar: '📅',
 		edit: '✏️',
-		camera: '📷'
+		camera: '📷',
 	};
-	
+
 	return (
-		<span style={{ 
-			fontSize: `${size}px`, 
-			display: 'inline-flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			lineHeight: 1
-		}}>
+		<span
+			style={{
+				fontSize: `${size}px`,
+				display: 'inline-flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				lineHeight: 1,
+			}}
+		>
 			{icons[type] || '•'}
 		</span>
 	);
@@ -27,15 +30,31 @@ const Icon = ({ type, size = 24 }) => {
 
 const Profile = ({ user }) => {
 	const [isEditing, setIsEditing] = useState(false);
-
+	const [newName, setNewName] = useState(user?.username || '');
 	const formatDate = (dateString) => {
 		if (!dateString) return 'N/A';
 		const date = new Date(dateString);
-		return date.toLocaleDateString('en-US', { 
-			year: 'numeric', 
-			month: 'long', 
-			day: 'numeric' 
+		return date.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
 		});
+	};
+	const handleSave = async () => {
+		try {
+			const response = await updateUsername({
+				id: user.id,
+				newUsername: newName,
+			});
+			localStorage.setItem('token', response.data.token);
+			setIsEditing(false);
+			window.location.reload();
+		} catch (err) {
+			console.error(
+				'update failed:',
+				err.response?.data?.message || err.message,
+			);
+		}
 	};
 
 	const getRoleBadgeColor = (role) => {
@@ -72,7 +91,10 @@ const Profile = ({ user }) => {
 							<div className='avatar-large'>
 								{user?.username ? user.username.charAt(0).toUpperCase() : 'U'}
 							</div>
-							<button className='avatar-edit-button' aria-label='Change profile picture'>
+							<button
+								className='avatar-edit-button'
+								aria-label='Change profile picture'
+							>
 								<Icon type='camera' size={16} />
 							</button>
 						</div>
@@ -95,7 +117,9 @@ const Profile = ({ user }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Username</p>
-										<p className='detail-value'>{user?.username || 'Not set'}</p>
+										<p className='detail-value'>
+											{user?.username || 'Not set'}
+										</p>
 									</div>
 								</div>
 
@@ -115,7 +139,9 @@ const Profile = ({ user }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Role</p>
-										<p className='detail-value'>{user?.role || 'Not assigned'}</p>
+										<p className='detail-value'>
+											{user?.role || 'Not assigned'}
+										</p>
 									</div>
 								</div>
 
@@ -125,7 +151,9 @@ const Profile = ({ user }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Member Since</p>
-										<p className='detail-value'>{formatDate(user?.createdAt) || 'N/A'}</p>
+										<p className='detail-value'>
+											{formatDate(user?.createdAt) || 'N/A'}
+										</p>
 									</div>
 								</div>
 							</div>
@@ -153,13 +181,14 @@ const Profile = ({ user }) => {
 					</div>
 
 					<div className='profile-actions'>
-						<button className='action-btn primary' onClick={() => setIsEditing(true)}>
+						<button
+							className='action-btn primary'
+							onClick={() => setIsEditing(true)}
+						>
 							<Icon type='edit' size={18} />
 							Edit Profile
 						</button>
-						<button className='action-btn secondary'>
-							Change Password
-						</button>
+						<button className='action-btn secondary'>Change Password</button>
 					</div>
 				</div>
 
