@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import '../App.css';
 import EditComponent from '../components/Sidebar/Dashboard/Edit';
 import PostingComponent from '../components/Sidebar/Dashboard/Posting';
@@ -14,6 +14,14 @@ import {
 	updateStudent,
 	deleteStudent,
 } from '../api/api';
+
+const studentCache = {
+	data: null,
+	timestamp: null,
+	params: null,
+};
+
+const CACHE_DURATION = 5 * 60 * 1000;
 
 function Dashboard(User) {
 	const [students, setStudents] = useState([]);
@@ -40,6 +48,9 @@ function Dashboard(User) {
 		type: 'success',
 	});
 
+	const hasFetchedRef = useRef(false);
+	const stateChangedRef = useRef(false);
+
 	const triggerToast = useCallback((msg, type = 'success') => {
 		setToastConfig({ show: true, message: msg, type });
 	}, []);
@@ -52,19 +63,54 @@ function Dashboard(User) {
 		setPage(1);
 	}, [searchTerm]);
 
+	const isCacheValid = useCallback((params) => {
+		if (!studentCache.data || !studentCache.timestamp || !studentCache.params) {
+			return false;
+		}
+
+		const cacheAge = Date.now() - studentCache.timestamp;
+		if (cacheAge > CACHE_DURATION) {
+			return false;
+		}
+
+		const paramsMatch =
+			studentCache.params.name === params.name &&
+			studentCache.params.sort === params.sort &&
+			studentCache.params.page === params.page &&
+			studentCache.params.limit === params.limit;
+
+		return paramsMatch;
+	}, []);
+
 	const fetchStudents = useCallback(async () => {
+		const params = {
+			name: searchTerm,
+			sort: sortOrder,
+			page,
+			limit,
+		};
+
+		if (isCacheValid(params) && !stateChangedRef.current) {
+			setStudents(studentCache.data.student);
+			setTotalCount(studentCache.data.totalCount);
+			setLoading(false);
+			return;
+		}
+
 		setLoading(true);
 		setError(null);
 
 		try {
-			const response = await getStudents({
-				name: searchTerm,
-				sort: sortOrder,
-				page,
-				limit,
-			});
+			const response = await getStudents(params);
+			
+			studentCache.data = response.data;
+			studentCache.timestamp = Date.now();
+			studentCache.params = params;
+
 			setStudents(response.data.student);
 			setTotalCount(response.data.totalCount);
+			
+			stateChangedRef.current = false;
 		} catch (err) {
 			console.error('Connection failed', err);
 			setError(true);
@@ -72,11 +118,27 @@ function Dashboard(User) {
 		} finally {
 			setLoading(false);
 		}
-	}, [searchTerm, sortOrder, page, limit, triggerToast]);
+	}, [searchTerm, sortOrder, page, limit, triggerToast, isCacheValid]);
 
 	useEffect(() => {
-		fetchStudents();
-	}, [fetchStudents]);
+		if (!hasFetchedRef.current) {
+			hasFetchedRef.current = true;
+			fetchStudents();
+		}
+	}, []);
+
+	useEffect(() => {
+		if (hasFetchedRef.current) {
+			fetchStudents();
+		}
+	}, [searchTerm, sortOrder, page]);
+
+	const invalidateCache = useCallback(() => {
+		studentCache.data = null;
+		studentCache.timestamp = null;
+		studentCache.params = null;
+		stateChangedRef.current = true;
+	}, []);
 
 	const handleChange = useCallback((e) => {
 		setFormData((prev) => ({
@@ -98,6 +160,7 @@ function Dashboard(User) {
 			await createStudent(formData);
 			setFormData({ student_name: '', email: '' });
 			setPostMode(false);
+			invalidateCache();
 			fetchStudents();
 			triggerToast('Student added successfully!', 'success');
 		} catch (err) {
@@ -110,7 +173,7 @@ function Dashboard(User) {
 
 		try {
 			await deleteStudent(studentToDelete.id);
-
+			invalidateCache();
 			fetchStudents();
 			triggerToast(`${studentToDelete.student_name} deleted`, 'success');
 			setStudentToDelete(null);
@@ -154,6 +217,7 @@ function Dashboard(User) {
 			setIsEditing(false);
 			setFormData({ student_name: '', email: '' });
 			setCurrentStudent(null);
+			invalidateCache();
 			fetchStudents();
 			triggerToast('Student updated successfully!', 'success');
 		} catch (err) {
@@ -361,7 +425,6 @@ function Dashboard(User) {
 
 			<style>{`
 				.dashboard-container {
-					/* Take up full available width next to sidebar */
 					width: 100%;
 					max-width: none;
 					margin: 0;
