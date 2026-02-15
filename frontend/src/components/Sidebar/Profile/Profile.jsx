@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './Profile.css';
+import '../../../css/Profile.css';
 
 // Simple emoji icon component
 const Icon = ({ type, size = 24 }) => {

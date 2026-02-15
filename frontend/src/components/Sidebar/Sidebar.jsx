@@ -8,7 +8,7 @@ import {
 	Menu,
 	X,
 } from 'lucide-react';
-import './Sidebar.css';
+import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
 
 const Sidebar = ({

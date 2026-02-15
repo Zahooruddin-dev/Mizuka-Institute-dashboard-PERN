@@ -1,6 +1,6 @@
 import { Search, ArrowUpAZ, ArrowDownZA } from 'lucide-react';
 import StudentTable from './StudentTable';
-import './main.css';
+import '../../../css/main.css';
 
 export default function MainComponent({
 	handleEdit,

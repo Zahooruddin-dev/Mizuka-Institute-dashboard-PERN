@@ -6,7 +6,7 @@ import Enroll from '../components/Sidebar/Enroll/Enroll';
 import Profile from '../components/Sidebar/Profile/Profile';
 import Settings from '../components/Sidebar/Settings/Settings';
 import { getUserFromToken } from '../utils/auth';
-import './Layout.css';
+import '../css/Layout.css';
 
 const Layout = () => {
 	const [activePage, setActivePage] = useState('students');

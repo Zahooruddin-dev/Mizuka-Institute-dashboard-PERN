@@ -1,5 +1,5 @@
 import { Edit, Trash2, Eye } from 'lucide-react';
-import './studenttable.css';
+import '../../../css/studenttable.css';
 
 export default function StudentTable({
 	students,
