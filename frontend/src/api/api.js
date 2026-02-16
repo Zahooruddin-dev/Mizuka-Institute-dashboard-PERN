@@ -16,7 +16,7 @@ export const deleteStudent = (id) => {
   return api.delete(`/api/students/${id}`);
 };
 export const getStudentById = (id) => {
-  return api.get(`/${id}`);
+  return api.get(`/api/students/${id}`);
 };
 
 export const getStudentClasses = (id) => {
