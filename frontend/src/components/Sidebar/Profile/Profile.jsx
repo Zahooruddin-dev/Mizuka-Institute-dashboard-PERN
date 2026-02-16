@@ -1,31 +1,7 @@
 import { useState, useEffect } from 'react';
+import { User, Mail, Shield, Calendar, Edit, Camera } from 'lucide-react';
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
-
-const Icon = ({ type, size = 24 }) => {
-	const icons = {
-		user: '👤',
-		mail: '✉️',
-		shield: '🛡️',
-		calendar: '📅',
-		edit: '✏️',
-		camera: '📷',
-	};
-
-	return (
-		<span
-			style={{
-				fontSize: `${size}px`,
-				display: 'inline-flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				lineHeight: 1,
-			}}
-		>
-			{icons[type] || '•'}
-		</span>
-	);
-};
 
 const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -141,7 +117,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 		<div className='page-container'>
 			<div className='page-header'>
 				<div className='page-icon'>
-					<Icon type='user' size={32} />
+					<User size={32} />
 				</div>
 				<div className='header-content'>
 					<h1 className='page-heading'>Profile</h1>
@@ -154,14 +130,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 			<div className='profile-content'>
 				<div className='profile-card'>
 					{error && (
-						<div style={{
-							padding: '12px',
-							marginBottom: '16px',
-							background: '#fee',
-							color: '#c00',
-							borderRadius: '8px',
-							fontSize: '14px'
-						}}>
+						<div className='error-message'>
 							{error}
 						</div>
 					)}
@@ -187,7 +156,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 							{isEditing && (
 								<>
 									<label htmlFor='file-upload' className='avatar-edit-button'>
-										<Icon type='camera' size={16} />
+										<Camera size={16} />
 									</label>
 									<input
 										id='file-upload'
@@ -202,7 +171,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 						<div className='profile-header-info'>
 							<h2 className='profile-name'>{currentUser?.username || 'User'}</h2>
 							<span className={`role-badge ${getRoleBadgeColor(currentUser?.role)}`}>
-								<Icon type='shield' size={14} />
+								<Shield size={14} />
 								{currentUser?.role || 'User'}
 							</span>
 						</div>
@@ -214,7 +183,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 							<div className='detail-grid'>
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Icon type='user' size={18} />
+										<User size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Username</p>
@@ -234,7 +203,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Icon type='mail' size={18} />
+										<Mail size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Email Address</p>
@@ -244,7 +213,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Icon type='shield' size={18} />
+										<Shield size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Role</p>
@@ -256,7 +225,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Icon type='calendar' size={18} />
+										<Calendar size={18} />
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Member Since</p>
@@ -296,7 +265,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 									onClick={handleSave}
 									disabled={loading}
 								>
-									<Icon type='edit' size={18} />
+									<Edit size={18} />
 									{loading ? 'Saving...' : 'Save Changes'}
 								</button>
 								<button 
@@ -313,7 +282,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 									className='action-btn primary'
 									onClick={() => setIsEditing(true)}
 								>
-									<Icon type='edit' size={18} />
+									<Edit size={18} />
 									Edit Profile
 								</button>
 								<button className='action-btn secondary'>
