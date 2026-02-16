@@ -32,8 +32,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--surface);
+  color: #ffffff;
   box-shadow: 0 6px 18px rgba(13, 148, 136, 0.12);
+}
+
+.logo-icon svg {
+  display: block;
+  width: 28px;
+  height: 28px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
 }
 
 .logo-text {
@@ -140,6 +151,20 @@
 .nav-icon {
   flex-shrink: 0;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
 }
 
 .nav-link:hover .nav-icon {
@@ -198,6 +223,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .avatar-fallback {
@@ -205,6 +231,7 @@
   font-weight: 700;
   color: #4f46e5;
   text-transform: uppercase;
+  display: block;
 }
 
 .user-details {
@@ -272,6 +299,14 @@
 
 .logout-btn svg {
   flex-shrink: 0;
+  display: block;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
 }
 
 .mobile-toggle {
@@ -291,6 +326,17 @@
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-toggle svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
 }
 
 .mobile-toggle:hover {

@@ -49,7 +49,6 @@ User
 						<div className='stat-icon'>
 							<Search size={20} />
 						</div>
-						
 						<div className='stat-info'>
 							<p className='stat-label'>Total Students</p>
 							<p className='stat-value'>{totalCount}</p>
