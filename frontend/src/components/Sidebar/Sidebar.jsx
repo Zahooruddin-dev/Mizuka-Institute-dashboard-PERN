@@ -16,11 +16,13 @@ const Sidebar = ({
 	onPageChange,
 	userName = 'Guest',
 	userRole = 'User',
+	userProfile = null,
 	
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 	const isStudent = userRole === 'student';
+	const isTeacher = userRole === 'teacher';
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -42,6 +44,9 @@ const Sidebar = ({
 		}
 	}, [isOpen, isMobile]);
 
+	const profileImageUrl = userProfile 
+    ? `http://localhost:3000${userProfile}` 
+    : null;
 	const menuItems = [
 		{ id: 'students', label: 'Students', icon: Users },
 		{ id: 'classes', label: 'Classes', icon: BookOpen },
@@ -122,22 +127,30 @@ const Sidebar = ({
 				</nav>
 
 				<div className='sidebar-footer'>
-					<div className='user-info' role='region' aria-label='User info'>
-						<div className='user-avatar' aria-hidden='true'>
-							<User size={20} />
-						</div>
-						<div className='user-details'>
-							<p className='user-name' title={userRole || 'User'}>
-								{(userRole || 'User').toUpperCase()}
-							</p>
-							<p className='user-role' title={userName || 'Guest'}>
-								{userName || 'Guest'}
-							</p>
-              <button onClick={logout}>Logout</button>
-						</div>
-					</div>
-				</div>
-			</aside>
+          <div className='user-info'>
+            <div className='user-avatar' aria-hidden='true'>
+              {profileImageUrl ? (
+                <img 
+                  src={profileImageUrl} 
+                  alt='Avatar' 
+                  className='sidebar-avatar-img'
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML = `<span class="avatar-fallback">${userName.charAt(0).toUpperCase()}</span>`;
+                  }}
+                />
+              ) : (
+                <User size={20} />
+              )}
+            </div>
+            <div className='user-details'>
+              <p className='user-name'>{(userRole || 'User').toUpperCase()}</p>
+              <p className='user-role'>{userName || 'Guest'}</p>
+              <button className="logout-btn" onClick={logout}>Logout</button>
+            </div>
+          </div>
+        </div>
+      </aside>
 		</>
 	);
 };

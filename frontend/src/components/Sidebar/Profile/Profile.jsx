@@ -27,7 +27,7 @@ const Icon = ({ type, size = 24 }) => {
 	);
 };
 
-const Profile = ({ user }) => {
+const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [newName, setNewName] = useState(user?.username || '');
 	const [selectedFile, setSelectedFile] = useState(null);
@@ -35,7 +35,6 @@ const Profile = ({ user }) => {
 	const [currentUser, setCurrentUser] = useState(user);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
 
 	useEffect(() => {
 		setCurrentUser(user);
@@ -86,11 +85,14 @@ const Profile = ({ user }) => {
 
 			setIsEditing(false);
 			setSelectedFile(null);
-			setImageTimestamp(Date.now());
 			
 			if (previewUrl) {
 				URL.revokeObjectURL(previewUrl);
 				setPreviewUrl(null);
+			}
+
+			if (onProfileUpdate) {
+				onProfileUpdate();
 			}
 
 			window.location.reload();
@@ -128,14 +130,11 @@ const Profile = ({ user }) => {
 		}
 	};
 
-	const getProfileImageUrl = () => {
+	const getCurrentDisplayImage = () => {
 		if (previewUrl) {
 			return previewUrl;
 		}
-		if (currentUser?.profile) {
-			return `http://localhost:3000${currentUser.profile}?t=${imageTimestamp}`;
-		}
-		return null;
+		return profileImageUrl;
 	};
 
 	return (
@@ -170,9 +169,9 @@ const Profile = ({ user }) => {
 					<div className='profile-header-section'>
 						<div className='avatar-section'>
 							<div className='avatar-large'>
-								{getProfileImageUrl() ? (
+								{getCurrentDisplayImage() ? (
 									<img 
-										src={getProfileImageUrl()} 
+										src={getCurrentDisplayImage()} 
 										alt='Profile' 
 										className='avatar-img'
 										onError={(e) => {

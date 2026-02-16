@@ -11,6 +11,7 @@ import '../css/Layout.css';
 const Layout = () => {
 	const [activePage, setActivePage] = useState('students');
 	const [user, setUser] = useState(null);
+	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
 
 	const loadUserData = () => {
 		const userData = getUserFromToken();
@@ -24,6 +25,18 @@ const Layout = () => {
 		if (pageId === 'profile') {
 			loadUserData();
 		}
+	};
+
+	const getProfileImageUrl = () => {
+		if (user?.profile) {
+			return `http://localhost:3000${user.profile}?t=${imageTimestamp}`;
+		}
+		return null;
+	};
+
+	const handleProfileUpdate = () => {
+		setImageTimestamp(Date.now());
+		loadUserData();
 	};
 
 	useEffect(() => {
@@ -51,7 +64,13 @@ const Layout = () => {
 			case 'enroll':
 				return <Enroll />;
 			case 'profile':
-				return <Profile user={user} key={user?.profile} />;
+				return (
+					<Profile 
+						user={user} 
+						profileImageUrl={getProfileImageUrl()}
+						onProfileUpdate={handleProfileUpdate}
+					/>
+				);
 			case 'settings':
 				return <Settings />;
 			default:
@@ -65,6 +84,7 @@ const Layout = () => {
 				userName={user?.username}
 				userRole={user?.role}
 				onPageChange={handlePageChange}
+				userProfile={getProfileImageUrl()}
 			/>
 			<div className='layout-main'>{renderPage()}</div>
 		</div>
