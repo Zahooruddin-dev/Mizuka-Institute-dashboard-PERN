@@ -1,93 +1,96 @@
-import { BookOpen, Users } from 'lucide-react';
-import React, { useState } from 'react';
-import { createClass } from '../../../api/api';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, Clock, Plus, Search } from 'lucide-react';
+import { getClasses } from '../utils/api';
+import CreateClassModal from './CreateClassModal';
+import '../../css/Classes.css';
 
 const Classes = ({ currentUser }) => {
-	const [showModal, setShowModal] = useState(false);
-	const isTeacher = currentUser?.role === ' teacher';
-	return (
-		<div className='page-container'>
-			<div className='page-header'>
-				<BookOpen size={32} className='page-icon' />
-				<div>
-					<h1 className='page-heading'>Classes</h1>
-					<p className='page-description'>
-						Manage all your classes and courses
-					</p>
-				</div>
-			</div>
+  const [classList, setClassList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
-			<div className='placeholder-content'>
-				<p>Classes management interface coming soon...</p>
-			</div>
+  const fetchClasses = async () => {
+    try {
+      setLoading(true);
+      const response = await getClasses();
+      setClassList(response.data);
+    } catch (err) {
+      console.error("Error fetching classes:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-			<style>{`
-        .page-container {
-          background: #ffffff;
-          border-radius: 20px;
-          padding: 2rem;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-          border: 1px solid rgba(0, 0, 0, 0.06);
-        }
+  useEffect(() => {
+    fetchClasses();
+  }, []);
 
-        .page-header {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-          padding-bottom: 2rem;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-          margin-bottom: 2rem;
-        }
+  const filteredClasses = classList.filter(c => 
+    c.class_name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-        .page-icon {
-          width: 56px;
-          height: 56px;
-          padding: 12px;
-          background: linear-gradient(135deg, var(--primary-500) 0%, var(--accent-1) 100%);
-          color: #ffffff;
-          border-radius: 16px;
-          flex-shrink: 0;
-        }
+  return (
+    <div className="classes-page">
+      <div className="page-header">
+        <div className="header-text">
+          <h1>Class Directory</h1>
+          <p>Explore and manage available courses</p>
+        </div>
 
-        .page-heading {
-          margin: 0;
-          font-size: 2rem;
-          font-weight: 700;
-          color: #1e293b;
-          letter-spacing: -0.02em;
-        }
+        {currentUser?.role === 'teacher' && (
+          <button className="add-class-btn" onClick={() => setIsModalOpen(true)}>
+            <Plus size={20} />
+            <span>Create Class</span>
+          </button>
+        )}
+      </div>
 
-        .page-description {
-          margin: 0.25rem 0 0 0;
-          font-size: 0.9375rem;
-          color: #64748b;
-        }
+      <div className="search-bar-container">
+        <Search className="search-icon" size={20} />
+        <input 
+          type="text" 
+          placeholder="Search for a class..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
 
-        .placeholder-content {
-          padding: 4rem 2rem;
-          text-align: center;
-          color: #64748b;
-          font-size: 1rem;
-        }
+      {loading ? (
+        <div className="loading-state">Loading classes...</div>
+      ) : (
+        <div className="classes-grid">
+          {filteredClasses.map((item) => (
+            <div key={item.id} className="class-card">
+              <div className="card-icon">
+                <BookOpen size={24} />
+              </div>
+              <div className="card-content">
+                <h3>{item.class_name}</h3>
+                <div className="class-info">
+                  <Clock size={16} />
+                  <span>{item.time_in_pakistan}</span>
+                </div>
+              </div>
+              <div className="card-footer">
+                <button className="view-btn">View Details</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
-        @media (max-width: 640px) {
-          .page-container {
-            padding: 1.5rem;
-          }
-
-          .page-heading {
-            font-size: 1.5rem;
-          }
-
-          .page-icon {
-            width: 48px;
-            height: 48px;
-            padding: 10px;
-          }
-        }
-      `}</style>
-		</div>
-	);
+      {isModalOpen && (
+        <CreateClassModal 
+          onClose={() => setIsModalOpen(false)} 
+          onSuccess={() => {
+            setIsModalOpen(false);
+            fetchClasses(); 
+          }} 
+        />
+      )}
+    </div>
+  );
 };
 
 export default Classes;
