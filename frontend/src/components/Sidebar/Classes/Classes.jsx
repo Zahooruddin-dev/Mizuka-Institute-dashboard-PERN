@@ -9,7 +9,8 @@ const Classes = ({ currentUser }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-
+  console.log(currentUser);
+  
   const fetchClasses = async () => {
     try {
       setLoading(true);
@@ -29,7 +30,7 @@ const Classes = ({ currentUser }) => {
   const filteredClasses = classList.filter(c => 
     c.class_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
+  const isTeacher = currentUser?.role === 'teacher'
   return (
     <div className="classes-page">
       <div className="page-header">
@@ -38,7 +39,7 @@ const Classes = ({ currentUser }) => {
           <p>Explore and manage available courses</p>
         </div>
 
-        {currentUser?.role === 'teacher' && (
+        {isTeacher && (
           <button className="add-class-btn" onClick={() => setIsModalOpen(true)}>
             <Plus size={20} />
             <span>Create Class</span>
