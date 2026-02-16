@@ -11,7 +11,6 @@ const Classes = ({ currentUser }) => {
 	const [loading, setLoading] = useState(true);
 	const [searchTerm, setSearchTerm] = useState('');
 	const [selectedClassId, setSelectedClassId] = useState(null);
-	console.log(currentUser);
 
 	const fetchClasses = async () => {
 		try {

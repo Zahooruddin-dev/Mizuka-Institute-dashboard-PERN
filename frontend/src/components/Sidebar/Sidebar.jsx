@@ -16,9 +16,11 @@ const Sidebar = ({
 	onPageChange,
 	userName = 'Guest',
 	userRole = 'User',
+	
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
+	const isStudent = userRole === 'student';
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -43,7 +45,7 @@ const Sidebar = ({
 	const menuItems = [
 		{ id: 'students', label: 'Students', icon: Users },
 		{ id: 'classes', label: 'Classes', icon: BookOpen },
-		{ id: 'enroll', label: 'Enroll', icon: UserPlus },
+		...(isStudent ? [{ id: 'enroll', label: 'Enroll', icon: UserPlus }]:[]),
 		{ id: 'profile', label: 'Profile', icon: User },
 		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
