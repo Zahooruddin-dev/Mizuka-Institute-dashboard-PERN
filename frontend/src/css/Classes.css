@@ -22,7 +22,6 @@
   margin: 0.25rem 0 0 0;
 }
 
-/* Button with Sidebar Blue */
 .add-class-btn {
   background: #2563eb;
   color: white;
@@ -41,7 +40,6 @@
   background: #1d4ed8;
 }
 
-/* Search Bar */
 .search-bar-container {
   position: relative;
   margin-bottom: 2rem;
@@ -63,7 +61,6 @@
   font-size: 1rem;
 }
 
-/* Grid System */
 .classes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

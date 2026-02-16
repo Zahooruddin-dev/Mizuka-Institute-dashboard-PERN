@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, Clock, Plus, Search } from 'lucide-react';
-import { getClasses } from '../utils/api';
+import { getClasses } from '../../../api/api';
 import CreateClassModal from './CreateClassModal';
-import '../../css/Classes.css';
+import '../../../css/Classes.css';
 
 const Classes = ({ currentUser }) => {
   const [classList, setClassList] = useState([]);

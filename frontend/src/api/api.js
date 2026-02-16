@@ -26,3 +26,6 @@ export const getStudentClasses = (id) => {
 export const createClass = (data) =>{
   return api.post('/api/class',data)
 }
+export const getClasses = (params) =>{
+  return api.get('/api/class',{params})
+}
