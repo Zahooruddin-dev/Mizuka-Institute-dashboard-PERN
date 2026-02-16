@@ -1,9 +1,9 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Mail, Lock, LogIn, AlertCircle, Loader } from 'lucide-react';
 import { loginUser } from '../api/authApi';
 import { Link, useNavigate } from 'react-router';
-
 import '../css/auth.css';
+
 export default function Login() {
 	const navigate = useNavigate();
 	const [formData, setFormData] = useState({
@@ -11,15 +11,22 @@ export default function Login() {
 		password: '',
 	});
 	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+
 	const handleChange = (e) => {
 		setFormData((prev) => ({
 			...prev,
 			[e.target.name]: e.target.value,
 		}));
+		if (error) setError('');
 	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		setError('');
+		setLoading(true);
+
 		try {
 			const response = await loginUser(formData);
 			const token = response.data.token;
@@ -27,34 +34,110 @@ export default function Login() {
 			navigate('/');
 		} catch (error) {
 			setError(error.response?.data?.message || 'Login Failed');
+		} finally {
+			setLoading(false);
 		}
 	};
+
 	return (
 		<div className='auth-container'>
-			<form className='auth-form' onSubmit={handleSubmit}>
-				<h2>Login</h2>
-				{error && <p className='error'>{error}</p>}
-				<input
-					type='email'
-					name='email'
-					placeholder='Email'
-					value={formData.email}
-					onChange={handleChange}
-					required
-				/>
-				<input
-					type='password'
-					name='password'
-					placeholder='Password'
-					value={formData.password}
-					onChange={handleChange}
-					required
-				/>
-				<button type='submit'>Login</button>
-				<p>
-					Don't have an account? <Link to='/register'>Register</Link>
-				</p>
-			</form>
+			<div className='auth-card'>
+				<div className='auth-header'>
+					<div className='auth-icon'>
+						<LogIn size={32} />
+					</div>
+					<h1>Welcome Back</h1>
+					<p>Sign in to continue to your account</p>
+				</div>
+
+				<form className='auth-form' onSubmit={handleSubmit} noValidate>
+					{error && (
+						<div className='error-banner' role='alert' aria-live='polite'>
+							<AlertCircle size={20} />
+							<span>{error}</span>
+						</div>
+					)}
+
+					<div className='input-group'>
+						<label htmlFor='email'>
+							<Mail size={18} />
+							<span>Email Address</span>
+						</label>
+						<input
+							id='email'
+							type='email'
+							name='email'
+							placeholder='Enter your email'
+							value={formData.email}
+							onChange={handleChange}
+							required
+							autoComplete='email'
+							aria-required='true'
+							aria-invalid={error ? 'true' : 'false'}
+							disabled={loading}
+						/>
+					</div>
+
+					<div className='input-group'>
+						<label htmlFor='password'>
+							<Lock size={18} />
+							<span>Password</span>
+						</label>
+						<div className='password-input-wrapper'>
+							<input
+								id='password'
+								type={showPassword ? 'text' : 'password'}
+								name='password'
+								placeholder='Enter your password'
+								value={formData.password}
+								onChange={handleChange}
+								required
+								autoComplete='current-password'
+								aria-required='true'
+								aria-invalid={error ? 'true' : 'false'}
+								disabled={loading}
+							/>
+							<button
+								type='button'
+								className='password-toggle'
+								onClick={() => setShowPassword(!showPassword)}
+								aria-label={showPassword ? 'Hide password' : 'Show password'}
+								disabled={loading}
+							>
+								{showPassword ? '👁️' : '👁️‍🗨️'}
+							</button>
+						</div>
+					</div>
+
+					<button
+						type='submit'
+						className='submit-btn'
+						disabled={loading}
+						aria-busy={loading}
+					>
+						{loading ? (
+							<>
+								<Loader size={20} className='spinner' />
+								<span>Signing in...</span>
+							</>
+						) : (
+							<>
+								<LogIn size={20} />
+								<span>Sign In</span>
+							</>
+						)}
+					</button>
+
+					<div className='auth-footer'>
+						<p>
+							Don't have an account?{' '}
+							<Link to='/register' aria-label='Go to registration page'>
+								Create Account
+							</Link>
+						</p>
+					</div>
+				</form>
+			</div>
 		</div>
 	);
 }
