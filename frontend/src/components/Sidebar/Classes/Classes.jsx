@@ -1,21 +1,27 @@
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Users } from 'lucide-react';
+import React, { useState } from 'react';
+import { createClass } from '../../../api/api';
 
-const Classes = () => {
-  return (
-    <div className="page-container">
-      <div className="page-header">
-        <BookOpen size={32} className="page-icon" />
-        <div>
-          <h1 className="page-heading">Classes</h1>
-          <p className="page-description">Manage all your classes and courses</p>
-        </div>
-      </div>
+const Classes = ({ currentUser }) => {
+	const [showModal, setShowModal] = useState(false);
+	const isTeacher = currentUser?.role === ' teacher';
+	return (
+		<div className='page-container'>
+			<div className='page-header'>
+				<BookOpen size={32} className='page-icon' />
+				<div>
+					<h1 className='page-heading'>Classes</h1>
+					<p className='page-description'>
+						Manage all your classes and courses
+					</p>
+				</div>
+			</div>
 
-      <div className="placeholder-content">
-        <p>Classes management interface coming soon...</p>
-      </div>
+			<div className='placeholder-content'>
+				<p>Classes management interface coming soon...</p>
+			</div>
 
-      <style>{`
+			<style>{`
         .page-container {
           background: #ffffff;
           border-radius: 20px;
@@ -80,8 +86,8 @@ const Classes = () => {
           }
         }
       `}</style>
-    </div>
-  );
+		</div>
+	);
 };
 
 export default Classes;
