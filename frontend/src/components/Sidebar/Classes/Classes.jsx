@@ -32,6 +32,7 @@ const Classes = ({ currentUser }) => {
 		c.class_name.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
 	const isTeacher = currentUser === 'teacher';
+	
 	return (
 		<div className='classes-page'>
 			<div className='page-header'>
@@ -77,12 +78,14 @@ const Classes = ({ currentUser }) => {
 									<span>{item.time_in_pakistan}</span>
 								</div>
 							</div>
-							<button
-								className='view-btn'
-								onClick={() => setSelectedClassId(item.id)} // Set the ID here
-							>
-								View Details
-							</button>
+							<div className='card-footer'>
+								<button
+									className='view-btn'
+									onClick={() => setSelectedClassId(item.id)}
+								>
+									View Details
+								</button>
+							</div>
 						</div>
 					))}
 				</div>
