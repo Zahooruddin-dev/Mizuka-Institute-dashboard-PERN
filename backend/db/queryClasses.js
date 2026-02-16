@@ -29,7 +29,7 @@ async function getClassByIdQuery(id) {
 	const { rows } = await pool.query('SELECT * FROM classes WHERE id = $1', [
 		id,
 	]);
-	return rows;
+	return rows[0];
 }
 async function deleteClassByIdQuery(id) {
 	await pool.query('DELETE FROM classes WHERE id = $1', [id]);
