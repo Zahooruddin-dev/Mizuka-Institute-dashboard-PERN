@@ -94,3 +94,54 @@
   margin-bottom: 1rem;
   font-size: 0.875rem;
 }
+.details-modal {
+  max-width: 500px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.text-blue {
+  color: #2563eb;
+}
+
+.details-body {
+  padding: 1rem 0;
+}
+
+.detail-item {
+  margin-bottom: 1.5rem;
+}
+
+.detail-item label {
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
