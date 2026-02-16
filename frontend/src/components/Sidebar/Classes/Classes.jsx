@@ -30,7 +30,7 @@ const Classes = ({ currentUser }) => {
   const filteredClasses = classList.filter(c => 
     c.class_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  const isTeacher = currentUser?.role === 'teacher'
+  const isTeacher = currentUser === 'teacher'
   return (
     <div className="classes-page">
       <div className="page-header">
