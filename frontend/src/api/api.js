@@ -29,3 +29,6 @@ export const createClass = (data) =>{
 export const getClasses = (params) =>{
   return api.get('/api/class',{params})
 }
+export const getClassById = (id) => {
+  return api.get(`api/class/${id}`);
+};
