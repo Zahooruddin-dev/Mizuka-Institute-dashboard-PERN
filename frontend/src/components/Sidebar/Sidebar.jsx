@@ -7,6 +7,7 @@ import {
 	Settings,
 	Menu,
 	X,
+	LogOut,
 } from 'lucide-react';
 import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
@@ -17,12 +18,10 @@ const Sidebar = ({
 	userName = 'Guest',
 	userRole = 'User',
 	userProfile = null,
-	
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 	const isStudent = userRole === 'student';
-	const isTeacher = userRole === 'teacher';
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -44,13 +43,10 @@ const Sidebar = ({
 		}
 	}, [isOpen, isMobile]);
 
-	const profileImageUrl = userProfile 
-    ? `http://localhost:3000${userProfile}` 
-    : null;
 	const menuItems = [
 		{ id: 'students', label: 'Students', icon: Users },
 		{ id: 'classes', label: 'Classes', icon: BookOpen },
-		...(isStudent ? [{ id: 'enroll', label: 'Enroll', icon: UserPlus }]:[]),
+		...(isStudent ? [{ id: 'enroll', label: 'Enroll', icon: UserPlus }] : []),
 		{ id: 'profile', label: 'Profile', icon: User },
 		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
@@ -127,30 +123,38 @@ const Sidebar = ({
 				</nav>
 
 				<div className='sidebar-footer'>
-          <div className='user-info'>
-            <div className='user-avatar' aria-hidden='true'>
-              {profileImageUrl ? (
-                <img 
-                  src={profileImageUrl} 
-                  alt='Avatar' 
-                  className='sidebar-avatar-img'
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = `<span class="avatar-fallback">${userName.charAt(0).toUpperCase()}</span>`;
-                  }}
-                />
-              ) : (
-                <User size={20} />
-              )}
-            </div>
-            <div className='user-details'>
-              <p className='user-name'>{(userRole || 'User').toUpperCase()}</p>
-              <p className='user-role'>{userName || 'Guest'}</p>
-              <button className="logout-btn" onClick={logout}>Logout</button>
-            </div>
-          </div>
-        </div>
-      </aside>
+					<div className='user-info'>
+						<div className='user-avatar' aria-hidden='true'>
+							{userProfile ? (
+								<img
+									src={userProfile}
+									alt={`${userName}'s avatar`}
+									className='sidebar-avatar-img'
+									onError={(e) => {
+										e.target.style.display = 'none';
+										const fallback = document.createElement('span');
+										fallback.className = 'avatar-fallback';
+										fallback.textContent = userName.charAt(0).toUpperCase();
+										e.target.parentElement.appendChild(fallback);
+									}}
+								/>
+							) : (
+								<span className='avatar-fallback'>
+									{userName.charAt(0).toUpperCase()}
+								</span>
+							)}
+						</div>
+						<div className='user-details'>
+							<p className='user-name'>{userName || 'Guest'}</p>
+							<p className='user-role'>{(userRole || 'User').toUpperCase()}</p>
+						</div>
+					</div>
+					<button className='logout-btn' onClick={logout}>
+						<LogOut size={18} />
+						<span>Logout</span>
+					</button>
+				</div>
+			</aside>
 		</>
 	);
 };
