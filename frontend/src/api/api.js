@@ -41,3 +41,6 @@ export const getClassEnrolledRooster = (id) => {
 export const getStudentEnrolledShedule = (id) => {
 	return api.get(`/api/enroll/class/${id}`);
 };
+export const getMyClasses = () => {
+  return api.get('/api/class/mine');
+};
