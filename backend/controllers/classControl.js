@@ -7,76 +7,75 @@ async function getClasses(req, res) {
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
-}async function createClasses(req, res) {
-  const { class_name, time_in_pakistan } = req.body;
-  const teacher_id = req.user.id; 
+}
+async function createClasses(req, res) {
+	const { class_name, time_in_pakistan } = req.body;
+	const teacher_id = req.user.id;
 
-  try {
-    const newClass = await db.CreateNewClassQuery(class_name, time_in_pakistan, teacher_id);
-    res.status(201).json(newClass);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+	try {
+		const newClass = await db.CreateNewClassQuery(
+			class_name,
+			time_in_pakistan,
+			teacher_id,
+		);
+		res.status(201).json(newClass);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
 }
 async function deleteClass(req, res) {
 	const { id } = req.params;
-	if (!id) {
-		return res
-			.status(400)
-			.json({ error: 'Id required to be able to delete class' });
-	}
 	try {
 		await db.deleteClassByIdQuery(id);
-		res.status(204).json({ message: 'Class deleted' });
-	} catch {
-		res.status(500).json({ message: 'Internal server error' });
+		res.status(200).json({ message: 'Class deleted successfully' });
+	} catch (err) {
+		res.status(500).json({ error: err.message });
 	}
 }
 async function getSpecificClass(req, res) {
 	const { id } = req.params;
-	if (!id) {
-		return res
-			.status(400)
-			.json({ error: 'Id required to be able to get specific class' });
-	}
 	try {
 		const subjectClass = await db.getClassByIdQuery(id);
-		res.status(201).json(subjectClass);
-	} catch {
-		res.status(500).json({ message: 'Internal server error' });
+		if (!subjectClass)
+			return res.status(404).json({ error: 'Class not found' });
+		res.status(200).json(subjectClass);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
 	}
 }
 async function editSpecificClass(req, res) {
 	const { id } = req.params;
-	if (!id) {
-		return res
-			.status(400)
-			.json({ error: 'Id required to be able to edit specific class' });
-	}
 	try {
-		const data = req.body;
-		const subjectClass = await db.queryEditClassQuery(id, data);
-		res.status(201).json(subjectClass);
-	} catch {
-		res.status(500).json({ message: 'Internal server error' });
+		const existingClass = await db.getClassByIdQuery(id);
+
+		if (existingClass.teacher_id !== req.user.id) {
+			return res
+				.status(403)
+				.json({ error: "You don't have permission to edit this class" });
+		}
+
+		const subjectClass = await db.queryEditClassQuery(id, req.body);
+		res.status(200).json(subjectClass);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
 	}
 }
 async function getTeacherClasses(req, res) {
-  const { id } = req.params; 
-  try {
-    const classes = await db.getClassesByTeacherIdQuery(id);
-    res.json(classes);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+	const { id } = req.params;
+	try {
+		const classes = await db.getClassesByTeacherIdQuery(id);
+		res.json(classes);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
 }
 async function getMyClasses(req, res) {
-  try {
-    const classes = await db.getClassesByTeacherIdQuery(req.user.id);
-    res.json(classes);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+	try {
+		const classes = await db.getClassesByTeacherIdQuery(req.user.id);
+		res.json(classes);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
 }
 module.exports = {
 	getClasses,
@@ -85,5 +84,5 @@ module.exports = {
 	getSpecificClass,
 	editSpecificClass,
 	getTeacherClasses,
-	getMyClasses
+	getMyClasses,
 };
