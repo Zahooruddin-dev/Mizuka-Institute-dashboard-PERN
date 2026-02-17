@@ -1,24 +1,32 @@
 const db = require('../db/queryEnrollment');
 const dbClass = require('../db/queryClasses');
-const dbStudent = require('../db/queryStudents');
+const pool = require('../db/Pool'); // DIRECT user CHECK via POOL
 async function createEnrollment(req, res) {
 	const { student_id, class_id } = req.body;
+
 	if (!student_id || !class_id) {
 		return res
 			.status(400)
-			.json({ error: 'student and class ID are required.' });
+			.json({ error: 'Student and Class ID are required.' });
 	}
+
 	try {
-		//1 Check existence of studentid and class id
-		const student = await dbStudent.getStudentByIdQuery(student_id);
-		const classObj = await dbClass.getClassByIdQuery(class_id);
-		if (!student) {
+		//  check if the user exists and is actually a student
+		const userResult = await pool.query(
+			'SELECT id, role FROM users WHERE id = $1',
+			[student_id],
+		);
+		const user = userResult.rows[0];
+
+		if (!user || user.role !== 'student') {
 			return res
 				.status(404)
-				.json({ error: 'Student not found. Cannot enroll.' });
+				.json({ error: 'Valid student not found. Cannot enroll.' });
 		}
+
+		const classObj = await dbClass.getClassByIdQuery(class_id);
 		if (!classObj) {
-			return res.status(404).json({ error: 'Class not found. Cannot enroll.' });
+			return res.status(404).json({ error: 'Class not found.' });
 		}
 
 		const enrollment = await db.enrollStudentQuery(student_id, class_id);
@@ -27,12 +35,10 @@ async function createEnrollment(req, res) {
 			data: enrollment,
 		});
 	} catch (err) {
-		// if student is already enrolled, the unique constraint should throw an error
 		if (err.code === '23505') {
-			//duplicate key in sql
 			return res
 				.status(400)
-				.json({ message: 'Student is already in this class' });
+				.json({ message: 'You are already enrolled in this class' });
 		}
 		res.status(500).json({ error: err.message });
 	}
