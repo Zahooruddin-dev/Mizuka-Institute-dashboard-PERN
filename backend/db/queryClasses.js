@@ -34,11 +34,18 @@ async function getClassByIdQuery(id) {
 async function deleteClassByIdQuery(id) {
 	await pool.query('DELETE FROM classes WHERE id = $1', [id]);
 }
-
+async function getClassesByTeacherIdQuery(teacherId) {
+	const { rows } = await pool.query(
+		'SELECT * FROM classes WHERE teacher_id = $1 ORDER BY id DESC',
+		[teacherId],
+	);
+	return rows;
+}
 module.exports = {
 	getAllClassesQuery,
 	CreateNewClassQuery,
 	deleteClassByIdQuery,
 	getClassByIdQuery,
 	queryEditClassQuery,
+	getClassesByTeacherIdQuery,
 };
