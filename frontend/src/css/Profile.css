@@ -83,6 +83,25 @@
 	font-size: 14px;
 	border: 1px solid rgba(239, 68, 68, 0.2);
 }
+.profile-meta {
+	display: flex;
+	gap: 1rem;
+	margin-top: 0.75rem;
+	font-size: 0.8125rem;
+	color: #64748b;
+}
+
+.profile-meta span {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+}
+
+.profile-meta svg {
+	width: 14px;
+	height: 14px;
+	stroke: currentColor;
+}
 
 .profile-header-section {
 	display: flex;

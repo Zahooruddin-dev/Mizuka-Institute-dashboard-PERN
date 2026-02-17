@@ -1,5 +1,15 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Shield, Calendar, Edit, Camera } from 'lucide-react';
+import {
+	User,
+	Mail,
+	Shield,
+	Calendar,
+	Edit,
+	Camera,
+	Key,
+	Activity,
+	IdCard
+} from 'lucide-react';
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
 
@@ -44,13 +54,13 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 			const formData = new FormData();
 			formData.append('id', currentUser.id);
 			formData.append('newUsername', newName);
-			
+
 			if (selectedFile) {
 				formData.append('image', selectedFile);
 			}
 
 			const response = await updateUsername(formData);
-			
+
 			if (response.data.token) {
 				localStorage.setItem('token', response.data.token);
 			}
@@ -61,7 +71,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 
 			setIsEditing(false);
 			setSelectedFile(null);
-			
+
 			if (previewUrl) {
 				URL.revokeObjectURL(previewUrl);
 				setPreviewUrl(null);
@@ -73,7 +83,6 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 
 			window.location.reload();
 		} catch (err) {
-			console.error('Update failed:', err);
 			setError(err.response?.data?.message || 'Failed to update profile');
 		} finally {
 			setLoading(false);
@@ -83,12 +92,12 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const handleCancel = () => {
 		setNewName(currentUser?.username || '');
 		setSelectedFile(null);
-		
+
 		if (previewUrl) {
 			URL.revokeObjectURL(previewUrl);
 			setPreviewUrl(null);
 		}
-		
+
 		setIsEditing(false);
 		setError('');
 	};
@@ -107,9 +116,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	};
 
 	const getCurrentDisplayImage = () => {
-		if (previewUrl) {
-			return previewUrl;
-		}
+		if (previewUrl) return previewUrl;
 		return profileImageUrl;
 	};
 
@@ -122,30 +129,29 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 				<div className='header-content'>
 					<h1 className='page-heading'>Profile</h1>
 					<p className='page-description'>
-						View and manage your profile information
+						Account overview and personal information
 					</p>
 				</div>
 			</div>
 
 			<div className='profile-content'>
 				<div className='profile-card'>
-					{error && (
-						<div className='error-message'>
-							{error}
-						</div>
-					)}
+					{error && <div className='error-message'>{error}</div>}
 
 					<div className='profile-header-section'>
 						<div className='avatar-section'>
 							<div className='avatar-large'>
 								{getCurrentDisplayImage() ? (
-									<img 
-										src={getCurrentDisplayImage()} 
-										alt='Profile' 
+									<img
+										src={getCurrentDisplayImage()}
+										alt='Profile'
 										className='avatar-img'
 										onError={(e) => {
 											e.target.style.display = 'none';
-											e.target.parentElement.textContent = currentUser?.username?.charAt(0).toUpperCase();
+											e.target.parentElement.textContent =
+												currentUser?.username
+													?.charAt(0)
+													.toUpperCase();
 										}}
 									/>
 								) : (
@@ -168,12 +174,29 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 								</>
 							)}
 						</div>
+
 						<div className='profile-header-info'>
-							<h2 className='profile-name'>{currentUser?.username || 'User'}</h2>
-							<span className={`role-badge ${getRoleBadgeColor(currentUser?.role)}`}>
+							<h2 className='profile-name'>
+								{currentUser?.username || 'User'}
+							</h2>
+							<span
+								className={`role-badge ${getRoleBadgeColor(
+									currentUser?.role,
+								)}`}
+							>
 								<Shield size={14} />
 								{currentUser?.role || 'User'}
 							</span>
+							<div className='profile-meta'>
+								<span>
+									<IdCard size={14} />
+									ID: {currentUser?.id}
+								</span>
+								<span>
+									<Calendar size={14} />
+									Joined {formatDate(currentUser?.createdAt)}
+								</span>
+							</div>
 						</div>
 					</div>
 
@@ -191,11 +214,13 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 											<input
 												className='edit-input'
 												value={newName}
-												onChange={(e) => setNewName(e.target.value)}
+												onChange={(e) =>
+													setNewName(e.target.value)
+												}
 											/>
 										) : (
 											<p className='detail-value'>
-												{currentUser?.username || 'Not set'}
+												{currentUser?.username}
 											</p>
 										)}
 									</div>
@@ -206,8 +231,10 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 										<Mail size={18} />
 									</div>
 									<div className='detail-content'>
-										<p className='detail-label'>Email Address</p>
-										<p className='detail-value'>{currentUser?.email || 'Not set'}</p>
+										<p className='detail-label'>Email</p>
+										<p className='detail-value'>
+											{currentUser?.email}
+										</p>
 									</div>
 								</div>
 
@@ -218,103 +245,95 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 									<div className='detail-content'>
 										<p className='detail-label'>Role</p>
 										<p className='detail-value'>
-											{currentUser?.role || 'Not assigned'}
+											{currentUser?.role}
 										</p>
 									</div>
 								</div>
 
 								<div className='detail-item'>
 									<div className='detail-icon'>
-										<Calendar size={18} />
+										<Activity size={18} />
 									</div>
 									<div className='detail-content'>
-										<p className='detail-label'>Member Since</p>
+										<p className='detail-label'>Account ID</p>
 										<p className='detail-value'>
-											{formatDate(currentUser?.createdAt) || 'N/A'}
+											{currentUser?.id}
 										</p>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<div className='detail-section'>
-							<h3 className='section-title'>Account Status</h3>
-							<div className='status-grid'>
-								<div className='status-card'>
-									<div className='status-indicator active'></div>
-									<div>
-										<p className='status-label'>Account Status</p>
-										<p className='status-value'>Active</p>
-									</div>
-								</div>
-								<div className='status-card'>
-									<div className='status-indicator verified'></div>
-									<div>
-										<p className='status-label'>Email Verified</p>
-										<p className='status-value'>Verified</p>
-									</div>
-								</div>
-							</div>
+						<div className='profile-actions'>
+							{isEditing ? (
+								<>
+									<button
+										className='action-btn primary'
+										onClick={handleSave}
+										disabled={loading}
+									>
+										<Edit size={18} />
+										{loading ? 'Saving...' : 'Save Changes'}
+									</button>
+									<button
+										className='action-btn secondary'
+										onClick={handleCancel}
+										disabled={loading}
+									>
+										Cancel
+									</button>
+								</>
+							) : (
+								<>
+									<button
+										className='action-btn primary'
+										onClick={() => setIsEditing(true)}
+									>
+										<Edit size={18} />
+										Edit Profile
+									</button>
+									<button className='action-btn secondary'>
+										<Key size={18} />
+										Change Password
+									</button>
+								</>
+							)}
 						</div>
-					</div>
-					<div className='profile-actions'>
-						{isEditing ? (
-							<>
-								<button 
-									className='action-btn primary' 
-									onClick={handleSave}
-									disabled={loading}
-								>
-									<Edit size={18} />
-									{loading ? 'Saving...' : 'Save Changes'}
-								</button>
-								<button 
-									className='action-btn secondary' 
-									onClick={handleCancel}
-									disabled={loading}
-								>
-									Cancel
-								</button>
-							</>
-						) : (
-							<>
-								<button
-									className='action-btn primary'
-									onClick={() => setIsEditing(true)}
-								>
-									<Edit size={18} />
-									Edit Profile
-								</button>
-								<button className='action-btn secondary'>
-									Change Password
-								</button>
-							</>
-						)}
 					</div>
 				</div>
 
 				<div className='activity-card'>
-					<h3 className='activity-title'>Recent Activity</h3>
+					<h3 className='activity-title'>Account Activity</h3>
 					<div className='activity-list'>
 						<div className='activity-item'>
 							<div className='activity-dot'></div>
 							<div className='activity-content'>
-								<p className='activity-text'>Profile viewed</p>
-								<p className='activity-time'>Just now</p>
+								<p className='activity-text'>
+									Account created
+								</p>
+								<p className='activity-time'>
+									{formatDate(currentUser?.createdAt)}
+								</p>
 							</div>
 						</div>
 						<div className='activity-item'>
 							<div className='activity-dot'></div>
 							<div className='activity-content'>
-								<p className='activity-text'>Logged in successfully</p>
-								<p className='activity-time'>2 hours ago</p>
+								<p className='activity-text'>
+									Profile last updated
+								</p>
+								<p className='activity-time'>Recently</p>
 							</div>
 						</div>
 						<div className='activity-item'>
 							<div className='activity-dot'></div>
 							<div className='activity-content'>
-								<p className='activity-text'>Password changed</p>
-								<p className='activity-time'>3 days ago</p>
+								<p className='activity-text'>
+									Role assigned: {currentUser?.role}
+								</p>
+								<p className='activity-time'>
+									{formatDate(currentUser?.createdAt)}
+								</p>
 							</div>
 						</div>
 					</div>
