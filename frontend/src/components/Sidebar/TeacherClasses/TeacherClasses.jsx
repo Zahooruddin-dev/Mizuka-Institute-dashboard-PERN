@@ -5,7 +5,7 @@ import {
   Settings2, Trash2, Plus 
 } from 'lucide-react';
 import CreateClassModal from '../Classes/CreateClassModal';
-import '../../../css/TeacherDashboard.css'; 
+import '../../../css/TeacherClasses.css'; 
 
 const TeacherClasses = () => {
   const [classes, setClasses] = useState([]);
