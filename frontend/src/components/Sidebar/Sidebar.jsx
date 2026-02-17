@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import {
 	Users,
 	BookOpen,
-	UserPlus,
 	User,
 	Settings,
 	Menu,
 	X,
 	LogOut,
+	Megaphone
 } from 'lucide-react';
 import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
@@ -46,7 +46,7 @@ const Sidebar = ({
 	const menuItems = [
 		{ id: 'students', label: 'Students', icon: Users },
 		{ id: 'classes', label: 'Classes', icon: BookOpen },
-		...(isStudent ? [{ id: 'announcements', label: 'Announcements', icon: UserPlus }] : []),
+		...(isStudent ? [{ id: 'announcements', label: 'Announcements', icon: Megaphone }] : []),
 		{ id: 'profile', label: 'Profile', icon: User },
 		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
