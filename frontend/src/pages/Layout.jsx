@@ -6,6 +6,7 @@ import Announcements from '../components/Sidebar/Announcements/Announcements';
 import Profile from '../components/Sidebar/Profile/Profile';
 import Settings from '../components/Sidebar/Settings/Settings';
 import { getUserFromToken } from '../utils/auth';
+import TeacherClasses from '../components/Sidebar/TeacherClasses/TeacherClasses';
 import '../css/Layout.css';
 
 const Layout = () => {
