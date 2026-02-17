@@ -44,13 +44,17 @@ const Sidebar = ({
 		}
 	}, [isOpen, isMobile]);
 
-	const menuItems = [
-		{ id: 'students', label: 'Students', icon: Users },
-		{ id: 'classes', label: 'Classes', icon: BookOpen },
-		...(isStudent ? [{ id: 'announcements', label: 'Announcements', icon: Megaphone }] : []),
-		{ id: 'profile', label: 'Profile', icon: User },
-		{ id: 'settings', label: 'Settings', icon: Settings },
-	];
+const menuItems = [
+  ...(isTeacher 
+    ? [{ id: 'teacher-classes', label: 'Your Classes', icon: BookOpen }] 
+    : [{ id: 'students', label: 'Students', icon: Users }]
+  ),
+  
+  { id: 'classes', label: 'Class Directory', icon: BookOpen },
+  { id: 'announcements', label: 'Announcements', icon: Megaphone },
+  { id: 'profile', label: 'Profile', icon: User },
+  { id: 'settings', label: 'Settings', icon: Settings },
+];
 
 	const handleMenuClick = (id) => {
 		onPageChange(id);
