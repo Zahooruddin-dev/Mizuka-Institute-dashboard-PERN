@@ -33,7 +33,7 @@ export const getClassById = (id) => {
 	return api.get(`api/class/${id}`);
 };
 export const postEnrollement = (data) => {
-	return api.get(`api/enroll`, data);
+	return api.post(`api/enroll`, data);
 };
 export const getClassEnrolledRooster = (id) => {
 	return api.get(`api/enroll/class/${id}`);
