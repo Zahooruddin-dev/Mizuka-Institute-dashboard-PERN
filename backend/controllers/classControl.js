@@ -60,15 +60,6 @@ async function editSpecificClass(req, res) {
 		res.status(500).json({ error: err.message });
 	}
 }
-async function getTeacherClasses(req, res) {
-	const { id } = req.params;
-	try {
-		const classes = await db.getClassesByTeacherIdQuery(id);
-		res.status(200).json(classes);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
-}
 async function getMyClasses(req, res) {
 	try {
 		const classes = await db.getClassesByTeacherIdQuery(req.user.id);
@@ -83,6 +74,5 @@ module.exports = {
 	deleteClass,
 	getSpecificClass,
 	editSpecificClass,
-	getTeacherClasses,
 	getMyClasses,
 };
