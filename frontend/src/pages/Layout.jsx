@@ -62,8 +62,10 @@ const Layout = () => {
 				return <Dashboard userRole={user?.role} />;
 			case 'classes':
 				return <Classes currentUser={user?.role} currentUserId = {user?.id}/>;
+				case 'teacher-classes':
+  return <TeacherClasses currentUserId={user?.id} />;
 			case 'enroll':
-				return <Announcements />;
+				return <Announcements userRole={user?.role}/>;
 			case 'profile':
 				return (
 					<Profile 
