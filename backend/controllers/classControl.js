@@ -7,15 +7,16 @@ async function getClasses(req, res) {
 	} catch {
 		res.status(500).json({ message: 'Internal server error' });
 	}
-}
-async function createClasses(req, res) {
-	try {
-		const data = req.body;
-		await db.CreateNewClassQuery(data);
-		res.status(201).json({ message: 'Created succesfully a new class' });
-	} catch {
-		res.status(500).json({ message: 'Internal server error' });
-	}
+}async function createClasses(req, res) {
+  const { class_name, time_in_pakistan } = req.body;
+  const teacher_id = req.user.id; 
+
+  try {
+    const newClass = await dbClass.createClassQuery(class_name, time_in_pakistan, teacher_id);
+    res.status(201).json(newClass);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }
 async function deleteClass(req, res) {
 	const { id } = req.params;
