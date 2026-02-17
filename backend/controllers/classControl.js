@@ -70,12 +70,20 @@ async function getTeacherClasses(req, res) {
     res.status(500).json({ error: err.message });
   }
 }
-
+async function getMyClasses(req, res) {
+  try {
+    const classes = await dbClass.getClassesByTeacherIdQuery(req.user.id);
+    res.json(classes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 module.exports = {
 	getClasses,
 	createClasses,
 	deleteClass,
 	getSpecificClass,
 	editSpecificClass,
-	getTeacherClasses
+	getTeacherClasses,
+	getMyClasses
 };
