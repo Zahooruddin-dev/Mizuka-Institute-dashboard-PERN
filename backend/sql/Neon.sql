@@ -14,3 +14,8 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ALTER TABLE users ADD COLUMN profile_pic TEXT;
+ALTER TABLE enrollments 
+DROP CONSTRAINT enrollments_student_id_fkey;
+ALTER TABLE enrollments 
+ADD CONSTRAINT enrollments_student_id_fkey 
+FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE;
