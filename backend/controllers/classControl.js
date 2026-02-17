@@ -12,7 +12,7 @@ async function getClasses(req, res) {
   const teacher_id = req.user.id; 
 
   try {
-    const newClass = await dbClass.createClassQuery(class_name, time_in_pakistan, teacher_id);
+    const newClass = await db.CreateNewClassQuery(class_name, time_in_pakistan, teacher_id);
     res.status(201).json(newClass);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -64,7 +64,7 @@ async function editSpecificClass(req, res) {
 async function getTeacherClasses(req, res) {
   const { id } = req.params; 
   try {
-    const classes = await dbClass.getClassesByTeacherIdQuery(id);
+    const classes = await db.getClassesByTeacherIdQuery(id);
     res.json(classes);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -72,7 +72,7 @@ async function getTeacherClasses(req, res) {
 }
 async function getMyClasses(req, res) {
   try {
-    const classes = await dbClass.getClassesByTeacherIdQuery(req.user.id);
+    const classes = await db.getClassesByTeacherIdQuery(req.user.id);
     res.json(classes);
   } catch (err) {
     res.status(500).json({ error: err.message });
