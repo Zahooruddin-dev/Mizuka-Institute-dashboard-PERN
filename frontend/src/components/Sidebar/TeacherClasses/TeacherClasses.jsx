@@ -4,8 +4,8 @@ import {
   BookOpen, Clock, Users, Megaphone, 
   Settings2, Trash2, Plus 
 } from 'lucide-react';
-import CreateClassModal from './CreateClassModal';
-import '../../../css/TeacherDashboard.css'; // New CSS file
+import CreateClassModal from '../Classes/CreateClassModal';
+import '../../../css/TeacherDashboard.css'; 
 
 const TeacherClasses = () => {
   const [classes, setClasses] = useState([]);
