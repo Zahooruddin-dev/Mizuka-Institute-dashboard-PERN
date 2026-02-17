@@ -5,8 +5,8 @@ import Classes from '../components/Sidebar/Classes/Classes';
 import Announcements from '../components/Sidebar/Announcements/Announcements';
 import Profile from '../components/Sidebar/Profile/Profile';
 import Settings from '../components/Sidebar/Settings/Settings';
-import { getUserFromToken } from '../utils/auth';
 import TeacherClasses from '../components/Sidebar/TeacherClasses/TeacherClasses';
+import { getUserFromToken } from '../utils/auth';
 import '../css/Layout.css';
 
 const Layout = () => {
@@ -16,16 +16,12 @@ const Layout = () => {
 
 	const loadUserData = () => {
 		const userData = getUserFromToken();
-		if (userData) {
-			setUser(userData);
-		}
+		if (userData) setUser(userData);
 	};
 
 	const handlePageChange = (pageId) => {
 		setActivePage(pageId);
-		if (pageId === 'profile') {
-			loadUserData();
-		}
+		if (pageId === 'profile') loadUserData();
 	};
 
 	const getProfileImageUrl = () => {
@@ -45,32 +41,30 @@ const Layout = () => {
 	}, []);
 
 	useEffect(() => {
-		const handleStorageChange = () => {
-			loadUserData();
-		};
-
+		const handleStorageChange = () => loadUserData();
 		window.addEventListener('storage', handleStorageChange);
-		
-		return () => {
-			window.removeEventListener('storage', handleStorageChange);
-		};
+		return () => window.removeEventListener('storage', handleStorageChange);
 	}, []);
-	
 
 	const renderPage = () => {
 		switch (activePage) {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
 			case 'classes':
-				return <Classes currentUser={user?.role} currentUserId = {user?.id}/>;
-				case 'teacher-classes':
-  return <TeacherClasses currentUserId={user?.id} />;
-			case 'enroll':
-				return <Announcements userRole={user?.role}/>;
+				return (
+					<Classes
+						currentUser={user?.role}
+						currentUserId={user?.id}
+					/>
+				);
+			case 'teacher-classes':
+				return <TeacherClasses currentUserId={user?.id} />;
+			case 'announcements':
+				return <Announcements userRole={user?.role} />;
 			case 'profile':
 				return (
-					<Profile 
-						user={user} 
+					<Profile
+						user={user}
 						profileImageUrl={getProfileImageUrl()}
 						onProfileUpdate={handleProfileUpdate}
 					/>
@@ -85,12 +79,15 @@ const Layout = () => {
 	return (
 		<div className='layout'>
 			<Sidebar
+				activePage={activePage}
 				userName={user?.username}
 				userRole={user?.role}
-				onPageChange={handlePageChange}
 				userProfile={getProfileImageUrl()}
+				onPageChange={handlePageChange}
 			/>
-			<div className='layout-main'>{renderPage()}</div>
+			<main className='layout-main'>
+				<div className='layout-content'>{renderPage()}</div>
+			</main>
 		</div>
 	);
 };

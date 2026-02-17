@@ -1,41 +1,36 @@
 .layout {
-  --sidebar-width: 280px;
-  min-height: 100vh;
-  background: #fafafa;
-  display: flex;
+	--sidebar-width: 280px;
+	min-height: 100vh;
+	background: #f8fafc;
+	display: flex;
 }
 
 .layout-main {
-  /* Make main content take remaining space after sidebar */
-  flex: 1;
-  margin-left: var(--sidebar-width);
-  min-height: 100vh;
-  width: calc(100% - var(--sidebar-width));
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+	flex: 1;
+	margin-left: var(--sidebar-width);
+	min-height: 100vh;
+	width: calc(100% - var(--sidebar-width));
+	display: flex;
+	flex-direction: column;
+	transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .layout-content {
-  flex: 1;
-  /* Remove max-width constraint to allow full-width usage */
-  max-width: none;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+	flex: 1;
+	width: 100%;
+	padding: 2rem;
 }
 
-/* For very wide screens, you can optionally add max-width to prevent ultra-wide layouts */
 @media (min-width: 1920px) {
-  .layout-content {
-    max-width: 1600px;
-    margin: 0 auto;
-  }
+	.layout-content {
+		max-width: 1600px;
+		margin: 0 auto;
+	}
 }
 
 @media (max-width: 767px) {
-  .layout-main {
-    margin-left: 0;
-    width: 100%;
-  }
+	.layout-main {
+		margin-left: 0;
+		width: 100%;
+	}
 }
