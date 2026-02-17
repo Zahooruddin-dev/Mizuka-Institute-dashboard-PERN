@@ -35,7 +35,7 @@ POST http://localhost:3000/api/enroll
 Content-Type: application/json
 
 {
-  "student_id": "c312354c-9858-4db4-b0f6-2b508f81c4bb",
+  "student_id": "769626e8-1d8c-43fd-959c-ef7220f0fe79",
   "class_id": "37cecd7a-edc3-4a3a-a3fa-e03e464c6020"
 }
 ###

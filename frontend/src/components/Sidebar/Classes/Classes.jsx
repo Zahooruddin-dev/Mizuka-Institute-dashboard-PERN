@@ -6,7 +6,7 @@ import '../../../css/Classes.css';
 import ClassDetailsModal from './ClassDetailsModal';
 import EnrollButton from './EnrollButton';
 
-const Classes = ({ currentUser }) => {
+const Classes = ({ currentUser,currentUserId }) => {
 	const [classList, setClassList] = useState([]);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -88,7 +88,7 @@ const Classes = ({ currentUser }) => {
 									View Details
 								</button>
 								{isStudent && (
-									<EnrollButton classId={item.id} studentId={currentUser.id} />
+									<EnrollButton classId={item.id} studentId={currentUserId} />
 								)}
 							</div>
 						</div>

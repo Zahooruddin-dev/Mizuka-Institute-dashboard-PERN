@@ -30,14 +30,14 @@ export const getClasses = (params) => {
 	return api.get('/api/class', { params });
 };
 export const getClassById = (id) => {
-	return api.get(`api/class/${id}`);
+	return api.get(`/api/class/${id}`);
 };
 export const postEnrollement = (data) => {
-	return api.post(`api/enroll`, data);
+	return api.post(`/api/enroll/`, data);
 };
 export const getClassEnrolledRooster = (id) => {
-	return api.get(`api/enroll/class/${id}`);
+	return api.get(`/api/enroll/class/${id}`);
 };
 export const getStudentEnrolledShedule = (id) => {
-	return api.get(`api/student/class/${id}`);
+	return api.get(`/api/enroll/class/${id}`);
 };

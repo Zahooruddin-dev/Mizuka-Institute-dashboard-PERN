@@ -54,13 +54,14 @@ const Layout = () => {
 			window.removeEventListener('storage', handleStorageChange);
 		};
 	}, []);
+	
 
 	const renderPage = () => {
 		switch (activePage) {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
 			case 'classes':
-				return <Classes currentUser={user?.role}/>;
+				return <Classes currentUser={user?.role} currentUserId = {user?.id}/>;
 			case 'enroll':
 				return <Enroll />;
 			case 'profile':
