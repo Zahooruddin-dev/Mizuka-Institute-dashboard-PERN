@@ -46,7 +46,7 @@ const Sidebar = ({
 	const menuItems = [
 		{ id: 'students', label: 'Students', icon: Users },
 		{ id: 'classes', label: 'Classes', icon: BookOpen },
-		...(isStudent ? [{ id: 'enroll', label: 'Enroll', icon: UserPlus }] : []),
+		...(isStudent ? [{ id: 'announcements', label: 'Announcements', icon: UserPlus }] : []),
 		{ id: 'profile', label: 'Profile', icon: User },
 		{ id: 'settings', label: 'Settings', icon: Settings },
 	];

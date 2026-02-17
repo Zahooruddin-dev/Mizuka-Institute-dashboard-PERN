@@ -1,18 +1,18 @@
 import { UserPlus } from 'lucide-react';
 
-const Enroll = () => {
+const Announcements = () => {
   return (
     <div className="page-container">
       <div className="page-header">
         <UserPlus size={32} className="page-icon" />
         <div>
-          <h1 className="page-heading">Enrollment</h1>
-          <p className="page-description">Enroll students in classes and programs</p>
+          <h1 className="page-heading">Announcements</h1>
+          <p className="page-description">Announcements students in classes and programs</p>
         </div>
       </div>
 
       <div className="placeholder-content">
-        <p>Enrollment management interface coming soon...</p>
+        <p>Announcements management interface coming soon...</p>
       </div>
 
       <style>{`
@@ -84,4 +84,4 @@ const Enroll = () => {
   );
 };
 
-export default Enroll;
+export default Announcements;

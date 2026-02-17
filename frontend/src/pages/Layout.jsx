@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Dashboard from './Dashboard';
 import Classes from '../components/Sidebar/Classes/Classes';
-import Enroll from '../components/Sidebar/Enroll/Enroll';
+import Announcements from '../components/Sidebar/Announcements/Announcements';
 import Profile from '../components/Sidebar/Profile/Profile';
 import Settings from '../components/Sidebar/Settings/Settings';
 import { getUserFromToken } from '../utils/auth';
@@ -63,7 +63,7 @@ const Layout = () => {
 			case 'classes':
 				return <Classes currentUser={user?.role} currentUserId = {user?.id}/>;
 			case 'enroll':
-				return <Enroll />;
+				return <Announcements />;
 			case 'profile':
 				return (
 					<Profile 
