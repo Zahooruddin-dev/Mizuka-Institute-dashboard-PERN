@@ -16,15 +16,17 @@ async function CreateNewClassQuery(class_name, time_in_pakistan, teacher_id) {
   return rows[0]; 
 }
 async function queryEditClassQuery(id, data) {
-	const { class_name, time_in_pakistan } = data;
-	await pool.query(
-		`
-		UPDATE classes
-		SET class_name = $1, time_in_pakistan = $2
-		WHERE id = $3
+  const { class_name, time_in_pakistan } = data;
+  const { rows } = await pool.query(
+    `
+    UPDATE classes
+    SET class_name = $1, time_in_pakistan = $2
+    WHERE id = $3
+    RETURNING *
     `,
-		[class_name, time_in_pakistan, id],
-	);
+    [class_name, time_in_pakistan, id],
+  );
+  return rows[0];
 }
 async function getClassByIdQuery(id) {
 	const { rows } = await pool.query('SELECT * FROM classes WHERE id = $1', [
