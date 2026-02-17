@@ -22,6 +22,7 @@ const Sidebar = ({
 	const [isOpen, setIsOpen] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 	const isStudent = userRole === 'student';
+	const isTeacher = userRole === 'teacher';
 
 	useEffect(() => {
 		const checkMobile = () => {

@@ -60,6 +60,15 @@ async function editSpecificClass(req, res) {
 		res.status(500).json({ message: 'Internal server error' });
 	}
 }
+async function getTeacherClasses(req, res) {
+  const { id } = req.params; 
+  try {
+    const classes = await dbClass.getClassesByTeacherIdQuery(id);
+    res.json(classes);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 
 module.exports = {
 	getClasses,
@@ -67,4 +76,5 @@ module.exports = {
 	deleteClass,
 	getSpecificClass,
 	editSpecificClass,
+	getTeacherClasses
 };
