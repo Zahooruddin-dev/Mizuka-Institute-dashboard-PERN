@@ -1,43 +1,104 @@
 import React, { useEffect, useState } from 'react';
 import { getMyClasses } from '../../../api/api';
-import { BookOpen, Users, Clock } from 'lucide-react';
+import { 
+  BookOpen, Clock, Users, Megaphone, 
+  Settings2, Trash2, Plus 
+} from 'lucide-react';
+import CreateClassModal from './CreateClassModal';
+import '../../../css/TeacherDashboard.css'; // New CSS file
 
 const TeacherClasses = () => {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const fetchMyClasses = async () => {
+    try {
+      const res = await getMyClasses();
+      setClasses(res.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getMyClasses()
-      .then(res => setClasses(res.data))
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
+    fetchMyClasses();
   }, []);
 
-  if (loading) return <div className="p-6">Loading your classes...</div>;
+  if (loading) return <div className="loading-text">Loading your dashboard...</div>;
 
   return (
-    <div className="teacher-classes-page p-6">
-      <h1 className="text-2xl font-bold mb-6">Classes You Manage</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {classes.map((c) => (
-          <div key={c.id} className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
-                <BookOpen size={24} />
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <div className="header-info">
+          <h1>Your Managed Classes</h1>
+          <p>Manage curriculum, announcements, and student rosters.</p>
+        </div>
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="create-btn"
+        >
+          <Plus size={20} />
+          <span>Create New Class</span>
+        </button>
+      </header>
+
+      <div className="dashboard-grid">
+        {classes.length > 0 ? (
+          classes.map((c) => (
+            <div key={c.id} className="teacher-class-card">
+              <div className="card-top">
+                <div className="icon-wrapper">
+                  <BookOpen size={24} />
+                </div>
+                <div className="card-actions">
+                  <button className="action-icon edit" title="Settings"><Settings2 size={18} /></button>
+                  <button className="action-icon delete" title="Delete"><Trash2 size={18} /></button>
+                </div>
               </div>
-              <h3 className="font-bold text-lg">{c.class_name}</h3>
-            </div>
-            <div className="space-y-2 text-sm text-gray-600">
-              <div className="flex items-center gap-2">
-                <Clock size={16} /> <span>{c.time_in_pakistan}:00 PKT</span>
+
+              <h3 className="class-title">{c.class_name}</h3>
+              
+              <div className="class-meta">
+                <div className="meta-item">
+                  <Clock size={16} />
+                  <span>{c.time_in_pakistan}:00 PKT</span>
+                </div>
+                <div className="meta-item">
+                  <Users size={16} />
+                  <span>{c.student_count || 0} Students</span>
+                </div>
+              </div>
+
+              <div className="card-buttons">
+                <button className="btn-roster">
+                  <Users size={16} /> Roster
+                </button>
+                <button className="btn-post">
+                  <Megaphone size={16} /> Post
+                </button>
               </div>
             </div>
-            <button className="w-full mt-4 py-2 bg-gray-50 hover:bg-indigo-50 text-indigo-600 rounded-lg font-medium transition-colors">
-              Manage Roster
-            </button>
+          ))
+        ) : (
+          <div className="empty-dashboard">
+            <BookOpen size={48} />
+            <p>You haven't created any classes yet.</p>
           </div>
-        ))}
+        )}
       </div>
+
+      {isModalOpen && (
+        <CreateClassModal 
+          onClose={() => setIsModalOpen(false)} 
+          onSuccess={() => {
+            setIsModalOpen(false);
+            fetchMyClasses();
+          }} 
+        />
+      )}
     </div>
   );
 };
