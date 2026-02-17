@@ -4,6 +4,7 @@ import { getClasses } from '../../../api/api';
 import CreateClassModal from './CreateClassModal';
 import '../../../css/Classes.css';
 import ClassDetailsModal from './ClassDetailsModal';
+import EnrollButton from './EnrollButton';
 
 const Classes = ({ currentUser }) => {
 	const [classList, setClassList] = useState([]);
@@ -32,7 +33,8 @@ const Classes = ({ currentUser }) => {
 		c.class_name.toLowerCase().includes(searchTerm.toLowerCase()),
 	);
 	const isTeacher = currentUser === 'teacher';
-	
+	const isStudent = currentUser === 'student';
+
 	return (
 		<div className='classes-page'>
 			<div className='page-header'>
@@ -85,6 +87,9 @@ const Classes = ({ currentUser }) => {
 								>
 									View Details
 								</button>
+								{isStudent && (
+									<EnrollButton classId={item.id} studentId={currentUser.id} />
+								)}
 							</div>
 						</div>
 					))}

@@ -21,7 +21,39 @@
   color: #64748b;
   margin: 0.25rem 0 0 0;
 }
+.enroll-btn {
+  background: #10b981; /* Success Green */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
+.enroll-btn:hover:not(:disabled) {
+  background: #059669;
+}
+
+.enroll-btn.success {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #10b981;
+  cursor: default;
+}
+
+.enroll-error {
+  color: #dc2626;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
 .add-class-btn {
   background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
   color: white;

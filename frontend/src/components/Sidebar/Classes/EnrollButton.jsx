@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { postEnrollment } from '../../../api/api';
+import { postEnrollement } from '../../../api/api';
 import { UserPlus, CheckCircle, AlertCircle } from 'lucide-react';
 
 const EnrollButton = ({ classId, studentId, onUpdate }) => {
@@ -9,7 +9,7 @@ const EnrollButton = ({ classId, studentId, onUpdate }) => {
   const handleEnroll = async () => {
     setStatus('loading');
     try {
-      await postEnrollment({ 
+      await postEnrollement({ 
         student_id: studentId, 
         class_id: classId 
       });
