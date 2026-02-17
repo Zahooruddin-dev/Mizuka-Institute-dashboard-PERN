@@ -7,7 +7,7 @@ require('dotenv').config;
 
 router.get('/', controller.getClasses);
 router.post('/', verifyToken, isTeacher, controller.createClasses);
-
+router.get('/mine', verifyToken, isTeacher, controller.getMyClasses);
 router.get('/:id', controller.getSpecificClass);
 router.put('/:id', controller.editSpecificClass);
 router.delete('/:id', verifyToken, isTeacher, controller.deleteClass);
