@@ -21,8 +21,24 @@ async function getAnnouncementsByClassQuery(classId) {
   );
   return rows;
 }
-
+async function getStudentFeedQuery(studentId) {
+  const { rows } = await pool.query(
+    `SELECT 
+        a.*, 
+        c.class_name, 
+        u.username as teacher_name
+     FROM announcements a
+     JOIN classes c ON a.class_id = c.id
+     JOIN users u ON a.teacher_id = u.id
+     JOIN enrollments e ON c.id = e.class_id
+     WHERE e.student_id = $1
+     ORDER BY a.created_at DESC`,
+    [studentId]
+  );
+  return rows;
+}
 module.exports = {
   createAnnouncementQuery,
-  getAnnouncementsByClassQuery
+  getAnnouncementsByClassQuery,
+  getStudentFeedQuery
 };
