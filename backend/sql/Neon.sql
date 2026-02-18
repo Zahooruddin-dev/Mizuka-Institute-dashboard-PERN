@@ -24,3 +24,11 @@ FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE;
 
 ALTER TABLE classes 
 ADD COLUMN teacher_id UUID REFERENCES users(id) ON DELETE SET NULL;
+CREATE TABLE announcements (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    class_id UUID REFERENCES classes(id) ON DELETE CASCADE,
+    teacher_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
