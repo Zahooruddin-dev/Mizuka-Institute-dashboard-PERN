@@ -3,7 +3,8 @@ const pool = require('./Pool');
 async function createAnnouncementQuery(classId, teacherId, title, content) {
   const { rows } = await pool.query(
     `INSERT INTO announcements (class_id, teacher_id, title, content)
-     VALUES ($1, $2, $3, $4) RETURNING *`,
+     VALUES ($1, $2, $3, $4) 
+     RETURNING *`,
     [classId, teacherId, title, content]
   );
   return rows[0];
@@ -21,4 +22,7 @@ async function getAnnouncementsByClassQuery(classId) {
   return rows;
 }
 
-module.exports = { createAnnouncementQuery, getAnnouncementsByClassQuery };
+module.exports = {
+  createAnnouncementQuery,
+  getAnnouncementsByClassQuery
+};

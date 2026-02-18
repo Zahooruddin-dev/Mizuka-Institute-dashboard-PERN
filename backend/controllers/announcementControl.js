@@ -2,22 +2,43 @@ const dbAnnounce = require('../db/queryAnnouncements');
 const dbClass = require('../db/queryClasses');
 
 async function postAnnouncement(req, res) {
-  const { class_id, title, content } = req.body;
-  const teacher_id = req.user.id;
+	const { classId } = req.params;
+	const { title, content } = req.body;
+	const teacherId = req.user.id;
 
-  try {
-    const targetClass = await dbClass.getClassByIdQuery(class_id);
-    
-    if (!targetClass) return res.status(404).json({ error: "Class not found" });
-    
-    if (targetClass.teacher_id !== teacher_id) {
-      return res.status(403).json({ error: "You can only post to your own classes" });
-    }
-    const announcement = await dbAnnounce.createAnnouncementQuery(class_id, teacher_id, title, content);
-    res.status(201).json(announcement);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+	try {
+		const targetClass = await dbClass.getClassByIdQuery(classId);
+
+		if (!targetClass) {
+			return res.status(404).json({ error: 'Class not found' });
+		}
+
+		if (targetClass.teacher_id !== teacherId) {
+			return res
+				.status(403)
+				.json({ error: "Unauthorized: You don't teach this class" });
+		}
+
+		const announcement = await dbAnnounce.createAnnouncementQuery(
+			classId,
+			teacherId,
+			title,
+			content,
+		);
+		res.status(201).json(announcement);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
 }
 
-module.exports={postAnnouncement}
+async function getClassAnnouncements(req, res) {
+	const { classId } = req.params;
+	try {
+		const list = await dbAnnounce.getAnnouncementsByClassQuery(classId);
+		res.status(200).json(list);
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+}
+
+module.exports = { postAnnouncement, getClassAnnouncements };
