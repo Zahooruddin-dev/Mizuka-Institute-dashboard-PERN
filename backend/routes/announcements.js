@@ -5,5 +5,4 @@ const { isTeacher, verifyToken } = require('../middleware/authMiddleware');
 
 router.post('/', verifyToken, isTeacher, controller.postAnnouncement);
 router.get('/', controller.getClassAnnouncements);
-router.get('/my-feed', verifyToken, controller.getMyFeed);
 module.exports = router;

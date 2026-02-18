@@ -42,12 +42,11 @@ export const getStudentEnrolledShedule = (id) => {
 	return api.get(`/api/enroll/class/${id}`);
 };
 export const getMyClasses = () => {
-	return api.get('/api/class/mine');
+  return api.get('/api/class/mine');
 };
-export const postAnnouncement = (id, data) => {
+export const postAnnouncement = (id,data) => {
 	return api.post(`/api/class/${id}/announcements`, data);
 };
-export const getClassAnnouncements = (classId) =>
-	api.get(`/api/class/${classId}/announcements`);
-export const getMyAnnouncements = () => api.get('/api/announcements/my-feed');
-
+export const getClassAnnouncements = (id) => {
+	return api.get(`/api/class/${id}/announcements`);
+};

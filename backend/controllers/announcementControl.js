@@ -40,13 +40,5 @@ async function getClassAnnouncements(req, res) {
 		res.status(500).json({ error: err.message });
 	}
 }
-async function getMyFeed(req, res) {
-	try {
-		const feed = await dbAnnounce.getStudentFeedQuery(req.user.id);
-		res.status(200).json(feed);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
-}
 
-module.exports = { postAnnouncement, getClassAnnouncements, getMyFeed };
+module.exports = { postAnnouncement, getClassAnnouncements };
