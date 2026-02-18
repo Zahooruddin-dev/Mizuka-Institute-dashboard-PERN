@@ -60,10 +60,10 @@ async function getStudentAnnouncements(req, res) {
     const list = await dbAnnounce.getAnnouncementsForStudentQuery(studentId);
     res.status(200).json(list);
   } catch (err) {
+    console.error('getStudentAnnouncements error:', err); // add this
     res.status(500).json({ error: err.message });
   }
 }
-
 module.exports = {
   postAnnouncement,
   getClassAnnouncements,

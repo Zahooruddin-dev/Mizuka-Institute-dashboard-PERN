@@ -24,7 +24,7 @@ async function getAnnouncementsByClassQuery(classId) {
 
 async function getAnnouncementByIdQuery(announcementId) {
   const { rows } = await pool.query(
-    `SELECT a.*, u.username AS teacher_name, c.name AS class_name
+    `SELECT a.*, u.username AS teacher_name, c.class_name
      FROM announcements a
      JOIN users u ON a.teacher_id = u.id
      JOIN classes c ON a.class_id = c.id
@@ -36,7 +36,7 @@ async function getAnnouncementByIdQuery(announcementId) {
 
 async function getAnnouncementsForStudentQuery(studentId) {
   const { rows } = await pool.query(
-    `SELECT a.*, u.username AS teacher_name, c.name AS class_name
+    `SELECT a.*, u.username AS teacher_name, c.class_name
      FROM announcements a
      JOIN users u ON a.teacher_id = u.id
      JOIN classes c ON a.class_id = c.id

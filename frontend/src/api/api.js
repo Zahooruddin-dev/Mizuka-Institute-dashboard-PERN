@@ -51,4 +51,4 @@ export const getClassAnnouncements = (classId) => {
 export const getAnnouncementById = (classId, announcementId) => {
 	return api.get(`/api/class/${classId}/announcements/${announcementId}`);
 };
-export const getMyAnnouncements = () => api.get('/api/class/announcements/my');
+export const getMyAnnouncements = () => api.get('/api/announcements/my');

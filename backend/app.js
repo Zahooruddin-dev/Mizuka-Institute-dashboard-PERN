@@ -15,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/class', classRoutes);
 app.use('/api/class/:classId/announcements', announcementRoutes);
+app.use('/api/announcements', announcementRoutes);
 app.use('/api/class-stats', classStatsRoute);
 app.use('/api/students', studentsRoute);
 app.use('/api/enroll', enrollRoutes);
