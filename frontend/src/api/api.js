@@ -47,3 +47,6 @@ export const getMyClasses = () => {
 export const postAnnouncement = (id,data) => {
 	return api.post(`/api/class/${id}/announcements`, data);
 };
+export const getClassAnnouncements = (id) => {
+	return api.get(`/api/class/${id}/announcements`);
+};
