@@ -7,10 +7,20 @@ import {
 	Menu,
 	X,
 	LogOut,
-	Megaphone
+	Megaphone,
+	ChevronLeft,
+	ChevronRight,
 } from 'lucide-react';
 import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
+
+const ROLE_META = {
+	student: { label: 'Student', color: '#0ea5e9', bg: 'rgba(14,165,233,0.1)', border: 'rgba(14,165,233,0.25)' },
+	teacher: { label: 'Teacher', color: '#8b5cf6', bg: 'rgba(139,92,246,0.1)', border: 'rgba(139,92,246,0.25)' },
+	admin:   { label: 'Admin',   color: '#f59e0b', bg: 'rgba(245,158,11,0.1)',  border: 'rgba(245,158,11,0.25)'  },
+};
+
+const getRoleMeta = (role) => ROLE_META[role?.toLowerCase()] ?? { label: role ?? 'User', color: '#64748b', bg: 'rgba(100,116,139,0.1)', border: 'rgba(100,116,139,0.2)' };
 
 const Sidebar = ({
 	activePage,
@@ -19,10 +29,12 @@ const Sidebar = ({
 	userRole = 'User',
 	userProfile = null,
 }) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [isMobile, setIsMobile] = useState(false);
-	const isStudent = userRole === 'student';
+	const [isOpen, setIsOpen]       = useState(false);
+	const [isMobile, setIsMobile]   = useState(false);
+	const [collapsed, setCollapsed] = useState(false);
+
 	const isTeacher = userRole === 'teacher';
+	const roleMeta  = getRoleMeta(userRole);
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -30,41 +42,34 @@ const Sidebar = ({
 			setIsMobile(mobile);
 			if (!mobile) setIsOpen(false);
 		};
-
 		checkMobile();
 		window.addEventListener('resize', checkMobile);
 		return () => window.removeEventListener('resize', checkMobile);
 	}, []);
 
 	useEffect(() => {
-		if (isOpen && isMobile) {
-			document.body.style.overflow = 'hidden';
-		} else {
-			document.body.style.overflow = 'unset';
-		}
+		document.body.style.overflow = (isOpen && isMobile) ? 'hidden' : 'unset';
 	}, [isOpen, isMobile]);
 
-const menuItems = [
-  ...(isTeacher 
-    ? [{ id: 'teacher-classes', label: 'Your Classes', icon: BookOpen }] 
-    : [{ id: 'students', label: 'Students', icon: Users }]
-  ),
-  
-  { id: 'classes', label: 'Class Directory', icon: BookOpen },
-  { id: 'announcements', label: 'Announcements', icon: Megaphone },
-  { id: 'profile', label: 'Profile', icon: User },
-  { id: 'settings', label: 'Settings', icon: Settings },
-];
+	useEffect(() => {
+		const root = document.documentElement;
+		root.style.setProperty('--sidebar-width', isMobile ? '280px' : collapsed ? '72px' : '280px');
+	}, [collapsed, isMobile]);
+
+	const menuItems = [
+		...(isTeacher
+			? [{ id: 'teacher-classes', label: 'Your Classes', icon: BookOpen }]
+			: [{ id: 'students', label: 'Students', icon: Users }]
+		),
+		{ id: 'classes',       label: 'Class Directory', icon: BookOpen  },
+		{ id: 'announcements', label: 'Announcements',   icon: Megaphone  },
+		{ id: 'profile',       label: 'Profile',         icon: User       },
+		{ id: 'settings',      label: 'Settings',        icon: Settings   },
+	];
 
 	const handleMenuClick = (id) => {
 		onPageChange(id);
-		if (isMobile) {
-			setIsOpen(false);
-		}
-	};
-
-	const toggleSidebar = () => {
-		setIsOpen(!isOpen);
+		if (isMobile) setIsOpen(false);
 	};
 
 	return (
@@ -72,7 +77,7 @@ const menuItems = [
 			{isMobile && (
 				<button
 					className='mobile-toggle'
-					onClick={toggleSidebar}
+					onClick={() => setIsOpen(v => !v)}
 					aria-label={isOpen ? 'Close menu' : 'Open menu'}
 					aria-expanded={isOpen}
 				>
@@ -81,15 +86,15 @@ const menuItems = [
 			)}
 
 			{isMobile && isOpen && (
-				<div
-					className='sidebar-overlay'
-					onClick={toggleSidebar}
-					aria-hidden='true'
-				/>
+				<div className='sidebar-overlay' onClick={() => setIsOpen(false)} aria-hidden='true' />
 			)}
 
 			<aside
-				className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}
+				className={[
+					'sidebar',
+					isOpen     ? 'sidebar-open'      : '',
+					collapsed  ? 'sidebar-collapsed' : '',
+				].join(' ').trim()}
 				aria-label='Main navigation'
 			>
 				<div className='sidebar-header'>
@@ -97,14 +102,24 @@ const menuItems = [
 						<div className='logo-icon'>
 							<BookOpen size={28} />
 						</div>
-						<h1 className='logo-text'>EduPortal</h1>
+						{!collapsed && <h1 className='logo-text'>EduPortal</h1>}
 					</div>
+
+					{!isMobile && (
+						<button
+							className='collapse-btn'
+							onClick={() => setCollapsed(v => !v)}
+							aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+						>
+							{collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+						</button>
+					)}
 				</div>
 
 				<nav className='sidebar-nav' role='navigation'>
 					<ul className='nav-list'>
 						{menuItems.map((item) => {
-							const Icon = item.icon;
+							const Icon     = item.icon;
 							const isActive = activePage === item.id;
 
 							return (
@@ -114,10 +129,11 @@ const menuItems = [
 										onClick={() => handleMenuClick(item.id)}
 										aria-label={item.label}
 										aria-current={isActive ? 'page' : undefined}
+										title={collapsed ? item.label : undefined}
 									>
 										<Icon className='nav-icon' size={20} />
-										<span className='nav-label'>{item.label}</span>
-										{isActive && (
+										{!collapsed && <span className='nav-label'>{item.label}</span>}
+										{isActive && !collapsed && (
 											<span className='active-indicator' aria-hidden='true' />
 										)}
 									</button>
@@ -128,35 +144,62 @@ const menuItems = [
 				</nav>
 
 				<div className='sidebar-footer'>
-					<div className='user-info'>
-						<div className='user-avatar' aria-hidden='true'>
-							{userProfile ? (
-								<img
-									src={userProfile}
-									alt={`${userName}'s avatar`}
-									className='sidebar-avatar-img'
-									onError={(e) => {
-										e.target.style.display = 'none';
-										const fallback = document.createElement('span');
-										fallback.className = 'avatar-fallback';
-										fallback.textContent = userName.charAt(0).toUpperCase();
-										e.target.parentElement.appendChild(fallback);
+					{!collapsed && (
+						<div className='user-info'>
+							<div className='user-avatar' aria-hidden='true'>
+								{userProfile ? (
+									<img
+										src={userProfile}
+										alt={`${userName}'s avatar`}
+										className='sidebar-avatar-img'
+										onError={(e) => {
+											e.target.style.display = 'none';
+											const fb = document.createElement('span');
+											fb.className = 'avatar-fallback';
+											fb.textContent = userName.charAt(0).toUpperCase();
+											e.target.parentElement.appendChild(fb);
+										}}
+									/>
+								) : (
+									<span className='avatar-fallback'>
+										{userName.charAt(0).toUpperCase()}
+									</span>
+								)}
+							</div>
+							<div className='user-details'>
+								<p className='user-name'>{userName || 'Guest'}</p>
+								<span
+									className='role-badge'
+									style={{
+										color:            roleMeta.color,
+										background:       roleMeta.bg,
+										borderColor:      roleMeta.border,
 									}}
-								/>
-							) : (
-								<span className='avatar-fallback'>
-									{userName.charAt(0).toUpperCase()}
+								>
+									{roleMeta.label}
 								</span>
+							</div>
+						</div>
+					)}
+
+					{collapsed && (
+						<div className='user-avatar-mini' title={userName} aria-label={userName}>
+							{userProfile ? (
+								<img src={userProfile} alt={`${userName}'s avatar`} className='sidebar-avatar-img' />
+							) : (
+								<span className='avatar-fallback'>{userName.charAt(0).toUpperCase()}</span>
 							)}
 						</div>
-						<div className='user-details'>
-							<p className='user-name'>{userName || 'Guest'}</p>
-							<p className='user-role'>{(userRole || 'User').toUpperCase()}</p>
-						</div>
-					</div>
-					<button className='logout-btn' onClick={logout}>
+					)}
+
+					<button
+						className='logout-btn'
+						onClick={logout}
+						title={collapsed ? 'Logout' : undefined}
+						aria-label='Logout'
+					>
 						<LogOut size={18} />
-						<span>Logout</span>
+						{!collapsed && <span>Logout</span>}
 					</button>
 				</div>
 			</aside>
