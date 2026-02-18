@@ -10,9 +10,9 @@ import { getUserFromToken } from '../utils/auth';
 import '../css/Layout.css';
 
 const Layout = () => {
-	const [activePage, setActivePage] = useState('students');
-	const [user, setUser] = useState(null);
-	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
+	const [activePage,      setActivePage]      = useState('students');
+	const [user,            setUser]            = useState(null);
+	const [imageTimestamp,  setImageTimestamp]  = useState(Date.now());
 
 	const loadUserData = () => {
 		const userData = getUserFromToken();
@@ -51,12 +51,7 @@ const Layout = () => {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
 			case 'classes':
-				return (
-					<Classes
-						currentUser={user?.role}
-						currentUserId={user?.id}
-					/>
-				);
+				return <Classes currentUser={user?.role} currentUserId={user?.id} />;
 			case 'teacher-classes':
 				return <TeacherClasses currentUserId={user?.id} />;
 			case 'announcements':
