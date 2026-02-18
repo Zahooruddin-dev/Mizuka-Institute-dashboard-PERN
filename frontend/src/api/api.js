@@ -44,3 +44,6 @@ export const getStudentEnrolledShedule = (id) => {
 export const getMyClasses = () => {
   return api.get('/api/class/mine');
 };
+export const postAnnouncement = (id,data) => {
+	return api.post(`/api/class/${id}/announcements`, data);
+};
