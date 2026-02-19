@@ -8,7 +8,7 @@ import {
 	Camera,
 	Key,
 	Activity,
-	IdCard
+	IdCard,
 } from 'lucide-react';
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
@@ -148,10 +148,9 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 										className='avatar-img'
 										onError={(e) => {
 											e.target.style.display = 'none';
-											e.target.parentElement.textContent =
-												currentUser?.username
-													?.charAt(0)
-													.toUpperCase();
+											e.target.parentElement.textContent = currentUser?.username
+												?.charAt(0)
+												.toUpperCase();
 										}}
 									/>
 								) : (
@@ -180,9 +179,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 								{currentUser?.username || 'User'}
 							</h2>
 							<span
-								className={`role-badge ${getRoleBadgeColor(
-									currentUser?.role,
-								)}`}
+								className={`role-badge ${getRoleBadgeColor(currentUser?.role)}`}
 							>
 								<Shield size={14} />
 								{currentUser?.role || 'User'}
@@ -214,14 +211,10 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 											<input
 												className='edit-input'
 												value={newName}
-												onChange={(e) =>
-													setNewName(e.target.value)
-												}
+												onChange={(e) => setNewName(e.target.value)}
 											/>
 										) : (
-											<p className='detail-value'>
-												{currentUser?.username}
-											</p>
+											<p className='detail-value'>{currentUser?.username}</p>
 										)}
 									</div>
 								</div>
@@ -232,9 +225,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Email</p>
-										<p className='detail-value'>
-											{currentUser?.email}
-										</p>
+										<p className='detail-value'>{currentUser?.email}</p>
 									</div>
 								</div>
 
@@ -244,9 +235,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Role</p>
-										<p className='detail-value'>
-											{currentUser?.role}
-										</p>
+										<p className='detail-value'>{currentUser?.role}</p>
 									</div>
 								</div>
 
@@ -256,9 +245,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 									</div>
 									<div className='detail-content'>
 										<p className='detail-label'>Account ID</p>
-										<p className='detail-value'>
-											{currentUser?.id}
-										</p>
+										<p className='detail-value'>{currentUser?.id}</p>
 									</div>
 								</div>
 							</div>
@@ -308,9 +295,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 						<div className='activity-item'>
 							<div className='activity-dot'></div>
 							<div className='activity-content'>
-								<p className='activity-text'>
-									Account created
-								</p>
+								<p className='activity-text'>Account created</p>
 								<p className='activity-time'>
 									{formatDate(currentUser?.createdAt)}
 								</p>
@@ -319,9 +304,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 						<div className='activity-item'>
 							<div className='activity-dot'></div>
 							<div className='activity-content'>
-								<p className='activity-text'>
-									Profile last updated
-								</p>
+								<p className='activity-text'>Profile last updated</p>
 								<p className='activity-time'>Recently</p>
 							</div>
 						</div>
