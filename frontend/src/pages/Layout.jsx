@@ -13,6 +13,7 @@ import Enrolled from '../components/Sidebar/Enrolled/Enrolled';
 const Layout = () => {
 	const [activePage, setActivePage] = useState('profile');
 	const [user, setUser] = useState(null);
+	const [isInitialLoad, setIsInitialLoad] = useState(true);
 	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
 
 	const loadUserData = () => {
@@ -20,10 +21,12 @@ const Layout = () => {
 		if (userData) setUser(userData);
 	};
 
-	const handlePageChange = (pageId) => {
-		setActivePage(pageId);
-		if (pageId === 'profile') loadUserData();
-	};
+const handlePageChange = (pageId) => {
+  if (activePage !== pageId) {
+    setActivePage(pageId);
+    if (pageId === 'profile') loadUserData();
+  }
+};
 
 	const getProfileImageUrl = () => {
 		if (user?.profile) {
@@ -48,7 +51,7 @@ const Layout = () => {
 	}, []);
 
 	useEffect(() => {
-		if (user) {
+		if (user && isInitialLoad) {
 			if (user.role === 'teacher') {
 				setActivePage('teacher-classes');
 			} else if (user.role === 'student') {
@@ -56,8 +59,9 @@ const Layout = () => {
 			} else {
 				setActivePage('profile');
 			}
+			setIsInitialLoad(false);
 		}
-	}, [user]);
+	}, [user,isInitialLoad]);
 
 	const renderPage = () => {
 		switch (activePage) {
