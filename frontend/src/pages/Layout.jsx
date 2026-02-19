@@ -51,8 +51,8 @@ const Layout = () => {
 		switch (activePage) {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
-			case 'enrolled-classes':
-				return <Enrolled userRole={user?.role} />;
+case 'enrolled-classes':
+  return <Enrolled userId={user?.id} />;
 			case 'classes':
 				return <Classes currentUser={user?.role} currentUserId={user?.id} />;
 			case 'teacher-classes':

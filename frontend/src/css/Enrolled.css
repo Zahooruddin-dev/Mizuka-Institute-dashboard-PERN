@@ -15,13 +15,13 @@
   width: 52px;
   height: 52px;
   min-width: 52px;
-  background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  background: linear-gradient(135deg, #14b8a6 0%, #5eead4 100%);
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 24px rgba(20, 184, 166, 0.25);
 }
 
 .enrolled-header h1 {
@@ -50,9 +50,7 @@
   font-size: 0.9375rem;
 }
 
-.enrolled-loading {
-  color: #64748b;
-}
+.enrolled-loading { color: #64748b; }
 
 .enrolled-error {
   color: #ef4444;
@@ -69,9 +67,7 @@
   color: #94a3b8;
 }
 
-.enrolled-empty svg {
-  color: #cbd5e1;
-}
+.enrolled-empty svg { color: #cbd5e1; }
 
 .enrolled-empty h3 {
   margin: 0;
@@ -125,8 +121,8 @@
 
 .enrolled-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(99, 102, 241, 0.12);
-  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 10px 32px rgba(20, 184, 166, 0.14);
+  border-color: rgba(20, 184, 166, 0.3);
 }
 
 .enrolled-card-top {
@@ -138,12 +134,12 @@
 .enrolled-card-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(129,140,248,0.12));
+  background: linear-gradient(135deg, rgba(20,184,166,0.12), rgba(94,234,212,0.12));
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #6366f1;
+  color: #14b8a6;
 }
 
 .enrolled-card-arrow {
@@ -153,7 +149,7 @@
 
 .enrolled-card:hover .enrolled-card-arrow {
   transform: translateX(3px);
-  color: #6366f1;
+  color: #14b8a6;
 }
 
 .enrolled-card h3 {
@@ -245,13 +241,13 @@
   width: 44px;
   height: 44px;
   min-width: 44px;
-  background: linear-gradient(135deg, #6366f1, #818cf8);
+  background: linear-gradient(135deg, #14b8a6, #5eead4);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+  box-shadow: 0 4px 14px rgba(20, 184, 166, 0.25);
 }
 
 .drawer-header h2 {
@@ -425,15 +421,7 @@
 }
 
 @media (max-width: 767px) {
-  .enrolled-drawer {
-    width: 100vw;
-  }
-
-  .enrolled-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .drawer-detail-grid {
-    grid-template-columns: 1fr;
-  }
+  .enrolled-drawer { width: 100vw; }
+  .enrolled-grid { grid-template-columns: 1fr; }
+  .drawer-detail-grid { grid-template-columns: 1fr; }
 }
