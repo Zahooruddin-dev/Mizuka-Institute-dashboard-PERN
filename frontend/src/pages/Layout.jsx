@@ -8,6 +8,7 @@ import Settings from '../components/Sidebar/Settings/Settings';
 import TeacherClasses from '../components/Sidebar/TeacherClasses/TeacherClasses';
 import { getUserFromToken } from '../utils/auth';
 import '../css/Layout.css';
+import Enrolled from '../components/Sidebar/Enrolled/Settings';
 
 const Layout = () => {
 	const [activePage, setActivePage] = useState('profile');
@@ -50,8 +51,8 @@ const Layout = () => {
 		switch (activePage) {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
-			case 'student-classes':
-				return <Settings userRole={user?.role} />;
+			case 'enrolled-classes':
+				return <Enrolled userRole={user?.role} />;
 			case 'classes':
 				return <Classes currentUser={user?.role} currentUserId={user?.id} />;
 			case 'teacher-classes':

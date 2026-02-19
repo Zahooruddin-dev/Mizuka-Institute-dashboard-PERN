@@ -85,7 +85,7 @@ const Sidebar = ({
 	const menuItems = [
 		...(isTeacher
 			? [{ id: 'teacher-classes', label: 'Your Classes', icon: BookOpen }]
-			: [{ id: 'student-classes', label: 'Student Classes', icon: DoorOpen }]),
+			: [{ id: 'enrolled-classes', label: 'Enrolled Classes', icon: DoorOpen }]),
 		{ id: 'classes', label: 'Class Directory', icon: BookOpen },
 		{ id: 'announcements', label: 'Announcements', icon: Megaphone },
 		{ id: 'profile', label: 'Profile', icon: User },
