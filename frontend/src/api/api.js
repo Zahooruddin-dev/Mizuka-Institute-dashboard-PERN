@@ -39,7 +39,7 @@ export const getClassEnrolledRooster = (id) => {
 	return api.get(`/api/enroll/class/${id}`);
 };
 export const getStudentEnrolledShedule = (id) => {
-  return api.get(`/api/enroll/student/${id}`);
+	return api.get(`/api/enroll/student/${id}`);
 };
 
 export const postAnnouncement = (classId, data) => {
@@ -52,3 +52,7 @@ export const getAnnouncementById = (classId, announcementId) => {
 	return api.get(`/api/class/${classId}/announcements/${announcementId}`);
 };
 export const getMyAnnouncements = () => api.get('/api/announcements/my');
+
+export const unenrollStudent = (studentId, classId) => {
+	return api.delete(`/api/enroll/student/${studentId}/class/${classId}`);
+};
