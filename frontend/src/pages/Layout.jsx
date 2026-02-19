@@ -8,7 +8,7 @@ import Settings from '../components/Sidebar/Settings/Settings';
 import TeacherClasses from '../components/Sidebar/TeacherClasses/TeacherClasses';
 import { getUserFromToken } from '../utils/auth';
 import '../css/Layout.css';
-import Enrolled from '../components/Sidebar/Enrolled/Settings';
+import Enrolled from '../components/Sidebar/Enrolled/Enrolled';
 
 const Layout = () => {
 	const [activePage, setActivePage] = useState('profile');
