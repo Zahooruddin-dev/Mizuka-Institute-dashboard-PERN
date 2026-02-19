@@ -1,69 +1,70 @@
 const db = require('../db/queryEnrollment');
 const dbClass = require('../db/queryClasses');
-const pool = require('../db/Pool'); // DIRECT user CHECK via POOL
+const pool = require('../db/Pool');
+
 async function createEnrollment(req, res) {
-	const { student_id, class_id } = req.body;
+  const { student_id, class_id } = req.body;
 
-	if (!student_id || !class_id) {
-		return res
-			.status(400)
-			.json({ error: 'Student and Class ID are required.' });
-	}
+  if (!student_id || !class_id) {
+    return res.status(400).json({ error: 'Student and Class ID are required.' });
+  }
 
-	try {
-		//  check if the user exists and is actually a student
-		const userResult = await pool.query(
-			'SELECT id, role FROM users WHERE id = $1',
-			[student_id],
-		);
-		const user = userResult.rows[0];
+  try {
+    const userResult = await pool.query('SELECT id, role FROM users WHERE id = $1', [student_id]);
+    const user = userResult.rows[0];
 
-		if (!user || user.role !== 'student') {
-			return res
-				.status(404)
-				.json({ error: 'Valid student not found. Cannot enroll.' });
-		}
+    if (!user || user.role !== 'student') {
+      return res.status(404).json({ error: 'Valid student not found. Cannot enroll.' });
+    }
 
-		const classObj = await dbClass.getClassByIdQuery(class_id);
-		if (!classObj) {
-			return res.status(404).json({ error: 'Class not found.' });
-		}
+    const classObj = await dbClass.getClassByIdQuery(class_id);
+    if (!classObj) {
+      return res.status(404).json({ error: 'Class not found.' });
+    }
 
-		const enrollment = await db.enrollStudentQuery(student_id, class_id);
-		res.status(201).json({
-			message: 'Enrollment successful',
-			data: enrollment,
-		});
-	} catch (err) {
-		if (err.code === '23505') {
-			return res
-				.status(400)
-				.json({ message: 'You are already enrolled in this class' });
-		}
-		res.status(500).json({ error: err.message });
-	}
+    const enrollment = await db.enrollStudentQuery(student_id, class_id);
+    res.status(201).json({ message: 'Enrollment successful', data: enrollment });
+  } catch (err) {
+    if (err.code === '23505') {
+      return res.status(400).json({ message: 'You are already enrolled in this class' });
+    }
+    res.status(500).json({ error: err.message });
+  }
 }
+
 async function rooster(req, res) {
-	try {
-		const roster = await db.getClassRosterQuery(req.params.id);
-		res.json(roster);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
-}
-async function getStudentSchedule(req, res) {
-	const { id } = req.params;
-	if (!id) {
-		return res
-			.status(400)
-			.json({ error: 'Id required to be able to get the student shedule' });
-	}
-	try {
-		const schedule = await db.getStudentScheduleQuery(id);
-		res.status(201).json(schedule);
-	} catch (err) {
-		res.status(500).json({ error: err.message });
-	}
+  try {
+    const roster = await db.getClassRosterQuery(req.params.id);
+    res.json(roster);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }
 
-module.exports = { createEnrollment, rooster, getStudentSchedule };
+async function getStudentSchedule(req, res) {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).json({ error: 'Id required to be able to get the student schedule' });
+  }
+  try {
+    const schedule = await db.getStudentScheduleQuery(id);
+    res.status(200).json(schedule);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+async function unenrollStudent(req, res) {
+  const { studentId, classId } = req.params;
+  try {
+    const deleted = await db.unenrollStudentQuery(studentId, classId);
+    if (!deleted) {
+      return res.status(404).json({ error: 'Enrollment not found.' });
+    }
+    res.status(200).json({ message: 'Unenrolled successfully.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
+module.exports = { createEnrollment, rooster, getStudentSchedule, unenrollStudent };
