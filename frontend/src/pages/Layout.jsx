@@ -10,9 +10,9 @@ import { getUserFromToken } from '../utils/auth';
 import '../css/Layout.css';
 
 const Layout = () => {
-	const [activePage,      setActivePage]      = useState('students');
-	const [user,            setUser]            = useState(null);
-	const [imageTimestamp,  setImageTimestamp]  = useState(Date.now());
+	const [activePage, setActivePage] = useState('profile');
+	const [user, setUser] = useState(null);
+	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
 
 	const loadUserData = () => {
 		const userData = getUserFromToken();
@@ -50,7 +50,7 @@ const Layout = () => {
 		switch (activePage) {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
-				case 'student-classes':
+			case 'student-classes':
 				return <Settings userRole={user?.role} />;
 			case 'classes':
 				return <Classes currentUser={user?.role} currentUserId={user?.id} />;
@@ -69,7 +69,13 @@ const Layout = () => {
 			case 'settings':
 				return <Settings />;
 			default:
-				return <Dashboard userRole={user?.role} />;
+				return (
+					<Profile
+						user={user}
+						profileImageUrl={getProfileImageUrl()}
+						onProfileUpdate={handleProfileUpdate}
+					/>
+				);
 		}
 	};
 
