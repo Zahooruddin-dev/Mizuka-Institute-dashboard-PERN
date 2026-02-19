@@ -54,6 +54,20 @@
   gap: 4px;
   margin-top: 4px;
 }
+.enroll-btn.checking {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: default;
+}
+
+.enroll-spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 .add-class-btn {
   background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 100%);
   color: white;
