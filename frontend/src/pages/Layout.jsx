@@ -47,12 +47,24 @@ const Layout = () => {
 		return () => window.removeEventListener('storage', handleStorageChange);
 	}, []);
 
+	useEffect(() => {
+		if (user) {
+			if (user.role === 'teacher') {
+				setActivePage('teacher-classes');
+			} else if (user.role === 'student') {
+				setActivePage('enrolled-classes');
+			} else {
+				setActivePage('profile');
+			}
+		}
+	}, [user]);
+
 	const renderPage = () => {
 		switch (activePage) {
 			case 'students':
 				return <Dashboard userRole={user?.role} />;
-case 'enrolled-classes':
-  return <Enrolled userId={user?.id} />;
+			case 'enrolled-classes':
+				return <Enrolled userId={user?.id} />;
 			case 'classes':
 				return <Classes currentUser={user?.role} currentUserId={user?.id} />;
 			case 'teacher-classes':
