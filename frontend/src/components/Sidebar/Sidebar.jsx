@@ -10,17 +10,39 @@ import {
 	Megaphone,
 	ChevronLeft,
 	ChevronRight,
+	DoorOpen,
 } from 'lucide-react';
 import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
 
 const ROLE_META = {
-	student: { label: 'Student', color: '#0ea5e9', bg: 'rgba(14,165,233,0.1)', border: 'rgba(14,165,233,0.25)' },
-	teacher: { label: 'Teacher', color: '#8b5cf6', bg: 'rgba(139,92,246,0.1)', border: 'rgba(139,92,246,0.25)' },
-	admin:   { label: 'Admin',   color: '#f59e0b', bg: 'rgba(245,158,11,0.1)',  border: 'rgba(245,158,11,0.25)'  },
+	student: {
+		label: 'Student',
+		color: '#0ea5e9',
+		bg: 'rgba(14,165,233,0.1)',
+		border: 'rgba(14,165,233,0.25)',
+	},
+	teacher: {
+		label: 'Teacher',
+		color: '#8b5cf6',
+		bg: 'rgba(139,92,246,0.1)',
+		border: 'rgba(139,92,246,0.25)',
+	},
+	admin: {
+		label: 'Admin',
+		color: '#f59e0b',
+		bg: 'rgba(245,158,11,0.1)',
+		border: 'rgba(245,158,11,0.25)',
+	},
 };
 
-const getRoleMeta = (role) => ROLE_META[role?.toLowerCase()] ?? { label: role ?? 'User', color: '#64748b', bg: 'rgba(100,116,139,0.1)', border: 'rgba(100,116,139,0.2)' };
+const getRoleMeta = (role) =>
+	ROLE_META[role?.toLowerCase()] ?? {
+		label: role ?? 'User',
+		color: '#64748b',
+		bg: 'rgba(100,116,139,0.1)',
+		border: 'rgba(100,116,139,0.2)',
+	};
 
 const Sidebar = ({
 	activePage,
@@ -29,12 +51,13 @@ const Sidebar = ({
 	userRole = 'User',
 	userProfile = null,
 }) => {
-	const [isOpen, setIsOpen]       = useState(false);
-	const [isMobile, setIsMobile]   = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 	const [collapsed, setCollapsed] = useState(false);
 
 	const isTeacher = userRole === 'teacher';
-	const roleMeta  = getRoleMeta(userRole);
+	const isAdmin = userRole === 'admin';
+	const roleMeta = getRoleMeta(userRole);
 
 	useEffect(() => {
 		const checkMobile = () => {
@@ -48,23 +71,25 @@ const Sidebar = ({
 	}, []);
 
 	useEffect(() => {
-		document.body.style.overflow = (isOpen && isMobile) ? 'hidden' : 'unset';
+		document.body.style.overflow = isOpen && isMobile ? 'hidden' : 'unset';
 	}, [isOpen, isMobile]);
 
 	useEffect(() => {
 		const root = document.documentElement;
-		root.style.setProperty('--sidebar-width', isMobile ? '280px' : collapsed ? '72px' : '280px');
+		root.style.setProperty(
+			'--sidebar-width',
+			isMobile ? '280px' : collapsed ? '72px' : '280px',
+		);
 	}, [collapsed, isMobile]);
 
 	const menuItems = [
 		...(isTeacher
 			? [{ id: 'teacher-classes', label: 'Your Classes', icon: BookOpen }]
-			: [{ id: 'students', label: 'Students', icon: Users }]
-		),
-		{ id: 'classes',       label: 'Class Directory', icon: BookOpen  },
-		{ id: 'announcements', label: 'Announcements',   icon: Megaphone  },
-		{ id: 'profile',       label: 'Profile',         icon: User       },
-		{ id: 'settings',      label: 'Settings',        icon: Settings   },
+			: [{ id: 'student-classes', label: 'Student Classes', icon: DoorOpen }]),
+		{ id: 'classes', label: 'Class Directory', icon: BookOpen },
+		{ id: 'announcements', label: 'Announcements', icon: Megaphone },
+		{ id: 'profile', label: 'Profile', icon: User },
+		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
 
 	const handleMenuClick = (id) => {
@@ -77,7 +102,7 @@ const Sidebar = ({
 			{isMobile && (
 				<button
 					className='mobile-toggle'
-					onClick={() => setIsOpen(v => !v)}
+					onClick={() => setIsOpen((v) => !v)}
 					aria-label={isOpen ? 'Close menu' : 'Open menu'}
 					aria-expanded={isOpen}
 				>
@@ -86,15 +111,21 @@ const Sidebar = ({
 			)}
 
 			{isMobile && isOpen && (
-				<div className='sidebar-overlay' onClick={() => setIsOpen(false)} aria-hidden='true' />
+				<div
+					className='sidebar-overlay'
+					onClick={() => setIsOpen(false)}
+					aria-hidden='true'
+				/>
 			)}
 
 			<aside
 				className={[
 					'sidebar',
-					isOpen     ? 'sidebar-open'      : '',
-					collapsed  ? 'sidebar-collapsed' : '',
-				].join(' ').trim()}
+					isOpen ? 'sidebar-open' : '',
+					collapsed ? 'sidebar-collapsed' : '',
+				]
+					.join(' ')
+					.trim()}
 				aria-label='Main navigation'
 			>
 				<div className='sidebar-header'>
@@ -108,10 +139,14 @@ const Sidebar = ({
 					{!isMobile && (
 						<button
 							className='collapse-btn'
-							onClick={() => setCollapsed(v => !v)}
+							onClick={() => setCollapsed((v) => !v)}
 							aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
 						>
-							{collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+							{collapsed ? (
+								<ChevronRight size={16} />
+							) : (
+								<ChevronLeft size={16} />
+							)}
 						</button>
 					)}
 				</div>
@@ -119,7 +154,7 @@ const Sidebar = ({
 				<nav className='sidebar-nav' role='navigation'>
 					<ul className='nav-list'>
 						{menuItems.map((item) => {
-							const Icon     = item.icon;
+							const Icon = item.icon;
 							const isActive = activePage === item.id;
 
 							return (
@@ -132,7 +167,9 @@ const Sidebar = ({
 										title={collapsed ? item.label : undefined}
 									>
 										<Icon className='nav-icon' size={20} />
-										{!collapsed && <span className='nav-label'>{item.label}</span>}
+										{!collapsed && (
+											<span className='nav-label'>{item.label}</span>
+										)}
 										{isActive && !collapsed && (
 											<span className='active-indicator' aria-hidden='true' />
 										)}
@@ -171,9 +208,9 @@ const Sidebar = ({
 								<span
 									className='role-badge'
 									style={{
-										color:            roleMeta.color,
-										background:       roleMeta.bg,
-										borderColor:      roleMeta.border,
+										color: roleMeta.color,
+										background: roleMeta.bg,
+										borderColor: roleMeta.border,
 									}}
 								>
 									{roleMeta.label}
@@ -183,11 +220,21 @@ const Sidebar = ({
 					)}
 
 					{collapsed && (
-						<div className='user-avatar-mini' title={userName} aria-label={userName}>
+						<div
+							className='user-avatar-mini'
+							title={userName}
+							aria-label={userName}
+						>
 							{userProfile ? (
-								<img src={userProfile} alt={`${userName}'s avatar`} className='sidebar-avatar-img' />
+								<img
+									src={userProfile}
+									alt={`${userName}'s avatar`}
+									className='sidebar-avatar-img'
+								/>
 							) : (
-								<span className='avatar-fallback'>{userName.charAt(0).toUpperCase()}</span>
+								<span className='avatar-fallback'>
+									{userName.charAt(0).toUpperCase()}
+								</span>
 							)}
 						</div>
 					)}
