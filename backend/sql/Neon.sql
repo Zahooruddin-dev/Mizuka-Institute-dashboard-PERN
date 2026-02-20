@@ -68,3 +68,11 @@ FROM
     JOIN information_schema.referential_constraints AS rc
       ON tc.constraint_name = rc.constraint_name
 WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = 'enrollments';
+
+CREATE TABLE password_resets (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    code VARCHAR(6) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
