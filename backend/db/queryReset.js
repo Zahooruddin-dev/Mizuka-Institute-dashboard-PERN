@@ -19,4 +19,10 @@ async function verifyResetCode(email, code) {
 async function deleteResetCode(email) {
 	await pool.query('DELETE FROM password_resets WHERE email =$1', [email]);
 }
-module.exports = { verifyResetCode, deleteResetCode, saveResetCode };
+async function updateUserPassword(email, hashedPassword) {
+  await pool.query(
+    'UPDATE users SET password_hash = $1 WHERE email = $2',
+    [hashedPassword, email]
+  );
+}
+module.exports = { verifyResetCode, deleteResetCode, saveResetCode,updateUserPassword };
