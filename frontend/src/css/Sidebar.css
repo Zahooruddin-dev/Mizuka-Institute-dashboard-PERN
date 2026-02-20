@@ -61,6 +61,23 @@
 	border-radius: 12px;
 }
 
+.logo-icon-btn {
+	cursor: pointer;
+	border: none;
+	padding: 0;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.logo-icon-btn:hover {
+	transform: scale(1.08);
+	box-shadow: 0 12px 32px rgba(20, 184, 166, 0.35);
+}
+
+.logo-icon-btn:focus {
+	outline: 2px solid #14b8a6;
+	outline-offset: 3px;
+}
+
 .logo-icon svg {
 	display: block;
 	width: 28px;
@@ -80,19 +97,21 @@
 	letter-spacing: -0.02em;
 	white-space: nowrap;
 	opacity: 1;
-	transition: opacity 0.18s ease;
+	max-width: 200px;
+	overflow: hidden;
+	transition: opacity 0.18s ease, max-width 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-collapsed .logo-text {
 	opacity: 0;
 	pointer-events: none;
-	width: 0;
+	max-width: 0;
 }
 
 .collapse-btn {
-	width: 28px;
-	height: 28px;
 	min-width: 28px;
+	height: 28px;
+	padding: 0 0.5rem;
 	border-radius: 8px;
 	border: 1px solid rgba(15, 23, 42, 0.1);
 	background: #f8fafc;
@@ -100,13 +119,15 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	gap: 0.3rem;
 	cursor: pointer;
-	transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+	transition: background 0.18s ease, color 0.18s ease;
 	flex-shrink: 0;
+	white-space: nowrap;
 }
 
 .collapse-btn:hover {
-	background: #f1f5f9;
+	background: #e2e8f0;
 	color: #0f172a;
 }
 
@@ -115,8 +136,15 @@
 	outline-offset: 2px;
 }
 
+.collapse-btn-label {
+	font-size: 0.75rem;
+	font-weight: 500;
+	letter-spacing: 0.01em;
+}
+
 .sidebar-collapsed .collapse-btn {
 	margin: 0 auto;
+	padding: 0 0.5rem;
 }
 
 .sidebar-nav {
@@ -284,6 +312,15 @@
 	border-radius: 10px;
 	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 	overflow: hidden;
+	cursor: pointer;
+	text-align: left;
+	width: 100%;
+	transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.user-info:hover {
+	background: #f8fafc;
+	border-color: rgba(20, 184, 166, 0.25);
 }
 
 .user-avatar-mini {
@@ -298,7 +335,14 @@
 	border: 2px solid #fff;
 	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 	flex-shrink: 0;
-	cursor: default;
+	cursor: pointer;
+	transition: box-shadow 0.15s ease, transform 0.15s ease;
+	padding: 0;
+}
+
+.user-avatar-mini:hover {
+	box-shadow: 0 4px 14px rgba(20, 184, 166, 0.25);
+	transform: scale(1.06);
 }
 
 .user-avatar {

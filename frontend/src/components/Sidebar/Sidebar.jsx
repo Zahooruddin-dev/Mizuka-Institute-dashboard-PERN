@@ -132,27 +132,32 @@ const Sidebar = ({
 			>
 				<div className='sidebar-header'>
 					<div className='logo-container'>
-						<div className='logo-icon'>
-							<BookOpen size={28} />
-						</div>
+						{collapsed && !isMobile ? (
+							<button
+								className='logo-icon logo-icon-btn'
+								onClick={() => setCollapsed(false)}
+								aria-label='Expand sidebar'
+								title='Expand sidebar'
+							>
+								<BookOpen size={28} />
+							</button>
+						) : (
+							<div className='logo-icon'>
+								<BookOpen size={28} />
+							</div>
+						)}
 						<h1 className='logo-text'>EduPortal</h1>
 					</div>
 
-					{!isMobile && (
+					{!isMobile && !collapsed && (
 						<button
 							className='collapse-btn'
-							onClick={() => setCollapsed((v) => !v)}
-							aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-							title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+							onClick={() => setCollapsed(true)}
+							aria-label='Collapse sidebar'
+							title='Collapse sidebar'
 						>
-							{collapsed ? (
-								<PanelLeftOpen size={16} />
-							) : (
-								<PanelLeftClose size={16} />
-							)}
-							{!collapsed && (
-								<span className='collapse-btn-label'>Collapse</span>
-							)}
+							<PanelLeftClose size={16} />
+							<span className='collapse-btn-label'>Collapse</span>
 						</button>
 					)}
 				</div>
