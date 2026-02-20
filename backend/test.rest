@@ -78,3 +78,21 @@ Content-Type: application/json
 ### get a class auth check
 GET http://localhost:3000/api/class 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2OTYyNmU4LTFkOGMtNDNmZC05NTljLWVmNzIyMGYwZmU3OSIsInJvbGUiOiJ0ZWFjaGVyIiwiaWF0IjoxNzcwODIxOTQ5LCJleHAiOjE3NzA5MDgzNDl9.ZrdcI4a0hW13VPyvxtDXLhcYAqpJ7eW4DY7UNkw4rAQ
+
+### RESET PASSWORD
+
+POST http://localhost:3000/api/auth/request-reset
+Content-Type: application/json
+
+{
+  "email":"mzkhan886@gmail.com"
+}
+### TEST THE RESET PASSWORD
+POST http://localhost:3000/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "email":"testuser@email.com",
+  "code":"",
+  "newPassword":"password123"
+}
