@@ -14,6 +14,6 @@ export const updateUsername = (data) => {
 		},
 	});
 };
-export const deleterUser = (data) => {
-	return api.delete('/delete', {data});
+export const deleteUser = (data) => {
+	return api.delete('/api/auth/delete', {data});
 };

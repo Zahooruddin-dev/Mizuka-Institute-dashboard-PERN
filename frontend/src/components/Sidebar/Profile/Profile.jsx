@@ -9,9 +9,11 @@ import {
 	Key,
 	Activity,
 	IdCard,
+	Trash2,
 } from 'lucide-react';
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
+import DeleteAccountModal from './DeleteAccountModal';
 
 const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -21,6 +23,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [currentUser, setCurrentUser] = useState(user);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 	useEffect(() => {
 		setCurrentUser(user);
@@ -286,6 +289,25 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 								</>
 							)}
 						</div>
+
+						<div className='danger-zone'>
+							<h3 className='danger-zone-title'>Danger Zone</h3>
+							<div className='danger-zone-body'>
+								<div className='danger-zone-info'>
+									<p className='danger-zone-label'>Delete Account</p>
+									<p className='danger-zone-desc'>
+										Permanently delete your account and all associated data. This cannot be undone.
+									</p>
+								</div>
+								<button
+									className='delete-account-btn'
+									onClick={() => setShowDeleteModal(true)}
+								>
+									<Trash2 size={16} />
+									Delete Account
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -322,6 +344,13 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 					</div>
 				</div>
 			</div>
+
+			{showDeleteModal && (
+				<DeleteAccountModal
+					username={currentUser?.username}
+					onClose={() => setShowDeleteModal(false)}
+				/>
+			)}
 		</div>
 	);
 };
