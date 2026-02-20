@@ -1,4 +1,5 @@
 const db = require('../db/queryReset');
+const dbAuht = require('../db/queryAuth');
 const bcrypt = require('bcrypt');
 async function resetPassword(req, res) {
 	const { email, code, newPassword } = req.body;
@@ -16,5 +17,15 @@ async function resetPassword(req, res) {
 		res.status(500).json({ message: error.message });
 	}
 }
-
-module.exports = { resetPassword };
+async function requestPasswordReset(req, res) {
+	const { email } = req.body;
+	try {
+    const user = await db.
+		console.log(`--- EMAIL SENT TO ${email} ---`);
+		console.log(`Your Reset Code is: ${code}`);
+		console.log(`------------------------------`);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+}
+module.exports = { resetPassword, requestPasswordReset };
