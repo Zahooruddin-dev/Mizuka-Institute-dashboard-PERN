@@ -296,7 +296,8 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 								<div className='danger-zone-info'>
 									<p className='danger-zone-label'>Delete Account</p>
 									<p className='danger-zone-desc'>
-										Permanently delete your account and all associated data. This cannot be undone.
+										Permanently delete your account and all associated data.
+										This cannot be undone.
 									</p>
 								</div>
 								<button
