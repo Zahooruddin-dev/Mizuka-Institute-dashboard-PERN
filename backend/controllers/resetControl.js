@@ -13,6 +13,7 @@ async function resetPassword(req, res) {
 		const hashedPassword = await bcrypt.hash(newPassword, salt);
 		await db.updateUserPassword(email, hashedPassword);
 		await db.deleteResetCode(email);
+		return res.status(200).json({ message: 'reset password done' });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
@@ -26,12 +27,13 @@ async function requestPasswordReset(req, res) {
 				.status(200)
 				.json({ message: 'If an account exists, a code was send' });
 		} // we send 200 even if the user doesn't exist to stopp hackers from guessing the emails
-		const code = Math.floor(10000 + Math, random() * 900000).toString();
+		const code = Math.floor(10000 + Math.random() * 900000).toString();
 		const expires = new Date(Date.now() + 15 * 60000);
 		await db.saveResetCode(email, code, expires);
 		console.log(`--- EMAIL SENT TO ${email} ---`);
 		console.log(`Your Reset Code is: ${code}`);
 		console.log(`------------------------------`);
+		return res.status(200).json({ message: 'reset code sent' });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
