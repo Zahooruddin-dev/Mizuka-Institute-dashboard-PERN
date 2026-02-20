@@ -1,23 +1,33 @@
 import { useState } from 'react';
-import { Mail, Lock, KeyRound, AlertCircle, Loader, CheckCircle, ArrowLeft } from 'lucide-react';
-import { requestReset, resetPassword } from '../api/authApi';
+import {
+	Mail,
+	Lock,
+	KeyRound,
+	AlertCircle,
+	Loader,
+	CheckCircle,
+	ArrowLeft,
+} from 'lucide-react';
+import { requestReset, resetPassword } from '../../api/authApi';
 import { Link, useNavigate } from 'react-router';
-import '../css/forgotPassword.css';
+import '../../css/forgotPassword.css';
 
 export default function ForgotPassword() {
 	const navigate = useNavigate();
 
-	const [step,            setStep]            = useState(1);
-	const [email,           setEmail]           = useState('');
-	const [code,            setCode]            = useState('');
-	const [newPassword,     setNewPassword]     = useState('');
+	const [step, setStep] = useState(1);
+	const [email, setEmail] = useState('');
+	const [code, setCode] = useState('');
+	const [newPassword, setNewPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const [error,           setError]           = useState('');
-	const [loading,         setLoading]         = useState(false);
-	const [showNew,         setShowNew]         = useState(false);
-	const [showConfirm,     setShowConfirm]     = useState(false);
+	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [showNew, setShowNew] = useState(false);
+	const [showConfirm, setShowConfirm] = useState(false);
 
-	const clearError = () => { if (error) setError(''); };
+	const clearError = () => {
+		if (error) setError('');
+	};
 
 	const handleRequestCode = async (e) => {
 		e.preventDefault();
@@ -67,7 +77,7 @@ export default function ForgotPassword() {
 					<h1>{step === 1 ? 'Forgot Password' : 'Reset Password'}</h1>
 					<p>
 						{step === 1
-							? 'Enter your email and we\'ll send you a reset code'
+							? "Enter your email and we'll send you a reset code"
 							: `Enter the code sent to ${email}`}
 					</p>
 				</div>
@@ -91,7 +101,10 @@ export default function ForgotPassword() {
 								type='email'
 								placeholder='Enter your email'
 								value={email}
-								onChange={(e) => { setEmail(e.target.value); clearError(); }}
+								onChange={(e) => {
+									setEmail(e.target.value);
+									clearError();
+								}}
 								required
 								autoComplete='email'
 								aria-required='true'
@@ -99,18 +112,36 @@ export default function ForgotPassword() {
 							/>
 						</div>
 
-						<button type='submit' className='submit-btn' disabled={loading} aria-busy={loading}>
+						<button
+							type='submit'
+							className='submit-btn'
+							disabled={loading}
+							aria-busy={loading}
+						>
 							{loading ? (
-								<><Loader size={20} className='fp-spinner' /><span>Sending...</span></>
+								<>
+									<Loader size={20} className='fp-spinner' />
+									<span>Sending...</span>
+								</>
 							) : (
-								<><Mail size={20} /><span>Send Reset Code</span></>
+								<>
+									<Mail size={20} />
+									<span>Send Reset Code</span>
+								</>
 							)}
 						</button>
 
 						<div className='auth-footer'>
 							<p>
 								<Link to='/login' aria-label='Back to login'>
-									<ArrowLeft size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />
+									<ArrowLeft
+										size={14}
+										style={{
+											display: 'inline',
+											verticalAlign: 'middle',
+											marginRight: '4px',
+										}}
+									/>
 									Back to Login
 								</Link>
 							</p>
@@ -135,7 +166,10 @@ export default function ForgotPassword() {
 								type='text'
 								placeholder='Enter the 6-digit code'
 								value={code}
-								onChange={(e) => { setCode(e.target.value); clearError(); }}
+								onChange={(e) => {
+									setCode(e.target.value);
+									clearError();
+								}}
 								required
 								autoComplete='one-time-code'
 								aria-required='true'
@@ -156,7 +190,10 @@ export default function ForgotPassword() {
 									type={showNew ? 'text' : 'password'}
 									placeholder='Enter new password'
 									value={newPassword}
-									onChange={(e) => { setNewPassword(e.target.value); clearError(); }}
+									onChange={(e) => {
+										setNewPassword(e.target.value);
+										clearError();
+									}}
 									required
 									autoComplete='new-password'
 									aria-required='true'
@@ -185,7 +222,10 @@ export default function ForgotPassword() {
 									type={showConfirm ? 'text' : 'password'}
 									placeholder='Confirm new password'
 									value={confirmPassword}
-									onChange={(e) => { setConfirmPassword(e.target.value); clearError(); }}
+									onChange={(e) => {
+										setConfirmPassword(e.target.value);
+										clearError();
+									}}
 									required
 									autoComplete='new-password'
 									aria-required='true'
@@ -203,11 +243,22 @@ export default function ForgotPassword() {
 							</div>
 						</div>
 
-						<button type='submit' className='submit-btn' disabled={loading} aria-busy={loading}>
+						<button
+							type='submit'
+							className='submit-btn'
+							disabled={loading}
+							aria-busy={loading}
+						>
 							{loading ? (
-								<><Loader size={20} className='fp-spinner' /><span>Resetting...</span></>
+								<>
+									<Loader size={20} className='fp-spinner' />
+									<span>Resetting...</span>
+								</>
 							) : (
-								<><CheckCircle size={20} /><span>Reset Password</span></>
+								<>
+									<CheckCircle size={20} />
+									<span>Reset Password</span>
+								</>
 							)}
 						</button>
 
@@ -216,9 +267,22 @@ export default function ForgotPassword() {
 								<button
 									type='button'
 									className='fp-back-link'
-									onClick={() => { setStep(1); setError(''); setCode(''); setNewPassword(''); setConfirmPassword(''); }}
+									onClick={() => {
+										setStep(1);
+										setError('');
+										setCode('');
+										setNewPassword('');
+										setConfirmPassword('');
+									}}
 								>
-									<ArrowLeft size={14} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '4px' }} />
+									<ArrowLeft
+										size={14}
+										style={{
+											display: 'inline',
+											verticalAlign: 'middle',
+											marginRight: '4px',
+										}}
+									/>
 									Use a different email
 								</button>
 							</p>

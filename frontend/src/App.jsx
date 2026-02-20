@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import Layout from './pages/Layout';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { getUserFromToken } from './utils/auth';
+import ForgotPassword from './pages/Auth/Forgotpassword';
 
 const AuthRedirect = ({ children }) => {
 	const user = getUserFromToken();
@@ -45,6 +46,7 @@ function App() {
 						</AuthRedirect>
 					}
 				/>
+				<Route path='/forgot-password' element={<ForgotPassword />} />
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
 		</Router>

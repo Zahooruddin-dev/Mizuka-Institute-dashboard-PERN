@@ -80,8 +80,20 @@ export default function Login() {
 
 					<div className='input-group'>
 						<label htmlFor='password'>
-							<Lock size={18} />
-							<span>Password</span>
+							<div className='password-label-row'>
+								<span className='password-label-left'>
+									<Lock size={18} />
+									<span>Password</span>
+								</span>
+								<Link
+									to='/forgot-password'
+									className='forgot-link'
+									tabIndex={0}
+									aria-label='Forgot your password?'
+								>
+									Forgot password?
+								</Link>
+							</div>
 						</label>
 						<div className='password-input-wrapper'>
 							<input

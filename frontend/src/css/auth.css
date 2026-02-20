@@ -392,3 +392,29 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+.password-label-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.password-label-left {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.forgot-link {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: #14b8a6;
+	text-decoration: none;
+	transition: color 0.15s ease;
+	white-space: nowrap;
+}
+
+.forgot-link:hover {
+	color: #0d9488;
+	text-decoration: underline;
+}
