@@ -76,5 +76,5 @@ CREATE TABLE password_resets (
     expires_at TIMESTAMP NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-ALTER TABLE password_rest
+ALTER TABLE password_rests
 RENAME to password_resets;
