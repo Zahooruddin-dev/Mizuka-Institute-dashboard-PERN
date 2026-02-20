@@ -17,3 +17,10 @@ export const updateUsername = (data) => {
 export const deleteUser = (data) => {
 	return api.delete('/api/auth/delete', { data });
 };
+export const requestReset = (data) => {
+	return api.post('/api/auth/request-reset', data);
+};
+
+export const resetPassword = (data) => {
+	return api.post('/api/auth/reset-password', data);
+};
