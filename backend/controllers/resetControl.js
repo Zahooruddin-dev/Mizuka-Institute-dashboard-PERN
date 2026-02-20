@@ -27,7 +27,7 @@ async function requestPasswordReset(req, res) {
 				.status(200)
 				.json({ message: 'If an account exists, a code was send' });
 		} // we send 200 even if the user doesn't exist to stopp hackers from guessing the emails
-		const code = Math.floor(10000 + Math.random() * 900000).toString();
+		const code = Math.floor(100000 + Math.random() * 900000).toString();
 		const expires = new Date(Date.now() + 15 * 60000);
 		await db.saveResetCode(email, code, expires);
 		console.log(`--- EMAIL SENT TO ${email} ---`);
