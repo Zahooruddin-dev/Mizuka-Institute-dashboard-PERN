@@ -38,9 +38,9 @@
 	display: flex;
 	align-items: center;
 	gap: 0.875rem;
-	overflow: hidden;
 	flex: 1;
 	min-width: 0;
+	justify-content:center;
 }
 
 .logo-icon {
@@ -52,7 +52,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #ffffff;
+	color: #0009089e;
 	box-shadow: 0 10px 30px rgba(20, 184, 166, 0.25);
 	transition: border-radius 0.28s ease;
 }
@@ -127,7 +127,7 @@
 }
 
 .collapse-btn:hover {
-	background: #e2e8f0;
+	background: #e2e8f000;
 	color: #0f172a;
 }
 
