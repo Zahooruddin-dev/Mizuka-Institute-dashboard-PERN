@@ -22,8 +22,17 @@ async function updateUsername(id, username, profilePic) {
 	const { rows } = await pool.query(query, params);
 	return rows[0];
 }
+
+async function deleteUserQuery(email) {
+	const { rows } = await pool.query('DELETE FROM users WHERE email = $1 RETURNING id', [
+		email,
+	]);
+	return rows[0] || null;
+}
+
 module.exports = {
 	loginQuery,
 	registerQuery,
 	updateUsername,
+	deleteUserQuery,
 };

@@ -7,18 +7,18 @@ async function login(req, res) {
 	try {
 		const user = await db.loginQuery(email);
 		console.log('User found in DB:', user);
-		
+
 		if (!user) {
 			return res.status(401).json({ message: 'Invalid Email or Password' });
 		}
-		
+
 		const actualMatch = await bcrypt.compare(password, user.password_hash);
 		console.log('Password match:', actualMatch);
-		
+
 		if (!actualMatch) {
 			return res.status(401).json({ message: 'Invalid Email or Password' });
 		}
-		
+
 		const token = jwt.sign(
 			{
 				id: user.id,
@@ -31,7 +31,7 @@ async function login(req, res) {
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
-		
+
 		res.json({
 			message: 'Login Successful',
 			token,
@@ -75,18 +75,18 @@ async function register(req, res) {
 async function changeUsername(req, res) {
 	const { id, newUsername } = req.body;
 	const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-	
+
 	if (!newUsername) {
 		return res.status(400).json({ message: 'Username cannot be empty' });
 	}
-	
+
 	try {
 		const updatedUser = await db.updateUsername(id, newUsername, imagePath);
-		
+
 		if (!updatedUser) {
 			return res.status(404).json({ message: 'User not found' });
 		}
-		
+
 		const token = jwt.sign(
 			{
 				id: updatedUser.id,
@@ -99,10 +99,10 @@ async function changeUsername(req, res) {
 			process.env.JWT_SECRET,
 			{ expiresIn: '1d' },
 		);
-		
-		res.json({ 
-			message: 'Profile updated!', 
-			token, 
+
+		res.json({
+			message: 'Profile updated!',
+			token,
 			user: {
 				id: updatedUser.id,
 				username: updatedUser.username,
@@ -110,11 +110,33 @@ async function changeUsername(req, res) {
 				role: updatedUser.role,
 				createdAt: updatedUser.created_at,
 				profile: updatedUser.profile_pic,
-			}
+			},
 		});
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}
 }
+async function deleteUser(req, res) {
+	const { email, password } = req.body;
+	try {
+		const user = await db.loginQuery(email);
+		console.log('User found in DB:', user);
 
-module.exports = { login, register, changeUsername };
+		if (!user) {
+			return res.status(401).json({ message: 'Invalid Email or Password' });
+		}
+
+		const actualMatch = await bcrypt.compare(password, user.password_hash);
+		console.log('Password match:', actualMatch);
+
+		if (!actualMatch) {
+			return res.status(401).json({ message: 'Invalid Email or Password' });
+		}
+		const deleteUser = await db.deleteUserQuery(email);
+		res.status(200).json({ message: 'User Deleted', deleteUser });
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+}
+
+module.exports = { login, register, changeUsername ,deleteUser};

@@ -32,3 +32,39 @@ CREATE TABLE announcements (
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+ON CASCADE TEST
+SELECT 
+    tc.table_name, 
+    kcu.column_name, 
+    rc.delete_rule 
+FROM 
+    information_schema.table_constraints AS tc 
+    JOIN information_schema.key_column_usage AS kcu
+      ON tc.constraint_name = kcu.constraint_name
+    JOIN information_schema.referential_constraints AS rc
+      ON tc.constraint_name = rc.constraint_name
+WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = 'announcements';
+TO SWITCH TO CASCADE
+-- 1. Find the name of the constraint (usually 'classes_teacher_id_fkey')
+-- 2. Drop it
+ALTER TABLE classes 
+DROP CONSTRAINT IF EXISTS classes_teacher_id_fkey;
+
+-- 3. Re-add it with CASCADE
+ALTER TABLE classes 
+ADD CONSTRAINT classes_teacher_id_fkey 
+FOREIGN KEY (teacher_id) REFERENCES users(id) 
+ON DELETE CASCADE;
+
+NOW ON enrollments
+SELECT 
+    tc.table_name, 
+    kcu.column_name, 
+    rc.delete_rule 
+FROM 
+    information_schema.table_constraints AS tc 
+    JOIN information_schema.key_column_usage AS kcu
+      ON tc.constraint_name = kcu.constraint_name
+    JOIN information_schema.referential_constraints AS rc
+      ON tc.constraint_name = rc.constraint_name
+WHERE tc.constraint_type = 'FOREIGN KEY' AND tc.table_name = 'enrollments';
