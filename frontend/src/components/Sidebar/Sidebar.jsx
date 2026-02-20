@@ -11,6 +11,8 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	DoorOpen,
+	PanelLeftClose,
+	PanelLeftOpen,
 } from 'lucide-react';
 import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
@@ -56,7 +58,6 @@ const Sidebar = ({
 	const [collapsed, setCollapsed] = useState(false);
 
 	const isTeacher = userRole === 'teacher';
-	const isAdmin = userRole === 'admin';
 	const roleMeta = getRoleMeta(userRole);
 
 	useEffect(() => {
@@ -75,8 +76,7 @@ const Sidebar = ({
 	}, [isOpen, isMobile]);
 
 	useEffect(() => {
-		const root = document.documentElement;
-		root.style.setProperty(
+		document.documentElement.style.setProperty(
 			'--sidebar-width',
 			isMobile ? '280px' : collapsed ? '72px' : '280px',
 		);
@@ -85,7 +85,9 @@ const Sidebar = ({
 	const menuItems = [
 		...(isTeacher
 			? [{ id: 'teacher-classes', label: 'Your Classes', icon: BookOpen }]
-			: [{ id: 'enrolled-classes', label: 'Enrolled Classes', icon: DoorOpen }]),
+			: [
+					{ id: 'enrolled-classes', label: 'Enrolled Classes', icon: DoorOpen },
+				]),
 		{ id: 'classes', label: 'Class Directory', icon: BookOpen },
 		{ id: 'announcements', label: 'Announcements', icon: Megaphone },
 		{ id: 'profile', label: 'Profile', icon: User },
@@ -133,7 +135,7 @@ const Sidebar = ({
 						<div className='logo-icon'>
 							<BookOpen size={28} />
 						</div>
-						{!collapsed && <h1 className='logo-text'>EduPortal</h1>}
+						<h1 className='logo-text'>EduPortal</h1>
 					</div>
 
 					{!isMobile && (
@@ -141,11 +143,15 @@ const Sidebar = ({
 							className='collapse-btn'
 							onClick={() => setCollapsed((v) => !v)}
 							aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+							title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
 						>
 							{collapsed ? (
-								<ChevronRight size={16} />
+								<PanelLeftOpen size={16} />
 							) : (
-								<ChevronLeft size={16} />
+								<PanelLeftClose size={16} />
+							)}
+							{!collapsed && (
+								<span className='collapse-btn-label'>Collapse</span>
 							)}
 						</button>
 					)}
@@ -156,7 +162,6 @@ const Sidebar = ({
 						{menuItems.map((item) => {
 							const Icon = item.icon;
 							const isActive = activePage === item.id;
-
 							return (
 								<li key={item.id} className='nav-item'>
 									<button
@@ -182,7 +187,11 @@ const Sidebar = ({
 
 				<div className='sidebar-footer'>
 					{!collapsed && (
-						<div className='user-info'>
+						<button
+							className='user-info'
+							onClick={() => handleMenuClick('profile')}
+							aria-label='Go to profile'
+						>
 							<div className='user-avatar' aria-hidden='true'>
 								{userProfile ? (
 									<img
@@ -216,14 +225,15 @@ const Sidebar = ({
 									{roleMeta.label}
 								</span>
 							</div>
-						</div>
+						</button>
 					)}
 
 					{collapsed && (
-						<div
+						<button
 							className='user-avatar-mini'
-							title={userName}
-							aria-label={userName}
+							onClick={() => handleMenuClick('profile')}
+							title={`${userName} — view profile`}
+							aria-label='Go to profile'
 						>
 							{userProfile ? (
 								<img
@@ -236,7 +246,7 @@ const Sidebar = ({
 									{userName.charAt(0).toUpperCase()}
 								</span>
 							)}
-						</div>
+						</button>
 					)}
 
 					<button
