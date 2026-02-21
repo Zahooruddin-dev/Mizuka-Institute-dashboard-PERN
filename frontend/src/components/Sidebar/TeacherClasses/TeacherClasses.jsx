@@ -24,17 +24,17 @@ import CreateAnnouncementModal from './CreateAnnouncementModal';
 import '../../../css/TeacherClasses.css';
 
 const TeacherClasses = () => {
-	const [classes, setClasses] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [deleteTarget, setDeleteTarget] = useState(null);
+	const [classes,            setClasses]            = useState([]);
+	const [loading,            setLoading]            = useState(true);
+	const [error,              setError]              = useState(null);
+	const [isModalOpen,        setIsModalOpen]        = useState(false);
+	const [deleteTarget,       setDeleteTarget]       = useState(null);
 	const [announcementTarget, setAnnouncementTarget] = useState(null);
-	const [expandedClass, setExpandedClass] = useState(null);
+	const [expandedClass,      setExpandedClass]      = useState(null);
 	const [classAnnouncements, setClassAnnouncements] = useState({});
-	const [annLoading, setAnnLoading] = useState({});
-	const [annDeleteTarget, setAnnDeleteTarget] = useState(null);
-	const [annDeleting, setAnnDeleting] = useState(false);
+	const [annLoading,         setAnnLoading]         = useState({});
+	const [annDeleteTarget,    setAnnDeleteTarget]    = useState(null);
+	const [annDeleting,        setAnnDeleting]        = useState(false);
 
 	const fetchMyClasses = async () => {
 		try {
@@ -48,15 +48,10 @@ const TeacherClasses = () => {
 		}
 	};
 
-	useEffect(() => {
-		fetchMyClasses();
-	}, []);
+	useEffect(() => { fetchMyClasses(); }, []);
 
 	const toggleAnnouncements = async (classId) => {
-		if (expandedClass === classId) {
-			setExpandedClass(null);
-			return;
-		}
+		if (expandedClass === classId) { setExpandedClass(null); return; }
 		setExpandedClass(classId);
 		if (classAnnouncements[classId]) return;
 		setAnnLoading((prev) => ({ ...prev, [classId]: true }));
@@ -98,32 +93,19 @@ const TeacherClasses = () => {
 		}
 	};
 
-	const handleCardKey = (e, id) => {
-		if (e.key === 'Enter') window.location.href = `/teacher/class/${id}`;
-	};
-
 	const formatDate = (ts) =>
 		new Date(ts).toLocaleDateString(undefined, {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric',
+			year: 'numeric', month: 'short', day: 'numeric',
 		});
 
 	return (
-		<main
-			className='dashboard-container'
-			aria-labelledby='teacher-classes-heading'
-		>
+		<main className='dashboard-container' aria-labelledby='teacher-classes-heading'>
 			<header className='dashboard-header'>
 				<div className='header-info'>
 					<h1 id='teacher-classes-heading'>Your Managed Classes</h1>
 					<p>Manage curriculum, announcements, and student rosters.</p>
 				</div>
-				<button
-					onClick={() => setIsModalOpen(true)}
-					className='create-btn'
-					aria-label='Create new class'
-				>
+				<button onClick={() => setIsModalOpen(true)} className='create-btn' aria-label='Create new class'>
 					<Plus size={20} />
 					<span>Create New Class</span>
 				</button>
@@ -148,16 +130,7 @@ const TeacherClasses = () => {
 				<section className='dashboard-grid'>
 					{classes.length > 0 ? (
 						classes.map((c) => (
-							<article
-								key={c.id}
-								className='teacher-class-card clickable'
-								tabIndex='0'
-								onClick={() =>
-									(window.location.href = `/teacher/class/${c.id}`)
-								}
-								onKeyDown={(e) => handleCardKey(e, c.id)}
-								aria-label={`Open ${c.class_name}`}
-							>
+							<article key={c.id} className='teacher-class-card'>
 								<div className='card-top'>
 									<div className='icon-wrapper'>
 										<BookOpen size={22} />
@@ -165,17 +138,13 @@ const TeacherClasses = () => {
 									<div className='card-actions'>
 										<button
 											className='action-icon edit'
-											onClick={(e) => e.stopPropagation()}
 											aria-label={`Edit ${c.class_name}`}
 										>
 											<Settings2 size={18} />
 										</button>
 										<button
 											className='action-icon delete'
-											onClick={(e) => {
-												e.stopPropagation();
-												setDeleteTarget(c);
-											}}
+											onClick={() => setDeleteTarget(c)}
 											aria-label={`Delete ${c.class_name}`}
 										>
 											<Trash2 size={18} />
@@ -197,89 +166,58 @@ const TeacherClasses = () => {
 								</div>
 
 								<div className='card-buttons'>
-									<button
-										className='btn-roster'
-										onClick={(e) => e.stopPropagation()}
-									>
+									<button className='btn-roster'>
 										<Users size={16} /> Roster
 									</button>
-									<button
-										className='btn-post'
-										onClick={(e) => {
-											e.stopPropagation();
-											setAnnouncementTarget(c);
-										}}
-									>
+									<button className='btn-post' onClick={() => setAnnouncementTarget(c)}>
 										<Megaphone size={16} /> Post
 									</button>
 								</div>
 
 								<button
 									className='ann-toggle-btn'
-									onClick={(e) => {
-										e.stopPropagation();
-										toggleAnnouncements(c.id);
-									}}
+									onClick={() => toggleAnnouncements(c.id)}
 									aria-expanded={expandedClass === c.id}
 								>
 									<Megaphone size={14} />
 									<span>Announcements</span>
-									{expandedClass === c.id ? (
-										<ChevronUp size={14} />
-									) : (
-										<ChevronDown size={14} />
-									)}
+									{expandedClass === c.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
 								</button>
 
 								{expandedClass === c.id && (
-									<div
-										className='ann-panel'
-										onClick={(e) => e.stopPropagation()}
-									>
+									<div className='ann-panel'>
 										{annLoading[c.id] && (
 											<p className='ann-panel-loading'>Loading…</p>
 										)}
 
-										{!annLoading[c.id] &&
-											classAnnouncements[c.id]?.length === 0 && (
-												<p className='ann-panel-empty'>No announcements yet.</p>
-											)}
+										{!annLoading[c.id] && classAnnouncements[c.id]?.length === 0 && (
+											<p className='ann-panel-empty'>No announcements yet.</p>
+										)}
 
-										{!annLoading[c.id] &&
-											classAnnouncements[c.id]?.length > 0 && (
-												<ul className='ann-panel-list'>
-													{classAnnouncements[c.id].map((ann) => (
-														<li key={ann.id} className='ann-panel-item'>
-															<div className='ann-panel-item-header'>
-																<strong>{ann.title}</strong>
-																<button
-																	className='ann-delete-btn'
-																	onClick={() =>
-																		setAnnDeleteTarget({
-																			...ann,
-																			class_id: c.id,
-																		})
-																	}
-																	aria-label={`Delete announcement "${ann.title}"`}
-																>
-																	<Trash2 size={13} />
-																</button>
-															</div>
-															<p>{ann.content}</p>
-															<div className='ann-panel-meta'>
-																<span>
-																	<User size={12} />
-																	{ann.teacher_name ?? 'You'}
-																</span>
-																<span>
-																	<Calendar size={12} />
-																	{formatDate(ann.created_at)}
-																</span>
-															</div>
-														</li>
-													))}
-												</ul>
-											)}
+										{!annLoading[c.id] && classAnnouncements[c.id]?.length > 0 && (
+											<ul className='ann-panel-list'>
+												{classAnnouncements[c.id].map((ann) => (
+													<li key={ann.id} className='ann-panel-item'>
+														<div className='ann-panel-item-header'>
+															<strong>{ann.title}</strong>
+															<button
+																className='ann-delete-btn'
+																onClick={() => setAnnDeleteTarget({ ...ann, class_id: c.id })}
+																aria-label={`Delete "${ann.title}"`}
+																title='Delete announcement'
+															>
+																<Trash2 size={15} />
+															</button>
+														</div>
+														<p>{ann.content}</p>
+														<div className='ann-panel-meta'>
+															<span><User size={12} />{ann.teacher_name ?? 'You'}</span>
+															<span><Calendar size={12} />{formatDate(ann.created_at)}</span>
+														</div>
+													</li>
+												))}
+											</ul>
+										)}
 									</div>
 								)}
 							</article>
@@ -289,10 +227,7 @@ const TeacherClasses = () => {
 							<BookOpen size={48} />
 							<h3>No Classes Yet</h3>
 							<p>You haven't created any classes yet.</p>
-							<button
-								onClick={() => setIsModalOpen(true)}
-								className='create-btn small'
-							>
+							<button onClick={() => setIsModalOpen(true)} className='create-btn small'>
 								<Plus size={16} /> Create Your First Class
 							</button>
 						</div>
@@ -303,10 +238,7 @@ const TeacherClasses = () => {
 			{isModalOpen && (
 				<CreateClassModal
 					onClose={() => setIsModalOpen(false)}
-					onSuccess={() => {
-						setIsModalOpen(false);
-						fetchMyClasses();
-					}}
+					onSuccess={() => { setIsModalOpen(false); fetchMyClasses(); }}
 				/>
 			)}
 
@@ -322,20 +254,10 @@ const TeacherClasses = () => {
 				<div className='modal-overlay' role='dialog' aria-modal='true'>
 					<div className='confirm-modal'>
 						<h3>Delete Class</h3>
-						<p>Are you sure you want to delete "{deleteTarget.class_name}"?</p>
+						<p>Are you sure you want to delete "<strong>{deleteTarget.class_name}</strong>"?</p>
 						<div className='modal-actions'>
-							<button
-								className='btn-secondary'
-								onClick={() => setDeleteTarget(null)}
-							>
-								Cancel
-							</button>
-							<button
-								className='btn-danger'
-								onClick={() => setDeleteTarget(null)}
-							>
-								Confirm Delete
-							</button>
+							<button className='btn-secondary' onClick={() => setDeleteTarget(null)}>Cancel</button>
+							<button className='btn-danger' onClick={() => setDeleteTarget(null)}>Confirm Delete</button>
 						</div>
 					</div>
 				</div>
@@ -345,10 +267,7 @@ const TeacherClasses = () => {
 				<div className='modal-overlay' role='dialog' aria-modal='true'>
 					<div className='confirm-modal'>
 						<h3>Delete Announcement</h3>
-						<p>
-							Delete "<strong>{annDeleteTarget.title}</strong>"? This cannot be
-							undone.
-						</p>
+						<p>Delete "<strong>{annDeleteTarget.title}</strong>"? This cannot be undone.</p>
 						<div className='modal-actions'>
 							<button
 								className='btn-secondary'
@@ -362,11 +281,9 @@ const TeacherClasses = () => {
 								onClick={handleDeleteAnnouncement}
 								disabled={annDeleting}
 							>
-								{annDeleting ? (
-									<Loader2 size={15} className='ann-spinner' />
-								) : (
-									<Trash2 size={15} />
-								)}
+								{annDeleting
+									? <Loader2 size={15} className='ann-spinner' />
+									: <Trash2 size={15} />}
 								{annDeleting ? 'Deleting…' : 'Delete'}
 							</button>
 						</div>
