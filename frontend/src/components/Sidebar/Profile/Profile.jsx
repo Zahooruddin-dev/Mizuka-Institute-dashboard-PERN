@@ -14,6 +14,7 @@ import {
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
 import DeleteAccountModal from './DeleteAccountModal';
+import ChangePasswordModal from './ChangePasswordModal';
 
 const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [isEditing, setIsEditing] = useState(false);
@@ -23,7 +24,8 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [currentUser, setCurrentUser] = useState(user);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
-	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [showDeleteModal,    setShowDeleteModal]    = useState(false);
+	const [showPasswordModal,  setShowPasswordModal]  = useState(false);
 
 	useEffect(() => {
 		setCurrentUser(user);
@@ -282,7 +284,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 										<Edit size={18} />
 										Edit Profile
 									</button>
-									<button className='action-btn secondary'>
+									<button className='action-btn secondary' onClick={() => setShowPasswordModal(true)}>
 										<Key size={18} />
 										Change Password
 									</button>
@@ -296,8 +298,7 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 								<div className='danger-zone-info'>
 									<p className='danger-zone-label'>Delete Account</p>
 									<p className='danger-zone-desc'>
-										Permanently delete your account and all associated data.
-										This cannot be undone.
+										Permanently delete your account and all associated data. This cannot be undone.
 									</p>
 								</div>
 								<button
@@ -351,6 +352,10 @@ const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 					username={currentUser?.username}
 					onClose={() => setShowDeleteModal(false)}
 				/>
+			)}
+
+			{showPasswordModal && (
+				<ChangePasswordModal onClose={() => setShowPasswordModal(false)} />
 			)}
 		</div>
 	);
