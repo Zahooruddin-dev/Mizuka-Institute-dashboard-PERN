@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getMyClasses, getClassAnnouncements } from '../../../api/api';
+import {
+	getMyClasses,
+	getClassAnnouncements,
+	deleteAnnouncement,
+} from '../../../api/api';
 import {
 	BookOpen,
 	Clock,
@@ -13,6 +17,7 @@ import {
 	ChevronUp,
 	Calendar,
 	User,
+	Loader2,
 } from 'lucide-react';
 import CreateClassModal from '../Classes/CreateClassModal';
 import CreateAnnouncementModal from './CreateAnnouncementModal';
@@ -29,6 +34,7 @@ const TeacherClasses = () => {
 	const [classAnnouncements, setClassAnnouncements] = useState({});
 	const [annLoading, setAnnLoading] = useState({});
 	const [annDeleteTarget, setAnnDeleteTarget] = useState(null);
+	const [annDeleting, setAnnDeleting] = useState(false);
 
 	const fetchMyClasses = async () => {
 		try {
@@ -51,11 +57,8 @@ const TeacherClasses = () => {
 			setExpandedClass(null);
 			return;
 		}
-
 		setExpandedClass(classId);
-
 		if (classAnnouncements[classId]) return;
-
 		setAnnLoading((prev) => ({ ...prev, [classId]: true }));
 		try {
 			const res = await getClassAnnouncements(classId);
@@ -73,6 +76,25 @@ const TeacherClasses = () => {
 		if (expandedClass === classId) {
 			setExpandedClass(null);
 			setTimeout(() => toggleAnnouncements(classId), 50);
+		}
+	};
+
+	const handleDeleteAnnouncement = async () => {
+		if (!annDeleteTarget) return;
+		setAnnDeleting(true);
+		try {
+			await deleteAnnouncement(annDeleteTarget.class_id, annDeleteTarget.id);
+			setClassAnnouncements((prev) => ({
+				...prev,
+				[annDeleteTarget.class_id]: prev[annDeleteTarget.class_id]?.filter(
+					(a) => a.id !== annDeleteTarget.id,
+				),
+			}));
+			setAnnDeleteTarget(null);
+		} catch {
+			setAnnDeleteTarget(null);
+		} finally {
+			setAnnDeleting(false);
 		}
 	};
 
@@ -179,8 +201,7 @@ const TeacherClasses = () => {
 										className='btn-roster'
 										onClick={(e) => e.stopPropagation()}
 									>
-										<Users size={16} />
-										Roster
+										<Users size={16} /> Roster
 									</button>
 									<button
 										className='btn-post'
@@ -189,8 +210,7 @@ const TeacherClasses = () => {
 											setAnnouncementTarget(c);
 										}}
 									>
-										<Megaphone size={16} />
-										Post
+										<Megaphone size={16} /> Post
 									</button>
 								</div>
 
@@ -234,7 +254,12 @@ const TeacherClasses = () => {
 																<strong>{ann.title}</strong>
 																<button
 																	className='ann-delete-btn'
-																	onClick={() => setAnnDeleteTarget(ann)}
+																	onClick={() =>
+																		setAnnDeleteTarget({
+																			...ann,
+																			class_id: c.id,
+																		})
+																	}
 																	aria-label={`Delete announcement "${ann.title}"`}
 																>
 																	<Trash2 size={13} />
@@ -268,8 +293,7 @@ const TeacherClasses = () => {
 								onClick={() => setIsModalOpen(true)}
 								className='create-btn small'
 							>
-								<Plus size={16} />
-								Create Your First Class
+								<Plus size={16} /> Create Your First Class
 							</button>
 						</div>
 					)}
@@ -321,19 +345,29 @@ const TeacherClasses = () => {
 				<div className='modal-overlay' role='dialog' aria-modal='true'>
 					<div className='confirm-modal'>
 						<h3>Delete Announcement</h3>
-						<p>Delete "{annDeleteTarget.title}"? This cannot be undone.</p>
+						<p>
+							Delete "<strong>{annDeleteTarget.title}</strong>"? This cannot be
+							undone.
+						</p>
 						<div className='modal-actions'>
 							<button
 								className='btn-secondary'
 								onClick={() => setAnnDeleteTarget(null)}
+								disabled={annDeleting}
 							>
 								Cancel
 							</button>
 							<button
 								className='btn-danger'
-								onClick={() => setAnnDeleteTarget(null)}
+								onClick={handleDeleteAnnouncement}
+								disabled={annDeleting}
 							>
-								Confirm Delete
+								{annDeleting ? (
+									<Loader2 size={15} className='ann-spinner' />
+								) : (
+									<Trash2 size={15} />
+								)}
+								{annDeleting ? 'Deleting…' : 'Delete'}
 							</button>
 						</div>
 					</div>
