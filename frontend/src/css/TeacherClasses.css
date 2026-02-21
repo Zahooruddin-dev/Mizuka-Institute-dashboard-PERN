@@ -229,6 +229,26 @@
     margin-bottom: 1rem;
 }
 
+.action-icon.delete {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.22);
+    color: #ef4444;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.action-icon.delete:hover {
+    background: rgba(239, 68, 68, 0.15);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
 .card-actions {
     display: flex;
     gap: 0.25rem;
