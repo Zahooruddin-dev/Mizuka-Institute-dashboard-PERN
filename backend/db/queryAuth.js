@@ -23,6 +23,15 @@ async function updateUsername(id, username, profilePic) {
 	return rows[0];
 }
 
+async function updatePasswordQuery(userId, newPasswordHash) {
+	const { rows } = await pool.query(
+		`UPDATE users SET password_hash = $1 WHERE id = $2 RETURNING id`,
+		[newPasswordHash, userId]
+	);
+	return rows[0] || null;
+}
+
+
 async function deleteUserQuery(email) {
 	const { rows } = await pool.query('DELETE FROM users WHERE email = $1 RETURNING id', [
 		email,
@@ -38,5 +47,6 @@ module.exports = {
 	registerQuery,
 	updateUsername,
 	deleteUserQuery,
-	getUserByEmail
+	getUserByEmail,
+	updatePasswordQuery,
 };
