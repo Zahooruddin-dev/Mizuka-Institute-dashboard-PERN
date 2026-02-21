@@ -3,7 +3,7 @@ const dbClass = require('../db/queryClasses');
 
 async function postAnnouncement(req, res) {
 	const { classId } = req.params;
-	const { title, content } = req.body;
+	const { title, content, expires_at } = req.body;
 	const teacherId = req.user.id;
 
 	try {
@@ -14,9 +14,7 @@ async function postAnnouncement(req, res) {
 		}
 
 		if (targetClass.teacher_id !== teacherId) {
-			return res
-				.status(403)
-				.json({ error: "Unauthorized: You don't teach this class" });
+			return res.status(403).json({ error: "Unauthorized: You don't teach this class" });
 		}
 
 		const announcement = await dbAnnounce.createAnnouncementQuery(
@@ -24,6 +22,7 @@ async function postAnnouncement(req, res) {
 			teacherId,
 			title,
 			content,
+			expires_at ?? null,
 		);
 		res.status(201).json(announcement);
 	} catch (err) {
@@ -44,8 +43,7 @@ async function getClassAnnouncements(req, res) {
 async function getAnnouncementById(req, res) {
 	const { announcementId } = req.params;
 	try {
-		const announcement =
-			await dbAnnounce.getAnnouncementByIdQuery(announcementId);
+		const announcement = await dbAnnounce.getAnnouncementByIdQuery(announcementId);
 
 		if (!announcement) {
 			return res.status(404).json({ error: 'Announcement not found' });
@@ -63,10 +61,10 @@ async function getStudentAnnouncements(req, res) {
 		const list = await dbAnnounce.getAnnouncementsForStudentQuery(studentId);
 		res.status(200).json(list);
 	} catch (err) {
-		console.error('getStudentAnnouncements error:', err);
 		res.status(500).json({ error: err.message });
 	}
 }
+
 module.exports = {
 	postAnnouncement,
 	getClassAnnouncements,
