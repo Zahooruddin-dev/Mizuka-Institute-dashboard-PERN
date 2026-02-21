@@ -50,10 +50,19 @@ async function getAnnouncementsForStudentQuery(studentId) {
   );
   return rows;
 }
+async function deleteAnnouncementQuery(announcementId, teacherId) {
+  const { rowCount } = await pool.query(
+    `DELETE FROM announcements
+     WHERE id = $1 AND teacher_id = $2`,
+    [announcementId, teacherId]
+  );
+  return rowCount;
+}
 
 module.exports = {
   createAnnouncementQuery,
   getAnnouncementsByClassQuery,
   getAnnouncementByIdQuery,
   getAnnouncementsForStudentQuery,
+  deleteAnnouncementQuery
 };
