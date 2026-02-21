@@ -10,5 +10,6 @@ router.get('/', controller.getClassAnnouncements);
 router.get('/my', verifyToken, controller.getStudentAnnouncements);
 
 router.get('/:announcementId', verifyToken, controller.getAnnouncementById);
+router.delete('/:announcementId', verifyToken, controller.deleteAnnouncement);
 
 module.exports = router;
