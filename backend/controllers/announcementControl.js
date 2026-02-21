@@ -14,7 +14,9 @@ async function postAnnouncement(req, res) {
 		}
 
 		if (targetClass.teacher_id !== teacherId) {
-			return res.status(403).json({ error: "Unauthorized: You don't teach this class" });
+			return res
+				.status(403)
+				.json({ error: "Unauthorized: You don't teach this class" });
 		}
 
 		const announcement = await dbAnnounce.createAnnouncementQuery(
@@ -43,7 +45,8 @@ async function getClassAnnouncements(req, res) {
 async function getAnnouncementById(req, res) {
 	const { announcementId } = req.params;
 	try {
-		const announcement = await dbAnnounce.getAnnouncementByIdQuery(announcementId);
+		const announcement =
+			await dbAnnounce.getAnnouncementByIdQuery(announcementId);
 
 		if (!announcement) {
 			return res.status(404).json({ error: 'Announcement not found' });
@@ -65,9 +68,29 @@ async function getStudentAnnouncements(req, res) {
 	}
 }
 
+async function deleteAnnouncement(req, res) {
+	const { announcementId } = req.params;
+	const teacherId = req.user.id;
+	try {
+		const deleted = await dbAnnounce.deleteAnnouncementQuery(
+			announcementId,
+			teacherId,
+		);
+		if (!deleted) {
+			return res
+				.status(404)
+				.json({ error: 'Announcement not found or unauthorized.' });
+		}
+		res.status(200).json({ message: 'Announcement deleted.' });
+	} catch (err) {
+		res.status(500).json({ error: err.message });
+	}
+}
+
 module.exports = {
 	postAnnouncement,
 	getClassAnnouncements,
 	getAnnouncementById,
 	getStudentAnnouncements,
+	deleteAnnouncement,
 };
