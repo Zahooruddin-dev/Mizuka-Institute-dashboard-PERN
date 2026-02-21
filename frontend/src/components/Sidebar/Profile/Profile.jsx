@@ -14,7 +14,7 @@ import {
 import '../../../css/Profile.css';
 import { updateUsername } from '../../../api/authApi';
 import DeleteAccountModal from './DeleteAccountModal';
-import ChangePasswordModal from './ChangePasswordModal';
+import ChangePasswordModal from './Changepasswordmodal';
 
 const Profile = ({ user, profileImageUrl, onProfileUpdate }) => {
 	const [isEditing, setIsEditing] = useState(false);

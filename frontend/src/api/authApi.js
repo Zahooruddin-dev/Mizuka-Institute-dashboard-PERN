@@ -15,7 +15,7 @@ export const updateUsername = (data) => {
 	});
 };
 export const changePassword = (data) => {
-	return api.delete('/api/auth/change-password', { data });
+	return api.put('/api/auth/change-password', data);
 };
 export const deleteUser = (data) => {
 	return api.delete('/api/auth/delete', { data });
