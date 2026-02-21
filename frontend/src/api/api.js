@@ -31,6 +31,9 @@ export const getClassById = (id) => {
 export const getMyClasses = () => {
 	return api.get('/api/class/mine');
 };
+export const deleteMyClass = (id) => {
+	return api.delete(`/api/class/${id}`);
+};
 
 export const postEnrollement = (data) => {
 	return api.post(`/api/enroll/`, data);
@@ -51,7 +54,7 @@ export const getClassAnnouncements = (classId) => {
 export const getAnnouncementById = (classId, announcementId) => {
 	return api.get(`/api/class/${classId}/announcements/${announcementId}`);
 };
-export const deleteAnnouncement  = (classId, announcementId) => {
+export const deleteAnnouncement = (classId, announcementId) => {
 	return api.delete(`/api/class/${classId}/announcements/${announcementId}`);
 };
 export const getMyAnnouncements = () => api.get('/api/announcements/my');
