@@ -3,7 +3,6 @@ import {
 	Users,
 	BookOpen,
 	User,
-	Settings,
 	Menu,
 	X,
 	LogOut,
@@ -91,7 +90,6 @@ const Sidebar = ({
 		{ id: 'classes', label: 'Class Directory', icon: BookOpen },
 		{ id: 'announcements', label: 'Announcements', icon: Megaphone },
 		{ id: 'profile', label: 'Profile', icon: User },
-		{ id: 'settings', label: 'Settings', icon: Settings },
 	];
 
 	const handleMenuClick = (id) => {

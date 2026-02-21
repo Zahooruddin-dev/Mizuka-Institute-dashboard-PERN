@@ -4,7 +4,6 @@ import Dashboard from './Dashboard';
 import Classes from '../components/Sidebar/Classes/Classes';
 import Announcements from '../components/Sidebar/Announcements/Announcements';
 import Profile from '../components/Sidebar/Profile/Profile';
-import Settings from '../components/Sidebar/Settings/Settings';
 import TeacherClasses from '../components/Sidebar/TeacherClasses/TeacherClasses';
 import { getUserFromToken } from '../utils/auth';
 import '../css/Layout.css';
@@ -83,8 +82,7 @@ const handlePageChange = (pageId) => {
 						onProfileUpdate={handleProfileUpdate}
 					/>
 				);
-			case 'settings':
-				return <Settings />;
+
 			default:
 				return (
 					<Profile
