@@ -51,6 +51,9 @@ export const getClassAnnouncements = (classId) => {
 export const getAnnouncementById = (classId, announcementId) => {
 	return api.get(`/api/class/${classId}/announcements/${announcementId}`);
 };
+export const deleteAnnouncement  = (classId, announcementId) => {
+	return api.delete(`/api/class/${classId}/announcements/${announcementId}`);
+};
 export const getMyAnnouncements = () => api.get('/api/announcements/my');
 
 export const unenrollStudent = (studentId, classId) => {
