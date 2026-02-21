@@ -206,7 +206,8 @@ const TeacherClasses = () => {
 																aria-label={`Delete "${ann.title}"`}
 																title='Delete announcement'
 															>
-																<Trash2 size={15} />
+																<Trash2 size={14} />
+																<span>Delete</span>
 															</button>
 														</div>
 														<p>{ann.content}</p>
