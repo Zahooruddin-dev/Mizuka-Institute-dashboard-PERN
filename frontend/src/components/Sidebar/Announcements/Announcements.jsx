@@ -6,6 +6,7 @@ import {
 	User,
 	Loader2,
 	AlertCircle,
+	Clock,
 } from 'lucide-react';
 import {
 	getMyAnnouncements,
@@ -13,6 +14,48 @@ import {
 	getClassAnnouncements,
 } from '../../../api/api';
 import '../../../css/Announcements.css';
+
+const getExpiryState = (expiresAt) => {
+	if (!expiresAt) return null;
+	const now = Date.now();
+	const exp = new Date(expiresAt).getTime();
+	const diff = exp - now;
+	if (diff <= 0) return 'expired';
+	if (diff <= 3 * 24 * 60 * 60 * 1000) return 'soon';
+	return 'active';
+};
+
+const ExpiryBadge = ({ expiresAt }) => {
+	const state = getExpiryState(expiresAt);
+	if (!state) return null;
+
+	const formatExpiry = (ts) =>
+		new Date(ts).toLocaleDateString(undefined, {
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric',
+		});
+
+	if (state === 'expired') {
+		return (
+			<span className='ann-expiry-badge ann-expiry-expired'>
+				<Clock size={11} /> Expired
+			</span>
+		);
+	}
+	if (state === 'soon') {
+		return (
+			<span className='ann-expiry-badge ann-expiry-soon'>
+				<Clock size={11} /> Expires {formatExpiry(expiresAt)}
+			</span>
+		);
+	}
+	return (
+		<span className='ann-expiry-badge ann-expiry-active'>
+			<Clock size={11} /> Expires {formatExpiry(expiresAt)}
+		</span>
+	);
+};
 
 const Announcements = ({ userRole }) => {
 	const [announcements, setAnnouncements] = useState([]);
@@ -109,10 +152,13 @@ const Announcements = ({ userRole }) => {
 									<BookOpen size={13} />
 									{ann.class_name}
 								</span>
-								<span className='ann-date'>
-									<Calendar size={13} />
-									{formatDate(ann.created_at)}
-								</span>
+								<div className='ann-card-header-right'>
+									<ExpiryBadge expiresAt={ann.expires_at} />
+									<span className='ann-date'>
+										<Calendar size={13} />
+										{formatDate(ann.created_at)}
+									</span>
+								</div>
 							</div>
 
 							<h2 className='ann-title'>{ann.title}</h2>

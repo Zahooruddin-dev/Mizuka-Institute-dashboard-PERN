@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	X,
 	BookOpen,
@@ -11,6 +11,30 @@ import {
 } from 'lucide-react';
 import '../../../css/Modal.css';
 import { getClassById, getClassAnnouncements } from '../../../api/api';
+
+const getExpiryState = (expiresAt) => {
+	if (!expiresAt) return null;
+	const diff = new Date(expiresAt).getTime() - Date.now();
+	if (diff <= 0) return 'expired';
+	if (diff <= 3 * 24 * 60 * 60 * 1000) return 'soon';
+	return 'active';
+};
+
+const ExpiryBadge = ({ expiresAt }) => {
+	const state = getExpiryState(expiresAt);
+	if (!state) return null;
+
+	const label =
+		state === 'expired'
+			? 'Expired'
+			: `Expires ${new Date(expiresAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
+
+	return (
+		<span className={`ann-expiry-badge ann-expiry-${state}`}>
+			<Clock size={11} /> {label}
+		</span>
+	);
+};
 
 const ClassDetailsModal = ({ classId, onClose }) => {
 	const [classData, setClassData] = useState(null);
@@ -140,9 +164,12 @@ const ClassDetailsModal = ({ classId, onClose }) => {
 										<li key={ann.id} className='detail-ann-item'>
 											<div className='detail-ann-item-header'>
 												<strong>{ann.title}</strong>
-												<span className='detail-ann-date'>
-													{formatDate(ann.created_at)}
-												</span>
+												<div className='detail-ann-item-header-right'>
+													<ExpiryBadge expiresAt={ann.expires_at} />
+													<span className='detail-ann-date'>
+														{formatDate(ann.created_at)}
+													</span>
+												</div>
 											</div>
 											<p>{ann.content}</p>
 											<span className='detail-ann-author'>
