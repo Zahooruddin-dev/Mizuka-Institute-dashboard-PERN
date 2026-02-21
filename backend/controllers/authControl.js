@@ -116,6 +116,33 @@ async function changeUsername(req, res) {
 		res.status(500).json({ message: error.message });
 	}
 }
+
+async function changePassword(req, res) {
+	const userId = req.user.id;
+	const { currentPassword, newPassword } = req.body;
+
+	if (!currentPassword || !newPassword) {
+		return res.status(400).json({ message: 'Both current and new password are required.' });
+	}
+	if (newPassword.length < 6) {
+		return res.status(400).json({ message: 'New password must be at least 6 characters.' });
+	}
+
+	try {
+		const user = await db.loginQuery(req.user.email);
+		if (!user) return res.status(404).json({ message: 'User not found.' });
+
+		const match = await bcrypt.compare(currentPassword, user.password_hash);
+		if (!match) return res.status(401).json({ message: 'Current password is incorrect.' });
+
+		const newHash = await bcrypt.hash(newPassword, 10);
+		await db.updatePasswordQuery(userId, newHash);
+
+		res.status(200).json({ message: 'Password changed successfully.' });
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
+}
 async function deleteUser(req, res) {
 	const { email, password } = req.body;
 	try {
@@ -139,4 +166,4 @@ async function deleteUser(req, res) {
 	}
 }
 
-module.exports = { login, register, changeUsername ,deleteUser};
+module.exports = { login, register, changeUsername ,changePassword,deleteUser};
