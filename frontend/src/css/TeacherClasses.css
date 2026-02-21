@@ -221,6 +221,7 @@
     border: none;
     font-weight: 600;
 }
+
 .card-top {
     display: flex;
     align-items: center;
@@ -371,6 +372,91 @@
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    cursor: pointer;
+}
+
+.delete-class-modal-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ef4444;
+    margin-bottom: 1rem;
+}
+
+.delete-class-modal h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.delete-class-modal p {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.delete-class-warning-list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.delete-class-warning-list li {
+    font-size: 0.825rem;
+    color: #dc2626;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.delete-class-warning-list li::before {
+    content: •;
+    position: absolute;
+    left: 0;
+}
+
+.ann-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.ann-panel-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.1rem;
+    border-radius: 4px;
+    transition: color 0.15s ease;
+}
+
+.ann-panel-close:hover {
+    color: #475569;
 }
 
 .empty-dashboard {
