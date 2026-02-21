@@ -78,3 +78,5 @@ CREATE TABLE password_resets (
 );
 ALTER TABLE password_rests
 RENAME to password_resets;
+ALTER TABLE announcements 
+ADD COLUMN expires_at TIMESTAMP;
