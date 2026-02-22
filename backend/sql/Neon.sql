@@ -80,3 +80,15 @@ ALTER TABLE password_rests
 RENAME to password_resets;
 ALTER TABLE announcements 
 ADD COLUMN expires_at TIMESTAMP;
+SELECT 
+    conname AS constraint_name, 
+    contype AS constraint_type,
+    confrelid::regclass AS referenced_table
+FROM pg_constraint
+WHERE conrelid = 'enrollments'::regclass;
+SELECT 
+    relname AS table_name, 
+    conname AS constraint_name
+FROM pg_constraint c
+JOIN pg_class t ON c.conrelid = t.oid
+WHERE confrelid = 'students'::regclass;
