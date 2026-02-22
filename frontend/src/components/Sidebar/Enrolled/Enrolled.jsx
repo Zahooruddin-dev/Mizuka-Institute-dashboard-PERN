@@ -20,14 +20,14 @@ import {
 import '../../../css/Enrolled.css';
 
 const Enrolled = ({ userId }) => {
-	const [classes,         setClasses]         = useState([]);
-	const [loading,         setLoading]         = useState(true);
-	const [error,           setError]           = useState(null);
-	const [selected,        setSelected]        = useState(null);
-	const [annCache,        setAnnCache]        = useState({});
-	const [annLoading,      setAnnLoading]      = useState(false);
-	const [unenrollTarget,  setUnenrollTarget]  = useState(null);
-	const [unenrolling,     setUnenrolling]     = useState(false);
+	const [classes, setClasses] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	const [selected, setSelected] = useState(null);
+	const [annCache, setAnnCache] = useState({});
+	const [annLoading, setAnnLoading] = useState(false);
+	const [unenrollTarget, setUnenrollTarget] = useState(null);
+	const [unenrolling, setUnenrolling] = useState(false);
 	const hasFetched = useRef(false);
 
 	const fetchClasses = async () => {
@@ -110,7 +110,11 @@ const Enrolled = ({ userId }) => {
 					<h1>My Enrolled Classes</h1>
 					<p>View your schedule, class details and announcements</p>
 				</div>
-				<button className='enrolled-refresh-btn' onClick={fetchClasses} aria-label='Refresh classes'>
+				<button
+					className='enrolled-refresh-btn'
+					onClick={fetchClasses}
+					aria-label='Refresh classes'
+				>
 					Refresh
 				</button>
 			</div>
@@ -201,11 +205,18 @@ const Enrolled = ({ userId }) => {
 								</div>
 							</div>
 							<div className='drawer-header-actions'>
-								<button className='unenroll-btn' onClick={() => setUnenrollTarget(selected)}>
+								<button
+									className='unenroll-btn'
+									onClick={() => setUnenrollTarget(selected)}
+								>
 									<LogOut size={15} />
 									Unenroll
 								</button>
-								<button className='drawer-close' onClick={closeDrawer} aria-label='Close'>
+								<button
+									className='drawer-close'
+									onClick={closeDrawer}
+									aria-label='Close'
+								>
 									<X size={20} />
 								</button>
 							</div>
@@ -215,13 +226,19 @@ const Enrolled = ({ userId }) => {
 							<div className='drawer-detail-grid'>
 								{selected.enrollment_date && (
 									<div className='drawer-detail-item'>
-										<label><Calendar size={13} />Enrolled</label>
+										<label>
+											<Calendar size={13} />
+											Enrolled
+										</label>
 										<p>{formatDate(selected.enrollment_date)}</p>
 									</div>
 								)}
 								{selected.student_name && (
 									<div className='drawer-detail-item'>
-										<label><User size={13} />Student</label>
+										<label>
+											<User size={13} />
+											Student
+										</label>
 										<p>{selected.student_name}</p>
 									</div>
 								)}
@@ -241,7 +258,9 @@ const Enrolled = ({ userId }) => {
 								)}
 
 								{!annLoading && selectedAnnouncements.length === 0 && (
-									<p className='drawer-ann-empty'>No announcements for this class yet.</p>
+									<p className='drawer-ann-empty'>
+										No announcements for this class yet.
+									</p>
 								)}
 
 								{!annLoading && selectedAnnouncements.length > 0 && (
@@ -250,7 +269,9 @@ const Enrolled = ({ userId }) => {
 											<li key={ann.id} className='drawer-ann-item'>
 												<div className='drawer-ann-item-header'>
 													<strong>{ann.title}</strong>
-													<span className='drawer-ann-date'>{formatDate(ann.created_at)}</span>
+													<span className='drawer-ann-date'>
+														{formatDate(ann.created_at)}
+													</span>
 												</div>
 												<p>{ann.content}</p>
 												<span className='drawer-ann-author'>
@@ -272,14 +293,28 @@ const Enrolled = ({ userId }) => {
 					<div className='unenroll-modal'>
 						<h3>Unenroll from class?</h3>
 						<p>
-							You are about to leave <strong>{unenrollTarget.class_name}</strong>. You can re-enroll later from the Class Directory.
+							You are about to leave{' '}
+							<strong>{unenrollTarget.class_name}</strong>. You can re-enroll
+							later from the Class Directory.
 						</p>
 						<div className='unenroll-modal-actions'>
-							<button className='unenroll-cancel' onClick={() => setUnenrollTarget(null)} disabled={unenrolling}>
+							<button
+								className='unenroll-cancel'
+								onClick={() => setUnenrollTarget(null)}
+								disabled={unenrolling}
+							>
 								Cancel
 							</button>
-							<button className='unenroll-confirm' onClick={handleUnenroll} disabled={unenrolling}>
-								{unenrolling ? <Loader2 size={15} className='enrolled-spinner' /> : <LogOut size={15} />}
+							<button
+								className='unenroll-confirm'
+								onClick={handleUnenroll}
+								disabled={unenrolling}
+							>
+								{unenrolling ? (
+									<Loader2 size={15} className='enrolled-spinner' />
+								) : (
+									<LogOut size={15} />
+								)}
 								{unenrolling ? 'Unenrolling…' : 'Yes, Unenroll'}
 							</button>
 						</div>
