@@ -1,115 +1,158 @@
-# 🎓 Mizuka Institute Dashboard (PERN)
+# 🎓 Mizuka Institute — EduPortal
 
-A robust Full-Stack Student Management System built with the **PERN Stack**
-(PostgreSQL, Express, React, Node.js). This project demonstrates advanced CRUD
-operations, relational database management, and optimized React performance.
+A full-stack education portal built with the **PERN Stack** (PostgreSQL, Express, React, Node.js). Teachers can manage classes and post announcements. Students can enroll, view their schedule, and stay up to date with class announcements.
 
 ---
 
-## 🚀 Features
+## ✨ Features
 
-- **Dynamic Student Management:** Full CRUD (Create, Read, Update, Delete) with
-  server-side validation.
-- **Advanced Pagination & Sorting:** Efficiently handles large datasets using
-  SQL `LIMIT` and `OFFSET`.
-- **Relational Data Architecture:** Implements Many-to-Many relationships
-  between Students and Classes via an Enrollment bridge table.
-- **Optimized UI:** High-performance React implementation using `useCallback`,
-  `memoization`, and custom hooks.
-- **Global Toast Notifications:** Real-time feedback for all user actions.
-- **Advanced Search:** Natural language search dialog and case-insensitive
-  filtering.
+- **Role-Based Auth** — JWT authentication with Teacher and Student roles. Each role sees a different dashboard on login.
+- **Class Management** — Teachers can create and delete classes. Students can browse and enroll from the class directory.
+- **Announcements** — Teachers post announcements per class with optional expiry dates. Students see only announcements from their enrolled classes.
+- **Enrollment System** — Students enroll and unenroll from classes. Duplicate enrollment is prevented.
+- **Password Management** — Forgot password flow with 6-digit reset code. Change password from profile.
+- **Profile** — Update username and profile picture. Delete account with credential confirmation.
+- **Performance** — Pages stay mounted after first visit (no refetch on tab switch). Announcement panels cache per class.
 
 ---
 
 ## 🛠 Tech Stack
 
-| Layer                | Technology                                     |
-| :------------------- | :--------------------------------------------- |
-| **Frontend**         | React.js, Axios, Lucide-React, CSS3            |
-| **Backend**          | Node.js, Express.js                            |
-| **Database**         | PostgreSQL                                     |
-| **State Management** | React Hooks (useState, useEffect, useCallback) |
-| **API Testing**      | REST Client / Postman                          |
+| Layer | Technology |
+|---|---|
+| **Frontend** | React, React Router, Axios, Lucide React |
+| **Backend** | Node.js, Express.js |
+| **Database** | PostgreSQL |
+| **Auth** | JWT, bcrypt |
+| **File Uploads** | Multer |
 
 ---
 
 ## 📂 Database Schema
 
-This project utilizes a relational structure to manage student-class
-enrollments.
-
 ```sql
--- Students Table
-CREATE TABLE students (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    student_name VARCHAR(100) NOT NULL,
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    role VARCHAR(20) DEFAULT 'student',
+    profile_pic TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Classes Table
 CREATE TABLE classes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id SERIAL PRIMARY KEY,
     class_name VARCHAR(100) NOT NULL,
-    time_in_pakistan INTEGER NOT NULL
+    time_in_pakistan INTEGER NOT NULL,
+    teacher_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Enrollment (Many-to-Many Bridge)
 CREATE TABLE enrollments (
     id SERIAL PRIMARY KEY,
-    student_id UUID REFERENCES students(id) ON DELETE CASCADE,
-    class_id UUID REFERENCES classes(id) ON DELETE CASCADE,
+    student_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    class_id INTEGER REFERENCES classes(id) ON DELETE CASCADE,
     enrolled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);🚦 API Endpoints
-Students
-GET /api/students - Get all students (Paginated/Sorted)
+);
 
-POST /api/students - Add new student
+CREATE TABLE announcements (
+    id SERIAL PRIMARY KEY,
+    class_id INTEGER REFERENCES classes(id) ON DELETE CASCADE,
+    teacher_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(200) NOT NULL,
+    content TEXT NOT NULL,
+    expires_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-GET /api/students/:id - Get specific student details
+CREATE TABLE password_resets (
+    email VARCHAR(100) PRIMARY KEY,
+    code VARCHAR(6) NOT NULL,
+    expires_at TIMESTAMP NOT NULL
+);
+```
 
-GET /api/students/:id/classes - Get classes for a specific student
+---
 
-Classes & Enrollment
-GET /api/class - Fetch all classes
+## 🚦 API Routes
 
-POST /api/enroll - Enroll a student in a class (Many-to-Many)
+### Auth — `/api/auth`
+| Method | Route | Description |
+|---|---|---|
+| POST | `/login` | Login, returns JWT |
+| POST | `/register` | Register new user |
+| PUT | `/update-profile` | Update username / profile picture |
+| PUT | `/change-password` | Change password (requires current password) |
+| DELETE | `/delete` | Delete account |
+| POST | `/request-reset` | Request password reset code |
+| POST | `/reset-password` | Reset password with code |
 
-GET /api/class-stats/popularity - Get analytics on class enrollment
+### Classes — `/api/class`
+| Method | Route | Description |
+|---|---|---|
+| GET | `/` | All classes |
+| POST | `/` | Create class (teacher only) |
+| GET | `/mine` | Teacher's own classes |
+| GET | `/:id` | Single class |
+| DELETE | `/:id` | Delete class + cascade (teacher only) |
 
-🔧 Installation & Setup
-Clone the repository
+### Enrollments — `/api/enroll`
+| Method | Route | Description |
+|---|---|---|
+| POST | `/` | Enroll student |
+| GET | `/class/:id` | Class roster |
+| GET | `/student/:id` | Student's enrolled classes |
+| DELETE | `/student/:studentId/class/:classId` | Unenroll |
 
-Bash
-git clone [https://github.com/Zahooruddin-dev/Mizuka-Institute-dashboard-PERN.git](https://github.com/Zahooruddin-dev/Mizuka-Institute-dashboard-PERN.git)
-Install Dependencies
+### Announcements — `/api/class/:classId/announcements`
+| Method | Route | Description |
+|---|---|---|
+| POST | `/` | Post announcement (teacher only) |
+| GET | `/` | Get active announcements for class |
+| DELETE | `/:announcementId` | Delete own announcement |
 
-Bash
-# Install for Backend
+---
+
+## 🔧 Setup
+
+**1. Clone the repo**
+```bash
+git clone https://github.com/zahooruddin-dev/mizuka-institute.git
+cd mizuka-institute
+```
+
+**2. Install dependencies**
+```bash
+# Backend
 npm install
-# Install for Frontend
-cd client && npm install
-Environment Variables Create a .env file in the root directory:
 
-Code snippet
+# Frontend
+cd client && npm install
+```
+
+**3. Create `.env` in root**
+```
 DB_USER=your_user
 DB_PASSWORD=your_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_DATABASE=mizuka_db
 PORT=3000
-Run the Project
-
-Bash
-# Run Backend
-npm start
-# Run Frontend (in separate terminal)
-cd client && npm start
-📈 Future Roadmap
-[ ] Text-to-SQL AI Integration: Natural language query bar to fetch data.
-
-[ ] Attendance Tracking: Daily logs for each class.
-
-[ ] Role-Based Access: Admin and Teacher login tiers.
+JWT_SECRET=your_secret
 ```
+
+**4. Run**
+```bash
+# Backend
+npm start
+
+# Frontend (separate terminal)
+cd client && npm run dev
+```
+
+---
+
+## 📬 Contact
+
+**Zahooruddin** — [mzkhan886@gmail.com](mailto:mzkhan886@gmail.com) — [@zahooruddin-dev](https://github.com/zahooruddin-dev)
