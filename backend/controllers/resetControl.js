@@ -33,9 +33,7 @@ async function requestPasswordReset(req, res) {
 		const expires = new Date(Date.now() + 15 * 60000);
 		await db.saveResetCode(email, code, expires);
 		await sendResetEmail(user.email, code);
-		console.log(`--- EMAIL SENT TO ${email} ---`);
-		console.log(`Your Reset Code is: ${code}`);
-		console.log(`------------------------------`);
+		
 		return res.status(200).json({ message: 'reset code sent' });
 	} catch (error) {
 		res.status(500).json({ message: error.message });
