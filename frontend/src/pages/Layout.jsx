@@ -10,22 +10,24 @@ import '../css/Layout.css';
 import Enrolled from '../components/Sidebar/Enrolled/Enrolled';
 
 const Layout = () => {
-	const [activePage, setActivePage] = useState('profile');
+	const [activePage, setActivePage] = useState(null);
 	const [user, setUser] = useState(null);
 	const [isInitialLoad, setIsInitialLoad] = useState(true);
 	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
+	const [visitedPages, setVisitedPages] = useState(new Set());
 
 	const loadUserData = () => {
 		const userData = getUserFromToken();
 		if (userData) setUser(userData);
 	};
 
-const handlePageChange = (pageId) => {
-  if (activePage !== pageId) {
-    setActivePage(pageId);
-    if (pageId === 'profile') loadUserData();
-  }
-};
+	const handlePageChange = (pageId) => {
+		if (activePage !== pageId) {
+			setActivePage(pageId);
+			setVisitedPages((prev) => new Set(prev).add(pageId));
+			if (pageId === 'profile') loadUserData();
+		}
+	};
 
 	const getProfileImageUrl = () => {
 		if (user?.profile) {
@@ -51,48 +53,41 @@ const handlePageChange = (pageId) => {
 
 	useEffect(() => {
 		if (user && isInitialLoad) {
-			if (user.role === 'teacher') {
-				setActivePage('teacher-classes');
-			} else if (user.role === 'student') {
-				setActivePage('enrolled-classes');
-			} else {
-				setActivePage('profile');
-			}
+			const startPage =
+				user.role === 'teacher'
+					? 'teacher-classes'
+					: user.role === 'student'
+						? 'enrolled-classes'
+						: 'profile';
+			setActivePage(startPage);
+			setVisitedPages(new Set([startPage]));
 			setIsInitialLoad(false);
 		}
-	}, [user,isInitialLoad]);
+	}, [user, isInitialLoad]);
 
-	const renderPage = () => {
-		switch (activePage) {
-			case 'students':
-				return <Dashboard userRole={user?.role} />;
-			case 'enrolled-classes':
-				return <Enrolled userId={user?.id} />;
-			case 'classes':
-				return <Classes currentUser={user?.role} currentUserId={user?.id} />;
-			case 'teacher-classes':
-				return <TeacherClasses currentUserId={user?.id} />;
-			case 'announcements':
-				return <Announcements userRole={user?.role} />;
-			case 'profile':
-				return (
-					<Profile
-						user={user}
-						profileImageUrl={getProfileImageUrl()}
-						onProfileUpdate={handleProfileUpdate}
-					/>
-				);
-
-			default:
-				return (
-					<Profile
-						user={user}
-						profileImageUrl={getProfileImageUrl()}
-						onProfileUpdate={handleProfileUpdate}
-					/>
-				);
-		}
-	};
+	const pages = [
+		{ id: 'students', component: <Dashboard userRole={user?.role} /> },
+		{ id: 'enrolled-classes', component: <Enrolled userId={user?.id} /> },
+		{
+			id: 'classes',
+			component: <Classes currentUser={user?.role} currentUserId={user?.id} />,
+		},
+		{
+			id: 'teacher-classes',
+			component: <TeacherClasses currentUserId={user?.id} />,
+		},
+		{ id: 'announcements', component: <Announcements userRole={user?.role} /> },
+		{
+			id: 'profile',
+			component: (
+				<Profile
+					user={user}
+					profileImageUrl={getProfileImageUrl()}
+					onProfileUpdate={handleProfileUpdate}
+				/>
+			),
+		},
+	];
 
 	return (
 		<div className='layout'>
@@ -104,7 +99,19 @@ const handlePageChange = (pageId) => {
 				onPageChange={handlePageChange}
 			/>
 			<main className='layout-main'>
-				<div className='layout-content'>{renderPage()}</div>
+				<div className='layout-content'>
+					{pages.map(({ id, component }) => {
+						if (!visitedPages.has(id)) return null;
+						return (
+							<div
+								key={id}
+								style={{ display: activePage === id ? 'block' : 'none' }}
+							>
+								{component}
+							</div>
+						);
+					})}
+				</div>
 			</main>
 		</div>
 	);
