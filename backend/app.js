@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const classRoutes = require('./routes/classes');
-const classStatsRoute = require('./routes/class-stats');
 const enrollRoutes = require('./routes/enrollRoutes');
 const authRoutes = require('./routes/authRoutes');
 const announcementRoutes = require('./routes/announcements');
@@ -15,7 +14,6 @@ app.use(express.json());
 app.use('/api/class', classRoutes);
 app.use('/api/class/:classId/announcements', announcementRoutes);
 app.use('/api/announcements', announcementRoutes);
-app.use('/api/class-stats', classStatsRoute);
 app.use('/api/enroll', enrollRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/uploads', express.static('uploads'));
