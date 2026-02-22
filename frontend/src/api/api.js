@@ -1,9 +1,5 @@
 import api from './axiosConfig';
 
-export const getStudentClasses = (id) => {
-	return api.get(`/${id}/classes`);
-};
-
 export const createClass = (data) => {
 	return api.post('/api/class', data);
 };
