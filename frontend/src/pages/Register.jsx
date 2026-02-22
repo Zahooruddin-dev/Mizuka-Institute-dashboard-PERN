@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { User, Mail, Lock, UserPlus, AlertCircle, Loader, Shield } from 'lucide-react';
 import { registerUser } from '../api/authApi';
+import { useAuth } from '../utils/AuthContext';
 import { Link, useNavigate } from 'react-router';
 import '../css/auth.css';
 
 export default function Register() {
 	const navigate = useNavigate();
+	const { refreshUser } = useAuth();
 	const [formData, setFormData] = useState({
 		username: '',
 		email: '',
@@ -17,22 +19,22 @@ export default function Register() {
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleChange = (e) => {
-		setFormData((prev) => ({
-			...prev,
-			[e.target.name]: e.target.value,
-		}));
+		setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 		if (error) setError('');
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!formData.username || !formData.email || !formData.password) {
+			setError('Please fill in all fields.');
+			return;
+		}
 		setError('');
 		setLoading(true);
-
 		try {
 			const response = await registerUser(formData);
-			const token = response.data.token;
-			localStorage.setItem('token', token);
+			localStorage.setItem('token', response.data.token);
+			refreshUser();
 			navigate('/');
 		} catch (error) {
 			setError(error.response?.data?.message || 'Registration Failed');
@@ -74,8 +76,6 @@ export default function Register() {
 							onChange={handleChange}
 							required
 							autoComplete='username'
-							aria-required='true'
-							aria-invalid={error ? 'true' : 'false'}
 							disabled={loading}
 						/>
 					</div>
@@ -94,8 +94,6 @@ export default function Register() {
 							onChange={handleChange}
 							required
 							autoComplete='email'
-							aria-required='true'
-							aria-invalid={error ? 'true' : 'false'}
 							disabled={loading}
 						/>
 					</div>
@@ -115,8 +113,6 @@ export default function Register() {
 								onChange={handleChange}
 								required
 								autoComplete='new-password'
-								aria-required='true'
-								aria-invalid={error ? 'true' : 'false'}
 								disabled={loading}
 								minLength={6}
 							/>
@@ -143,40 +139,25 @@ export default function Register() {
 							value={formData.role}
 							onChange={handleChange}
 							required
-							aria-required='true'
 							disabled={loading}
 						>
 							<option value='student'>Student</option>
 							<option value='teacher'>Teacher</option>
-							<option value='admin'>Administrator</option>
 						</select>
 					</div>
 
-					<button
-						type='submit'
-						className='submit-btn'
-						disabled={loading}
-						aria-busy={loading}
-					>
+					<button type='submit' className='submit-btn' disabled={loading}>
 						{loading ? (
-							<>
-								<Loader size={20} className='spinner' />
-								<span>Creating Account...</span>
-							</>
+							<><Loader size={20} className='spinner' /><span>Creating Account...</span></>
 						) : (
-							<>
-								<UserPlus size={20} />
-								<span>Create Account</span>
-							</>
+							<><UserPlus size={20} /><span>Create Account</span></>
 						)}
 					</button>
 
 					<div className='auth-footer'>
 						<p>
 							Already have an account?{' '}
-							<Link to='/login' aria-label='Go to login page'>
-								Sign In
-							</Link>
+							<Link to='/login'>Sign In</Link>
 						</p>
 					</div>
 				</form>
