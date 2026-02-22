@@ -25,7 +25,10 @@ const Layout = () => {
 
 	const getProfileImageUrl = () => {
 		if (user?.profile) {
-			return `http://localhost:3000${user.profile}?t=${imageTimestamp}`;
+			const isFullUrl = user.profile.startsWith('http');
+			return isFullUrl
+				? `${user.profile}?t=${imageTimestamp}`
+				: `http://localhost:3000${user.profile}?t=${imageTimestamp}`;
 		}
 		return null;
 	};
