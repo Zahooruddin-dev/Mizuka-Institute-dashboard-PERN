@@ -10,6 +10,7 @@ import Layout from './pages/Layout';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { getUserFromToken } from './utils/auth';
 import ForgotPassword from './pages/Auth/Forgotpassword';
+import './App.css';
 
 const AuthRedirect = ({ children }) => {
 	const user = getUserFromToken();
