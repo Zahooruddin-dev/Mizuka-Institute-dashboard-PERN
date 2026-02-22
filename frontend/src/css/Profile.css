@@ -83,6 +83,7 @@
 	font-size: 14px;
 	border: 1px solid rgba(239, 68, 68, 0.2);
 }
+
 .profile-meta {
 	display: flex;
 	gap: 1rem;
@@ -208,47 +209,26 @@
 	height: 14px;
 	stroke: currentColor;
 	stroke-width: 2;
-	stroke-linecap: round;
-	stroke-linejoin: round;
 	fill: none;
 }
 
 .role-admin {
-	background: linear-gradient(
-		135deg,
-		rgba(239, 68, 68, 0.1) 0%,
-		rgba(220, 38, 38, 0.1) 100%
-	);
+	background: rgba(239, 68, 68, 0.1);
 	color: #dc2626;
 	border: 1px solid rgba(239, 68, 68, 0.2);
 }
-
 .role-teacher {
-	background: linear-gradient(
-		135deg,
-		rgba(16, 185, 129, 0.1) 0%,
-		rgba(5, 150, 105, 0.1) 100%
-	);
+	background: rgba(16, 185, 129, 0.1);
 	color: #059669;
 	border: 1px solid rgba(16, 185, 129, 0.2);
 }
-
 .role-student {
-	background: linear-gradient(
-		135deg,
-		rgba(59, 130, 246, 0.1) 0%,
-		rgba(37, 99, 235, 0.1) 100%
-	);
+	background: rgba(59, 130, 246, 0.1);
 	color: #2563eb;
 	border: 1px solid rgba(59, 130, 246, 0.2);
 }
-
 .role-default {
-	background: linear-gradient(
-		135deg,
-		rgba(45, 212, 191, 0.1) 0%,
-		rgba(20, 184, 166, 0.1) 100%
-	);
+	background: rgba(45, 212, 191, 0.1);
 	color: #14b8a6;
 	border: 1px solid rgba(45, 212, 191, 0.2);
 }
@@ -291,8 +271,9 @@
 }
 
 .detail-item:hover {
-	border-color: rgba(45, 212, 191, 0.3);
-	box-shadow: 0 4px 12px rgba(45, 212, 191, 0.08);
+	background: rgba(45, 212, 191, 0.04);
+	border-color: rgba(45, 212, 191, 0.35);
+	box-shadow: 0 4px 12px rgba(45, 212, 191, 0.1);
 	transform: translateY(-2px);
 }
 
@@ -318,8 +299,6 @@
 	height: 18px;
 	stroke: currentColor;
 	stroke-width: 2;
-	stroke-linecap: round;
-	stroke-linejoin: round;
 	fill: none;
 }
 
@@ -365,64 +344,6 @@
 	box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.1);
 }
 
-.status-grid {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 1rem;
-}
-
-.status-card {
-	display: flex;
-	align-items: center;
-	gap: 0.875rem;
-	padding: 1rem;
-	background: #ffffff;
-	border: 1px solid rgba(0, 0, 0, 0.06);
-	border-radius: 12px;
-}
-
-.status-indicator {
-	width: 12px;
-	height: 12px;
-	border-radius: 50%;
-	flex-shrink: 0;
-	animation: pulse 2s infinite;
-}
-
-.status-indicator.active {
-	background: #10b981;
-	box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
-}
-
-.status-indicator.verified {
-	background: #2dd4bf;
-	box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.2);
-}
-
-@keyframes pulse {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.7;
-	}
-}
-
-.status-label {
-	margin: 0;
-	font-size: 0.75rem;
-	color: #64748b;
-	font-weight: 500;
-}
-
-.status-value {
-	margin: 0.25rem 0 0 0;
-	font-size: 0.875rem;
-	font-weight: 600;
-	color: #1e293b;
-}
-
 .profile-actions {
 	display: flex;
 	gap: 1rem;
@@ -452,8 +373,6 @@
 	height: 18px;
 	stroke: currentColor;
 	stroke-width: 2;
-	stroke-linecap: round;
-	stroke-linejoin: round;
 	fill: none;
 }
 
@@ -465,7 +384,8 @@
 
 .action-btn.primary:hover:not(:disabled) {
 	transform: translateY(-2px);
-	box-shadow: 0 6px 16px rgba(45, 212, 191, 0.35);
+	box-shadow: 0 6px 16px rgba(45, 212, 191, 0.4);
+	background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
 }
 
 .action-btn.primary:disabled {
@@ -475,21 +395,21 @@
 }
 
 .action-btn.secondary {
-	background: #ffffff;
+	background: #f8fafc;
 	color: #334155;
-	border: 1px solid rgba(0, 0, 0, 0.08);
+	border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .action-btn.secondary:hover:not(:disabled) {
-	background: #f8fafc;
+	background: rgba(45, 212, 191, 0.08);
 	border-color: #2dd4bf;
+	color: #0f766e;
 	transform: translateY(-2px);
 }
 
 .action-btn:active:not(:disabled) {
 	transform: translateY(0);
 }
-
 .action-btn:focus {
 	outline: 2px solid #2dd4bf;
 	outline-offset: 2px;
@@ -559,75 +479,12 @@
 	color: #64748b;
 }
 
-@media (max-width: 1024px) {
-	.profile-content {
-		grid-template-columns: 1fr;
-	}
-
-	.activity-card {
-		order: -1;
-	}
-
-	.detail-grid {
-		grid-template-columns: 1fr;
-	}
-}
-
-@media (max-width: 640px) {
-	.page-container {
-		padding: 1.5rem;
-	}
-
-	.page-heading {
-		font-size: 1.5rem;
-	}
-
-	.page-icon {
-		width: 48px;
-		height: 48px;
-		padding: 10px;
-	}
-
-	.page-icon svg {
-		width: 28px;
-		height: 28px;
-	}
-
-	.profile-card {
-		padding: 1.5rem;
-	}
-
-	.profile-header-section {
-		flex-direction: column;
-		text-align: center;
-	}
-
-	.avatar-large {
-		width: 80px;
-		height: 80px;
-		font-size: 2rem;
-	}
-
-	.profile-name {
-		font-size: 1.5rem;
-	}
-
-	.status-grid {
-		grid-template-columns: 1fr;
-	}
-
-	.profile-actions {
-		flex-direction: column;
-	}
-
-	.activity-card {
-		padding: 1.25rem;
-	}
-}
+/* ── Danger zone ─────────────────────────────────────────────── */
 .danger-zone {
 	border: 1px solid rgba(239, 68, 68, 0.2);
 	border-radius: 12px;
 	overflow: hidden;
+	margin-top: 2rem;
 }
 
 .danger-zone-title {
@@ -679,11 +536,11 @@
 	font-weight: 600;
 	cursor: pointer;
 	white-space: nowrap;
+	flex-shrink: 0;
 	transition:
 		background 0.15s ease,
 		border-color 0.15s ease,
 		box-shadow 0.15s ease;
-	flex-shrink: 0;
 }
 
 .delete-account-btn:hover {
@@ -692,6 +549,7 @@
 	box-shadow: 0 4px 12px rgba(239, 68, 68, 0.12);
 }
 
+/* ── Delete modal ─────────────────────────────────────────────── */
 .delete-modal-overlay {
 	position: fixed;
 	inset: 0;
@@ -755,7 +613,6 @@
 	font-weight: 700;
 	color: #1e293b;
 }
-
 .delete-modal > p {
 	margin: 0 0 1.5rem;
 	font-size: 0.9rem;
@@ -880,7 +737,6 @@
 .delete-spinner {
 	animation: delete-spin 0.8s linear infinite;
 }
-
 @keyframes delete-spin {
 	from {
 		transform: rotate(0deg);
@@ -890,71 +746,54 @@
 	}
 }
 
-.danger-zone {
-	border: 1px solid rgba(239, 68, 68, 0.2);
-	border-radius: 12px;
-	overflow: hidden;
-	margin-top: 2rem;
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+	.profile-content {
+		grid-template-columns: 1fr;
+	}
+	.activity-card {
+		order: -1;
+	}
+	.detail-grid {
+		grid-template-columns: 1fr;
+	}
 }
 
-.danger-zone-title {
-	margin: 0;
-	padding: 0.875rem 1.25rem;
-	font-size: 0.8125rem;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: 0.06em;
-	color: #dc2626;
-	background: rgba(239, 68, 68, 0.04);
-	border-bottom: 1px solid rgba(239, 68, 68, 0.12);
-}
-
-.danger-zone-body {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1.5rem;
-	padding: 1.25rem;
-	flex-wrap: wrap;
-}
-
-.danger-zone-label {
-	margin: 0 0 0.25rem;
-	font-size: 0.9375rem;
-	font-weight: 600;
-	color: #1e293b;
-}
-
-.danger-zone-desc {
-	margin: 0;
-	font-size: 0.8375rem;
-	color: #64748b;
-	line-height: 1.5;
-	max-width: 380px;
-}
-
-.delete-account-btn {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.4rem;
-	padding: 0.625rem 1.125rem;
-	border-radius: 8px;
-	border: 1px solid rgba(239, 68, 68, 0.3);
-	background: #fff1f2;
-	color: #dc2626;
-	font-size: 0.875rem;
-	font-weight: 600;
-	cursor: pointer;
-	white-space: nowrap;
-	flex-shrink: 0;
-	transition:
-		background 0.15s ease,
-		border-color 0.15s ease,
-		box-shadow 0.15s ease;
-}
-
-.delete-account-btn:hover {
-	background: #fee2e2;
-	border-color: rgba(239, 68, 68, 0.5);
-	box-shadow: 0 4px 12px rgba(239, 68, 68, 0.12);
+@media (max-width: 640px) {
+	.page-container {
+		padding: 1.5rem;
+	}
+	.page-heading {
+		font-size: 1.5rem;
+	}
+	.page-icon {
+		width: 48px;
+		height: 48px;
+		padding: 10px;
+	}
+	.page-icon svg {
+		width: 28px;
+		height: 28px;
+	}
+	.profile-card {
+		padding: 1.5rem;
+	}
+	.profile-header-section {
+		flex-direction: column;
+		text-align: center;
+	}
+	.avatar-large {
+		width: 80px;
+		height: 80px;
+		font-size: 2rem;
+	}
+	.profile-name {
+		font-size: 1.5rem;
+	}
+	.profile-actions {
+		flex-direction: column;
+	}
+	.activity-card {
+		padding: 1.25rem;
+	}
 }
