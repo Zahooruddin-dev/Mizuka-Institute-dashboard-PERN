@@ -4,8 +4,8 @@ import {
 	Route,
 	Navigate,
 } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
 import Layout from './pages/Layout';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { AuthProvider, useAuth } from './utils/AuthContext';

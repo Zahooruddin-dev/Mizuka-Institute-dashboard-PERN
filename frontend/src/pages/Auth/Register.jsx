@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { Mail, Lock, LogIn, AlertCircle, Loader } from 'lucide-react';
-import { loginUser } from '../api/authApi';
-import { useAuth } from '../utils/AuthContext';
+import { User, Mail, Lock, UserPlus, AlertCircle, Loader, Shield } from 'lucide-react';
+import { registerUser } from '../../api/authApi';
+import { useAuth } from '../../utils/AuthContext';
 import { Link, useNavigate } from 'react-router';
-import '../css/auth.css';
+import '../../css/auth.css';
 
-export default function Login() {
+export default function Register() {
 	const navigate = useNavigate();
 	const { refreshUser } = useAuth();
-	const [formData, setFormData] = useState({ email: '', password: '' });
+	const [formData, setFormData] = useState({
+		username: '',
+		email: '',
+		password: '',
+		role: 'student',
+	});
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
@@ -20,19 +25,19 @@ export default function Login() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (!formData.email || !formData.password) {
+		if (!formData.username || !formData.email || !formData.password) {
 			setError('Please fill in all fields.');
 			return;
 		}
 		setError('');
 		setLoading(true);
 		try {
-			const response = await loginUser(formData);
+			const response = await registerUser(formData);
 			localStorage.setItem('token', response.data.token);
 			refreshUser();
 			navigate('/');
 		} catch (error) {
-			setError(error.response?.data?.message || 'Login Failed');
+			setError(error.response?.data?.message || 'Registration Failed');
 		} finally {
 			setLoading(false);
 		}
@@ -43,19 +48,37 @@ export default function Login() {
 			<div className='auth-card'>
 				<div className='auth-header'>
 					<div className='auth-icon'>
-						<LogIn size={32} />
+						<UserPlus size={32} />
 					</div>
-					<h1>Welcome Back</h1>
-					<p>Sign in to continue to your account</p>
+					<h1>Create Account</h1>
+					<p>Join us and start your learning journey</p>
 				</div>
 
 				<form className='auth-form' onSubmit={handleSubmit} noValidate>
 					{error && (
-						<div className='error-banner' role='alert'>
+						<div className='error-banner' role='alert' aria-live='polite'>
 							<AlertCircle size={20} />
 							<span>{error}</span>
 						</div>
 					)}
+
+					<div className='input-group'>
+						<label htmlFor='username'>
+							<User size={18} />
+							<span>Username</span>
+						</label>
+						<input
+							id='username'
+							type='text'
+							name='username'
+							placeholder='Choose a username'
+							value={formData.username}
+							onChange={handleChange}
+							required
+							autoComplete='username'
+							disabled={loading}
+						/>
+					</div>
 
 					<div className='input-group'>
 						<label htmlFor='email'>
@@ -77,27 +100,21 @@ export default function Login() {
 
 					<div className='input-group'>
 						<label htmlFor='password'>
-							<div className='password-label-row'>
-								<span className='password-label-left'>
-									<Lock size={18} />
-									<span>Password</span>
-								</span>
-								<Link to='/forgot-password' className='forgot-link'>
-									Forgot password?
-								</Link>
-							</div>
+							<Lock size={18} />
+							<span>Password</span>
 						</label>
 						<div className='password-input-wrapper'>
 							<input
 								id='password'
 								type={showPassword ? 'text' : 'password'}
 								name='password'
-								placeholder='Enter your password'
+								placeholder='Create a strong password'
 								value={formData.password}
 								onChange={handleChange}
 								required
-								autoComplete='current-password'
+								autoComplete='new-password'
 								disabled={loading}
+								minLength={6}
 							/>
 							<button
 								type='button'
@@ -111,23 +128,36 @@ export default function Login() {
 						</div>
 					</div>
 
+					<div className='input-group'>
+						<label htmlFor='role'>
+							<Shield size={18} />
+							<span>Account Type</span>
+						</label>
+						<select
+							id='role'
+							name='role'
+							value={formData.role}
+							onChange={handleChange}
+							required
+							disabled={loading}
+						>
+							<option value='student'>Student</option>
+							<option value='teacher'>Teacher</option>
+						</select>
+					</div>
+
 					<button type='submit' className='submit-btn' disabled={loading}>
 						{loading ? (
-							<>
-								<Loader size={20} className='spinner' />
-								<span>Signing in...</span>
-							</>
+							<><Loader size={20} className='spinner' /><span>Creating Account...</span></>
 						) : (
-							<>
-								<LogIn size={20} />
-								<span>Sign In</span>
-							</>
+							<><UserPlus size={20} /><span>Create Account</span></>
 						)}
 					</button>
 
 					<div className='auth-footer'>
 						<p>
-							Don't have an account? <Link to='/register'>Create Account</Link>
+							Already have an account?{' '}
+							<Link to='/login'>Sign In</Link>
 						</p>
 					</div>
 				</form>
