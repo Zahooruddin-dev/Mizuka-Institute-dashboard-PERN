@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
 	Megaphone,
 	Calendar,
@@ -17,9 +17,7 @@ import '../../../css/Announcements.css';
 
 const getExpiryState = (expiresAt) => {
 	if (!expiresAt) return null;
-	const now = Date.now();
-	const exp = new Date(expiresAt).getTime();
-	const diff = exp - now;
+	const diff = new Date(expiresAt).getTime() - Date.now();
 	if (diff <= 0) return 'expired';
 	if (diff <= 3 * 24 * 60 * 60 * 1000) return 'soon';
 	return 'active';
@@ -28,31 +26,13 @@ const getExpiryState = (expiresAt) => {
 const ExpiryBadge = ({ expiresAt }) => {
 	const state = getExpiryState(expiresAt);
 	if (!state) return null;
-
-	const formatExpiry = (ts) =>
-		new Date(ts).toLocaleDateString(undefined, {
-			month: 'short',
-			day: 'numeric',
-			year: 'numeric',
-		});
-
-	if (state === 'expired') {
-		return (
-			<span className='ann-expiry-badge ann-expiry-expired'>
-				<Clock size={11} /> Expired
-			</span>
-		);
-	}
-	if (state === 'soon') {
-		return (
-			<span className='ann-expiry-badge ann-expiry-soon'>
-				<Clock size={11} /> Expires {formatExpiry(expiresAt)}
-			</span>
-		);
-	}
+	const label =
+		state === 'expired'
+			? 'Expired'
+			: `Expires ${new Date(expiresAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}`;
 	return (
-		<span className='ann-expiry-badge ann-expiry-active'>
-			<Clock size={11} /> Expires {formatExpiry(expiresAt)}
+		<span className={`ann-expiry-badge ann-expiry-${state}`}>
+			<Clock size={11} /> {label}
 		</span>
 	);
 };
@@ -61,46 +41,45 @@ const Announcements = ({ userRole }) => {
 	const [announcements, setAnnouncements] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const hasFetched = useRef(false);
+
+	const fetchAnnouncements = async () => {
+		setLoading(true);
+		setError(null);
+		try {
+			if (userRole === 'student') {
+				const res = await getMyAnnouncements();
+				setAnnouncements(res.data);
+			} else {
+				const classesRes = await getClasses();
+				const settled = await Promise.allSettled(
+					classesRes.data.map((c) =>
+						getClassAnnouncements(c.id).then((r) =>
+							r.data.map((ann) => ({
+								...ann,
+								class_name: ann.class_name ?? c.class_name,
+							})),
+						),
+					),
+				);
+				const merged = settled
+					.filter((r) => r.status === 'fulfilled')
+					.flatMap((r) => r.value)
+					.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+				setAnnouncements(merged);
+			}
+		} catch {
+			setError('Failed to load announcements.');
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	useEffect(() => {
-		const fetchAnnouncements = async () => {
-			try {
-				setLoading(true);
-				setError(null);
-
-				if (userRole === 'student') {
-					const res = await getMyAnnouncements();
-					setAnnouncements(res.data);
-				} else {
-					const classesRes = await getClasses();
-					const classList = classesRes.data;
-
-					const settled = await Promise.allSettled(
-						classList.map((c) =>
-							getClassAnnouncements(c.id).then((r) =>
-								r.data.map((ann) => ({
-									...ann,
-									class_name: ann.class_name ?? c.class_name,
-								})),
-							),
-						),
-					);
-
-					const merged = settled
-						.filter((r) => r.status === 'fulfilled')
-						.flatMap((r) => r.value)
-						.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-
-					setAnnouncements(merged);
-				}
-			} catch (err) {
-				setError('Failed to load announcements.');
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchAnnouncements();
+		if (!hasFetched.current) {
+			hasFetched.current = true;
+			fetchAnnouncements();
+		}
 	}, [userRole]);
 
 	const formatDate = (ts) =>
@@ -120,6 +99,13 @@ const Announcements = ({ userRole }) => {
 					<h1>Announcements</h1>
 					<p>Recent updates from your enrolled classes</p>
 				</div>
+				<button
+					className='ann-refresh-btn'
+					onClick={fetchAnnouncements}
+					aria-label='Refresh announcements'
+				>
+					Refresh
+				</button>
 			</div>
 
 			{loading && (
