@@ -2,9 +2,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export const getUserFromToken = () => {
 	const token = localStorage.getItem('token');
-	if (!token || token === 'null' || token === 'undefined') {
-		return null;
-	}
+	if (!token || token === 'null' || token === 'undefined') return null;
 	try {
 		const decoded = jwtDecode(token);
 		if (decoded.exp * 1000 < Date.now()) {
@@ -19,8 +17,7 @@ export const getUserFromToken = () => {
 			profile: decoded.profile || null,
 			createdAt: decoded.createdAt || null,
 		};
-	} catch (error) {
-		console.error('Invalid token format');
+	} catch {
 		return null;
 	}
 };
@@ -30,6 +27,4 @@ export const logout = () => {
 	window.location.href = '/login';
 };
 
-export const isAuthenticated = () => {
-	return getUserFromToken() !== null;
-};
+export const isAuthenticated = () => getUserFromToken() !== null;
