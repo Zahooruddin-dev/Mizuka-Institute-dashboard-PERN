@@ -4,27 +4,22 @@ import Classes from '../components/Sidebar/Classes/Classes';
 import Announcements from '../components/Sidebar/Announcements/Announcements';
 import Profile from '../components/Sidebar/Profile/Profile';
 import TeacherClasses from '../components/Sidebar/TeacherClasses/TeacherClasses';
-import { getUserFromToken } from '../utils/auth';
+import { useAuth } from '../utils/AuthContext';
 import '../css/Layout.css';
 import Enrolled from '../components/Sidebar/Enrolled/Enrolled';
 
 const Layout = () => {
 	const [activePage, setActivePage] = useState(null);
-	const [user, setUser] = useState(null);
+	const { user, refreshUser } = useAuth();
 	const [isInitialLoad, setIsInitialLoad] = useState(true);
 	const [imageTimestamp, setImageTimestamp] = useState(Date.now());
 	const [visitedPages, setVisitedPages] = useState(new Set());
-
-	const loadUserData = () => {
-		const userData = getUserFromToken();
-		if (userData) setUser(userData);
-	};
 
 	const handlePageChange = (pageId) => {
 		if (activePage !== pageId) {
 			setActivePage(pageId);
 			setVisitedPages((prev) => new Set(prev).add(pageId));
-			if (pageId === 'profile') loadUserData();
+			if (pageId === 'profile') refreshUser();
 		}
 	};
 
@@ -37,18 +32,8 @@ const Layout = () => {
 
 	const handleProfileUpdate = () => {
 		setImageTimestamp(Date.now());
-		loadUserData();
+		refreshUser();
 	};
-
-	useEffect(() => {
-		loadUserData();
-	}, []);
-
-	useEffect(() => {
-		const handleStorageChange = () => loadUserData();
-		window.addEventListener('storage', handleStorageChange);
-		return () => window.removeEventListener('storage', handleStorageChange);
-	}, []);
 
 	useEffect(() => {
 		if (user && isInitialLoad) {
