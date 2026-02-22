@@ -1,36 +1,35 @@
 import React, { useState } from 'react';
 import { Mail, Lock, LogIn, AlertCircle, Loader } from 'lucide-react';
 import { loginUser } from '../api/authApi';
+import { useAuth } from '../utils/AuthContext';
 import { Link, useNavigate } from 'react-router';
 import '../css/auth.css';
 
 export default function Login() {
 	const navigate = useNavigate();
-	const [formData, setFormData] = useState({
-		email: '',
-		password: '',
-	});
+	const { refreshUser } = useAuth();
+	const [formData, setFormData] = useState({ email: '', password: '' });
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleChange = (e) => {
-		setFormData((prev) => ({
-			...prev,
-			[e.target.name]: e.target.value,
-		}));
+		setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 		if (error) setError('');
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (!formData.email || !formData.password) {
+			setError('Please fill in all fields.');
+			return;
+		}
 		setError('');
 		setLoading(true);
-
 		try {
 			const response = await loginUser(formData);
-			const token = response.data.token;
-			localStorage.setItem('token', token);
+			localStorage.setItem('token', response.data.token);
+			refreshUser();
 			navigate('/');
 		} catch (error) {
 			setError(error.response?.data?.message || 'Login Failed');
@@ -52,7 +51,7 @@ export default function Login() {
 
 				<form className='auth-form' onSubmit={handleSubmit} noValidate>
 					{error && (
-						<div className='error-banner' role='alert' aria-live='polite'>
+						<div className='error-banner' role='alert'>
 							<AlertCircle size={20} />
 							<span>{error}</span>
 						</div>
@@ -72,8 +71,6 @@ export default function Login() {
 							onChange={handleChange}
 							required
 							autoComplete='email'
-							aria-required='true'
-							aria-invalid={error ? 'true' : 'false'}
 							disabled={loading}
 						/>
 					</div>
@@ -85,12 +82,7 @@ export default function Login() {
 									<Lock size={18} />
 									<span>Password</span>
 								</span>
-								<Link
-									to='/forgot-password'
-									className='forgot-link'
-									tabIndex={0}
-									aria-label='Forgot your password?'
-								>
+								<Link to='/forgot-password' className='forgot-link'>
 									Forgot password?
 								</Link>
 							</div>
@@ -105,8 +97,6 @@ export default function Login() {
 								onChange={handleChange}
 								required
 								autoComplete='current-password'
-								aria-required='true'
-								aria-invalid={error ? 'true' : 'false'}
 								disabled={loading}
 							/>
 							<button
@@ -121,12 +111,7 @@ export default function Login() {
 						</div>
 					</div>
 
-					<button
-						type='submit'
-						className='submit-btn'
-						disabled={loading}
-						aria-busy={loading}
-					>
+					<button type='submit' className='submit-btn' disabled={loading}>
 						{loading ? (
 							<>
 								<Loader size={20} className='spinner' />
@@ -142,10 +127,7 @@ export default function Login() {
 
 					<div className='auth-footer'>
 						<p>
-							Don't have an account?{' '}
-							<Link to='/register' aria-label='Go to registration page'>
-								Create Account
-							</Link>
+							Don't have an account? <Link to='/register'>Create Account</Link>
 						</p>
 					</div>
 				</form>
