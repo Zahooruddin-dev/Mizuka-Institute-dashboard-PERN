@@ -118,8 +118,8 @@ CREATE TABLE password_resets (
 
 **1. Clone the repo**
 ```bash
-git clone https://github.com/zahooruddin-dev/mizuka-institute.git
-cd mizuka-institute
+git clone https://github.com/zahooruddin-dev/Eduportal-PERN.git
+cd Eduportal-PERN
 ```
 
 **2. Install dependencies**
