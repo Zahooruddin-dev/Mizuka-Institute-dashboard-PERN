@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../db/queryAuth');
-const { sendResetEmail } = require('../utility/emailSender');
+
 
 async function login(req, res) {
 	const { email, password } = req.body;

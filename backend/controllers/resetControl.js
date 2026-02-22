@@ -1,6 +1,8 @@
 const db = require('../db/queryReset');
 const dbAuth = require('../db/queryAuth');
 const bcrypt = require('bcrypt');
+const { sendResetEmail } = require('../utility/emailSender');
+
 async function resetPassword(req, res) {
 	const { email, code, newPassword } = req.body;
 	try {
@@ -30,6 +32,7 @@ async function requestPasswordReset(req, res) {
 		const code = Math.floor(100000 + Math.random() * 900000).toString();
 		const expires = new Date(Date.now() + 15 * 60000);
 		await db.saveResetCode(email, code, expires);
+		await sendResetEmail(user.email, code);
 		console.log(`--- EMAIL SENT TO ${email} ---`);
 		console.log(`Your Reset Code is: ${code}`);
 		console.log(`------------------------------`);
