@@ -25,18 +25,18 @@ import CreateAnnouncementModal from './CreateAnnouncementModal';
 import '../../../css/TeacherClasses.css';
 
 const TeacherClasses = () => {
-	const [classes,            setClasses]            = useState([]);
-	const [loading,            setLoading]            = useState(true);
-	const [error,              setError]              = useState(null);
-	const [isModalOpen,        setIsModalOpen]        = useState(false);
+	const [classes, setClasses] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [announcementTarget, setAnnouncementTarget] = useState(null);
-	const [expandedClass,      setExpandedClass]      = useState(null);
+	const [expandedClass, setExpandedClass] = useState(null);
 	const [classAnnouncements, setClassAnnouncements] = useState({});
-	const [annLoading,         setAnnLoading]         = useState({});
-	const [annDeleteTarget,    setAnnDeleteTarget]    = useState(null);
-	const [annDeleting,        setAnnDeleting]        = useState(false);
-	const [deleteClassTarget,  setDeleteClassTarget]  = useState(null);
-	const [deletingClass,      setDeletingClass]      = useState(false);
+	const [annLoading, setAnnLoading] = useState({});
+	const [annDeleteTarget, setAnnDeleteTarget] = useState(null);
+	const [annDeleting, setAnnDeleting] = useState(false);
+	const [deleteClassTarget, setDeleteClassTarget] = useState(null);
+	const [deletingClass, setDeletingClass] = useState(false);
 
 	const fetchMyClasses = async () => {
 		try {
@@ -50,10 +50,15 @@ const TeacherClasses = () => {
 		}
 	};
 
-	useEffect(() => { fetchMyClasses(); }, []);
+	useEffect(() => {
+		fetchMyClasses();
+	}, []);
 
 	const toggleAnnouncements = async (classId) => {
-		if (expandedClass === classId) { setExpandedClass(null); return; }
+		if (expandedClass === classId) {
+			setExpandedClass(null);
+			return;
+		}
 		setExpandedClass(classId);
 		setAnnLoading((prev) => ({ ...prev, [classId]: true }));
 		try {
@@ -107,17 +112,26 @@ const TeacherClasses = () => {
 
 	const formatDate = (ts) =>
 		new Date(ts).toLocaleDateString(undefined, {
-			year: 'numeric', month: 'short', day: 'numeric',
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric',
 		});
 
 	return (
-		<main className='dashboard-container' aria-labelledby='teacher-classes-heading'>
+		<main
+			className='dashboard-container'
+			aria-labelledby='teacher-classes-heading'
+		>
 			<header className='dashboard-header'>
 				<div className='header-info'>
 					<h1 id='teacher-classes-heading'>Your Managed Classes</h1>
 					<p>Manage curriculum, announcements, and student rosters.</p>
 				</div>
-				<button onClick={() => setIsModalOpen(true)} className='create-btn' aria-label='Create new class'>
+				<button
+					onClick={() => setIsModalOpen(true)}
+					className='create-btn'
+					aria-label='Create new class'
+				>
 					<Plus size={20} />
 					<span>Create New Class</span>
 				</button>
@@ -203,35 +217,50 @@ const TeacherClasses = () => {
 											<p className='ann-panel-loading'>Loading…</p>
 										)}
 
-										{!annLoading[c.id] && classAnnouncements[c.id]?.length === 0 && (
-											<p className='ann-panel-empty'>No announcements yet. Use "Post" to add one.</p>
-										)}
+										{!annLoading[c.id] &&
+											classAnnouncements[c.id]?.length === 0 && (
+												<p className='ann-panel-empty'>
+													No announcements yet. Use "Post" to add one.
+												</p>
+											)}
 
-										{!annLoading[c.id] && classAnnouncements[c.id]?.length > 0 && (
-											<ul className='ann-panel-list'>
-												{classAnnouncements[c.id].map((ann) => (
-													<li key={ann.id} className='ann-panel-item'>
-														<div className='ann-panel-item-header'>
-															<strong>{ann.title}</strong>
-															<button
-																className='ann-delete-btn'
-																onClick={() => setAnnDeleteTarget({ ...ann, class_id: c.id })}
-																aria-label={`Delete "${ann.title}"`}
-																title='Delete announcement'
-															>
-																<Trash2 size={14} />
-																<span>Delete</span>
-															</button>
-														</div>
-														<p>{ann.content}</p>
-														<div className='ann-panel-meta'>
-															<span><User size={12} />{ann.teacher_name ?? 'You'}</span>
-															<span><Calendar size={12} />{formatDate(ann.created_at)}</span>
-														</div>
-													</li>
-												))}
-											</ul>
-										)}
+										{!annLoading[c.id] &&
+											classAnnouncements[c.id]?.length > 0 && (
+												<ul className='ann-panel-list'>
+													{classAnnouncements[c.id].map((ann) => (
+														<li key={ann.id} className='ann-panel-item'>
+															<div className='ann-panel-item-header'>
+																<strong>{ann.title}</strong>
+																<button
+																	className='ann-delete-btn'
+																	onClick={() =>
+																		setAnnDeleteTarget({
+																			...ann,
+																			class_id: c.id,
+																		})
+																	}
+																	aria-label={`Delete "${ann.title}"`}
+																	title='Delete announcement'
+																>
+																	<Trash2 size={14} />
+																	<span>Delete</span>
+																</button>
+															</div>
+															<p>{ann.content}</p>
+															<div className='ann-panel-meta'>
+																<span>
+																	<User size={12} />
+																	{ann.teacher_name ?? 'You'}
+																</span>
+																<span>
+																	<Calendar size={12} />
+																	{formatDate(ann.created_at)}
+																</span>
+															</div>
+														</li>
+													))}
+												</ul>
+											)}
 									</div>
 								)}
 							</article>
@@ -241,7 +270,10 @@ const TeacherClasses = () => {
 							<BookOpen size={48} />
 							<h3>No Classes Yet</h3>
 							<p>You haven't created any classes yet.</p>
-							<button onClick={() => setIsModalOpen(true)} className='create-btn small'>
+							<button
+								onClick={() => setIsModalOpen(true)}
+								className='create-btn small'
+							>
 								<Plus size={16} /> Create Your First Class
 							</button>
 						</div>
@@ -252,7 +284,10 @@ const TeacherClasses = () => {
 			{isModalOpen && (
 				<CreateClassModal
 					onClose={() => setIsModalOpen(false)}
-					onSuccess={() => { setIsModalOpen(false); fetchMyClasses(); }}
+					onSuccess={() => {
+						setIsModalOpen(false);
+						fetchMyClasses();
+					}}
 				/>
 			)}
 
@@ -268,13 +303,28 @@ const TeacherClasses = () => {
 				<div className='modal-overlay' role='dialog' aria-modal='true'>
 					<div className='confirm-modal'>
 						<h3>Delete Announcement</h3>
-						<p>Delete "<strong>{annDeleteTarget.title}</strong>"? This cannot be undone.</p>
+						<p>
+							Delete "<strong>{annDeleteTarget.title}</strong>"? This cannot be
+							undone.
+						</p>
 						<div className='modal-actions'>
-							<button className='btn-secondary' onClick={() => setAnnDeleteTarget(null)} disabled={annDeleting}>
+							<button
+								className='btn-secondary'
+								onClick={() => setAnnDeleteTarget(null)}
+								disabled={annDeleting}
+							>
 								Cancel
 							</button>
-							<button className='btn-danger' onClick={handleDeleteAnnouncement} disabled={annDeleting}>
-								{annDeleting ? <Loader2 size={15} className='ann-spinner' /> : <Trash2 size={15} />}
+							<button
+								className='btn-danger'
+								onClick={handleDeleteAnnouncement}
+								disabled={annDeleting}
+							>
+								{annDeleting ? (
+									<Loader2 size={15} className='ann-spinner' />
+								) : (
+									<Trash2 size={15} />
+								)}
 								{annDeleting ? 'Deleting…' : 'Delete'}
 							</button>
 						</div>
@@ -290,7 +340,8 @@ const TeacherClasses = () => {
 						</div>
 						<h3>Delete Class</h3>
 						<p>
-							You are about to permanently delete <strong>{deleteClassTarget.class_name}</strong>.
+							You are about to permanently delete{' '}
+							<strong>{deleteClassTarget.class_name}</strong>.
 						</p>
 						<ul className='delete-class-warning-list'>
 							<li>All announcements for this class will be deleted</li>
@@ -298,11 +349,23 @@ const TeacherClasses = () => {
 							<li>This action cannot be undone</li>
 						</ul>
 						<div className='modal-actions'>
-							<button className='btn-secondary' onClick={() => setDeleteClassTarget(null)} disabled={deletingClass}>
+							<button
+								className='btn-secondary'
+								onClick={() => setDeleteClassTarget(null)}
+								disabled={deletingClass}
+							>
 								Cancel
 							</button>
-							<button className='btn-danger' onClick={handleDeleteClass} disabled={deletingClass}>
-								{deletingClass ? <Loader2 size={15} className='ann-spinner' /> : <Trash2 size={15} />}
+							<button
+								className='btn-danger'
+								onClick={handleDeleteClass}
+								disabled={deletingClass}
+							>
+								{deletingClass ? (
+									<Loader2 size={15} className='ann-spinner' />
+								) : (
+									<Trash2 size={15} />
+								)}
 								{deletingClass ? 'Deleting…' : 'Delete Class'}
 							</button>
 						</div>

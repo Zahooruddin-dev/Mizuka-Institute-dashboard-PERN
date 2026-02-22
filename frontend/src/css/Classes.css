@@ -94,6 +94,7 @@
 	background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
 	transform: translateY(-2px);
 	box-shadow: 0 6px 16px rgba(45, 212, 191, 0.35);
+	color: rgb(0, 0, 0);
 }
 
 .add-class-btn:active {
