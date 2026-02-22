@@ -71,50 +71,37 @@ async function register(req, res) {
 		res.status(400).json({ message: error.message });
 	}
 }
-
 async function changeUsername(req, res) {
-	const { id, newUsername } = req.body;
-	const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+  const { id, newUsername } = req.body;
+  
+  const imagePath = req.file ? req.file.path : null;
 
-	if (!newUsername) {
-		return res.status(400).json({ message: 'Username cannot be empty' });
-	}
+  if (!newUsername) {
+    return res.status(400).json({ message: 'Username cannot be empty' });
+  }
 
-	try {
-		const updatedUser = await db.updateUsername(id, newUsername, imagePath);
+  try {
+    const updatedUser = await db.updateUsername(id, newUsername, imagePath);
 
-		if (!updatedUser) {
-			return res.status(404).json({ message: 'User not found' });
-		}
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User found' });
+    }
 
-		const token = jwt.sign(
-			{
-				id: updatedUser.id,
-				role: updatedUser.role,
-				username: updatedUser.username,
-				email: updatedUser.email,
-				createdAt: updatedUser.created_at,
-				profile: updatedUser.profile_pic,
-			},
-			process.env.JWT_SECRET,
-			{ expiresIn: '1d' },
-		);
+    const token = jwt.sign(
+      {
+        id: updatedUser.id,
+        role: updatedUser.role,
+        username: updatedUser.username,
+        profile: updatedUser.profile_pic, 
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
-		res.json({
-			message: 'Profile updated!',
-			token,
-			user: {
-				id: updatedUser.id,
-				username: updatedUser.username,
-				email: updatedUser.email,
-				role: updatedUser.role,
-				createdAt: updatedUser.created_at,
-				profile: updatedUser.profile_pic,
-			},
-		});
-	} catch (error) {
-		res.status(500).json({ message: error.message });
-	}
+    res.json({ message: 'Profile updated!', token, user: updatedUser });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 }
 
 async function changePassword(req, res) {
