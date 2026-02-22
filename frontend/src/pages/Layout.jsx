@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar/Sidebar';
-import Dashboard from './Dashboard';
 import Classes from '../components/Sidebar/Classes/Classes';
 import Announcements from '../components/Sidebar/Announcements/Announcements';
 import Profile from '../components/Sidebar/Profile/Profile';
@@ -66,7 +65,6 @@ const Layout = () => {
 	}, [user, isInitialLoad]);
 
 	const pages = [
-		{ id: 'students', component: <Dashboard userRole={user?.role} /> },
 		{ id: 'enrolled-classes', component: <Enrolled userId={user?.id} /> },
 		{
 			id: 'classes',
