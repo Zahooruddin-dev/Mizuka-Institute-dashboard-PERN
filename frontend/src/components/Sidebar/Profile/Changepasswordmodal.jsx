@@ -8,7 +8,7 @@ import {
 	AlertCircle,
 } from 'lucide-react';
 import { changePassword } from '../../../api/authApi';
-import '../../../css/ChangePasswordModal.css';
+import '../../../css/Changepasswordmodal.css';
 
 const ChangePasswordModal = ({ onClose }) => {
 	const [currentPassword, setCurrentPassword] = useState('');
