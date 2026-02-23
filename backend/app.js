@@ -18,8 +18,8 @@ app.use('/api/enroll', enrollRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/uploads', express.static('uploads'));
 
-app.listen(PORT, () => {
-	console.log(`${PORT} is running`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
