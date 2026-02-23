@@ -1,17 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
-	Users,
 	BookOpen,
 	User,
 	Menu,
 	X,
 	LogOut,
 	Megaphone,
-	ChevronLeft,
-	ChevronRight,
 	DoorOpen,
 	PanelLeftClose,
-	PanelLeftOpen,
 } from 'lucide-react';
 import '../../css/Sidebar.css';
 import { logout } from '../../utils/auth';
