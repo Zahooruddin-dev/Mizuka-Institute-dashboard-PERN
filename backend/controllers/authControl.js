@@ -6,7 +6,7 @@ const db = require('../db/queryAuth');
 async function login(req, res) {
 	const { email, password } = req.body;
 	try {
-		const user = await db.loginQuery(email);
+		const user = await db.getUserByEmail(email);
 		if (!user)
 			return res.status(401).json({ message: 'Invalid Email or Password' });
 
