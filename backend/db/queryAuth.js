@@ -1,11 +1,5 @@
 const pool = require('./Pool');
 
-async function loginQuery(email) {
-	const { rows } = await pool.query('SELECT * FROM users WHERE email = $1', [
-		email,
-	]);
-	return rows[0] || null;
-}
 async function registerQuery(username, email, password_hash, role = 'student') {
 	const { rows } = await pool.query(
 		`
@@ -43,7 +37,6 @@ async function getUserByEmail(email) {
 	return rows[0] || null
 }
 module.exports = {
-	loginQuery,
 	registerQuery,
 	updateUsername,
 	deleteUserQuery,
